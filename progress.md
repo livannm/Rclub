@@ -27,7 +27,7 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 | Feature | Titre | Owner | Statut | Tests | PR | Notes |
 |---|---|---|---|---|---|---|
 | F-03 | Galerie Cash Out (visiteur) | Codex | review | lint+test+typecheck+build+e2e OK | [#9](https://github.com/livannm/Rclub/pull/9) | Galerie visiteur `cash-out` avec source media en memoire |
-| F-06 | Demande privatisation | Codex | review | lint+test+typecheck+build+e2e OK | - | Formulaire privatisation + consentement RGPD |
+| F-06 | Demande privatisation | Codex | review | lint+test+typecheck+build+e2e OK | [#10](https://github.com/livannm/Rclub/pull/10) | Formulaire privatisation + consentement RGPD |
 | F-08 | Changer logo | - | todo | - | - | Dépend de F-07 |
 | F-11 | Gérer photos Cash Out | - | todo | - | - | Dépend de F-07 et F-10 |
 | F-12 | Changer vidéo hero | - | todo | - | - | Dépend de F-07 |

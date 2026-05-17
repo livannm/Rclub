@@ -25,5 +25,5 @@ Permettre l'envoi d'une demande de privatisation avec collecte des informations 
 - [x] `progress.md` mis à jour
 
 ## Checklist PR
-- [ ] PR liée à `F-06`
-- [ ] Relecture des libellés métier
+- [x] PR liée à `F-06`
+- [x] Relecture des libellés métier
