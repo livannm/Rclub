@@ -12,7 +12,7 @@
     "startsAt": "Starts",
     "adminLink": "Go to admin area",
     "agendaLink": "See the events schedule",
-    "galleryLink": "View Cash Out gallery",
+    "galleryLink": "See the gallery",
     "privatisationLink": "Privatisation request",
     "reservationLink": "Reservation request"
   },
@@ -23,10 +23,14 @@
     "location": "Location",
     "ticket": "Tickets"
   },
+  "GalleryIndex": {
+    "title": "Gallery",
+    "empty": "No gallery available yet.",
+    "sectionLabel": "Events in gallery"
+  },
   "Gallery": {
-    "title": "Cash Out Gallery",
-    "description": "Explore photos from the Cash Out event.",
+    "backToGallery": "Back to gallery",
     "empty": "No photos available yet.",
-    "sectionLabel": "Cash Out photos"
+    "sectionLabel": "Photos"
   }
 }

@@ -24,6 +24,10 @@ export class EventService {
     return this.repository.listPublishedUpcoming(new Date().toISOString());
   }
 
+  async findBySlug(slug: string) {
+    return this.repository.findBySlug(slug);
+  }
+
   async create(input: EventPayload): Promise<ClubEvent> {
     const payload = this.validatePayload(input);
     const existingBySlug = await this.repository.findBySlug(payload.slug);

@@ -18,7 +18,16 @@ export default async function AgendaPage() {
         const localized = getLocalizedEventContent(event, locale);
 
         return (
-          <article key={event.id} style={{ border: "1px solid #333", padding: "1rem" }}>
+          <article key={event.id} style={{ border: "1px solid #333", padding: "1rem", display: "grid", gap: "0.5rem" }}>
+            {event.cover_image_url ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={event.cover_image_url}
+                alt={localized.title}
+                loading="lazy"
+                style={{ width: "100%", height: "220px", objectFit: "cover", display: "block" }}
+              />
+            ) : null}
             <h2 data-testid={`agenda-event-title-${index}`}>{localized.title}</h2>
             <p>{localized.description}</p>
             <p>

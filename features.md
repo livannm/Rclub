@@ -14,10 +14,10 @@
 - `F-10` Gérer les événements (CRUD)
 
 ### P1 (important après socle MVP)
-- `F-03` Voir les photos de l'événement "Cash Out"
+- `F-03` Voir la galerie d'un événement (liste événements + page photos par événement)
 - `F-06` Envoyer une demande de privatisation
 - `F-08` Changer le logo
-- `F-11` Gérer les photos de l'événement "Cash Out"
+- `F-11` Gérer les photos d'un événement depuis l'admin (upload / suppression)
 - `F-12` Changer la vidéo du hero
 
 ### P2 (optimisation / confort)
@@ -52,12 +52,26 @@ Scenario: Changer la langue de FR vers EN
   Then le contenu principal s'affiche en anglais
 ```
 
-### Feature `F-03`: Voir les photos de l'événement "Cash Out"
+### Feature `F-03`: Voir la galerie d'un événement
+
+> La galerie est structurée par événement. "Cash Out" est un événement parmi d'autres.
+> Chaque événement a : titre, date, description, image de couverture (uploadée par l'admin).
+
 ```gherkin
-Scenario: Consulter la galerie d'un événement
-  Given des photos existent pour l'événement "Cash Out"
-  When je vais dans la galerie de cet événement
-  Then je vois la liste des photos associées
+Scenario: Consulter la liste des événements avec photos
+  Given plusieurs événements publiés ont au moins une photo
+  When je vais sur la page /galerie
+  Then je vois la liste des événements avec leur couverture et leur titre
+
+Scenario: Consulter la galerie d'un événement spécifique
+  Given un événement publié a des photos associées
+  When je clique sur cet événement depuis /galerie
+  Then je suis redirigé vers /galerie/[slug]
+  And je vois toutes les photos de cet événement
+
+Scenario: Galerie vide
+  Given un événement publié n'a aucune photo
+  Then il n'apparaît pas dans la liste /galerie
 ```
 
 ### Feature `F-04`: Envoyer une demande de réservation
@@ -115,22 +129,21 @@ Scenario: Mettre à jour un texte éditorial
 ```
 
 ### Feature `F-10`: Gérer les événements (CRUD)
-```gherkin
-Scenario: Ajouter un événement
-  Given je suis connecté en admin
-  When je crée un événement avec des données valides
-  Then l'événement apparaît dans l'agenda
-```
+
+> Chaque événement contient : titre (FR/EN), date, description (FR/EN), image de couverture uploadable.
 
 ```gherkin
+Scenario: Ajouter un événement avec image de couverture
+  Given je suis connecté en admin
+  When je crée un événement avec titre, date, description et une image uploadée
+  Then l'événement apparaît dans l'agenda avec son image
+
 Scenario: Modifier un événement
   Given je suis connecté en admin
   And un événement existe déjà
-  When je modifie ses informations
+  When je modifie ses informations ou remplace son image
   Then les nouvelles informations sont affichées sur le site
-```
 
-```gherkin
 Scenario: Supprimer un événement
   Given je suis connecté en admin
   And un événement existe déjà
@@ -138,20 +151,28 @@ Scenario: Supprimer un événement
   Then il n'apparaît plus dans l'agenda
 ```
 
-### Feature `F-11`: Gérer les photos de l'événement "Cash Out"
-```gherkin
-Scenario: Ajouter des photos
-  Given je suis connecté en admin
-  When j'ajoute des photos à l'événement "Cash Out"
-  Then elles sont visibles dans la galerie correspondante
-```
+### Feature `F-11`: Gérer les photos d'un événement (admin)
+
+> S'applique à tous les événements, pas uniquement "Cash Out".
 
 ```gherkin
-Scenario: Supprimer des photos
+Scenario: Ajouter des photos à un événement
   Given je suis connecté en admin
-  And des photos existent pour "Cash Out"
+  And un événement existe
+  When j'uploade des photos depuis la fiche de cet événement
+  Then elles sont visibles dans la galerie /galerie/[slug]
+
+Scenario: Supprimer une photo d'un événement
+  Given je suis connecté en admin
+  And des photos existent pour un événement
   When je supprime une photo
   Then elle n'est plus visible dans la galerie
+
+Scenario: Réordonner les photos
+  Given je suis connecté en admin
+  And plusieurs photos existent pour un événement
+  When je modifie leur ordre
+  Then la galerie visiteur respecte ce nouvel ordre
 ```
 
 ### Feature `F-12`: Changer la vidéo du hero

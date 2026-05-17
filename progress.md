@@ -16,7 +16,7 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 | Feature | Titre | Owner | Statut | Tests | PR | Notes |
 |---|---|---|---|---|---|---|
 | F-07 | Connexion admin | Codex | done | unit+integration+e2e OK | [#1](https://github.com/livannm/Rclub/pull/1) | Auth.js v5 credentials, proxy guard `/admin`, session JWT 8h |
-| F-10 | CRUD événements | Codex | done | unit+integration+e2e OK | [#1](https://github.com/livannm/Rclub/pull/1) | Admin CRUD + agenda public + is_published |
+| F-10 | CRUD événements | Codex | done | unit+integration+e2e OK | [#1](https://github.com/livannm/Rclub/pull/1) | Admin CRUD + agenda public + is_published — à compléter : upload image couverture |
 | F-01 | Highlight prochain événement | Codex | done | unit+integration+e2e OK | [#2](https://github.com/livannm/Rclub/pull/2) | Bloc accueil affiche l'événement publié le plus proche |
 | F-05 | Agenda événements | Codex | done | unit+integration+e2e OK | [#3](https://github.com/livannm/Rclub/pull/3) | Agenda à venir trié par date croissante + fallback vide |
 | F-04 | Demande réservation | Codex | done | unit+integration+e2e OK | [#4](https://github.com/livannm/Rclub/pull/4) | Formulaire réservation + consentement RGPD |
@@ -26,10 +26,10 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 ### P1
 | Feature | Titre | Owner | Statut | Tests | PR | Notes |
 |---|---|---|---|---|---|---|
-| F-03 | Galerie Cash Out (visiteur) | Codex | review | lint+test+typecheck+build+e2e OK | [#9](https://github.com/livannm/Rclub/pull/9) | Galerie visiteur `cash-out` avec source media en memoire |
+| F-03 | Galerie par événement (visiteur) | Codex | review | lint+test+typecheck+build+e2e OK | [#9](https://github.com/livannm/Rclub/pull/9) | `/galerie` liste événements avec photos, `/galerie/[slug]` photos d'un event — Cash Out est un event |
 | F-06 | Demande privatisation | Codex | review | lint+test+typecheck+build+e2e OK | [#10](https://github.com/livannm/Rclub/pull/10) | Formulaire privatisation + consentement RGPD |
 | F-08 | Changer logo | - | todo | - | - | Dépend de F-07 |
-| F-11 | Gérer photos Cash Out | - | todo | - | - | Dépend de F-07 et F-10 |
+| F-11 | Gérer photos par événement (admin) | - | todo | - | - | Upload/suppression/ordre photos depuis la fiche admin d'un event — Dépend de F-07 et F-10 |
 | F-12 | Changer vidéo hero | - | todo | - | - | Dépend de F-07 |
 
 ### P2
@@ -38,6 +38,17 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 | X-01 | Anti-spam formulaires | - | todo | - | - | Rate limit + honeypot/captcha |
 | X-02 | SEO avancé | - | todo | - | - | |
 | X-03 | Stats dashboard admin | - | todo | - | - | |
+
+### P3 – Design
+| Feature | Titre | Owner | Statut | Tests | PR | Notes |
+|---|---|---|---|---|---|---|
+| D-01 | Identité visuelle globale | - | todo | - | - | Palette couleurs, typographie, espacement — cohérence sur toutes les pages |
+| D-02 | Page d'accueil (hero + highlight) | - | todo | - | - | Mise en page hero vidéo + bloc événement mis en avant |
+| D-03 | Agenda & cartes événements | - | todo | - | - | Layout liste/grille, cartes événements responsive |
+| D-04 | Formulaires (réservation / privatisation) | - | todo | - | - | UX formulaires, feedback d'erreur, confirmation |
+| D-05 | Galerie Cash Out | - | todo | - | - | Grille photos, lightbox, responsive mobile |
+| D-06 | Interface admin | - | todo | - | - | Dashboard admin : tables, modales CRUD, feedback toast |
+| D-07 | Responsive & accessibilité | - | todo | - | - | Breakpoints mobile/tablette/desktop, contrastes WCAG AA |
 
 ## Journal des décisions
 | Date | Décision | Impact | Owner |

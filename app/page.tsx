@@ -36,7 +36,7 @@ export default async function HomePage() {
 
       <nav aria-label="Pages principales" style={{ display: "grid", gap: "0.5rem" }}>
         <a href="/agenda">{t("agendaLink")}</a>
-        <a href="/gallery/cash-out">{t("galleryLink")}</a>
+        <a href="/galerie">{t("galleryLink")}</a>
         <a href="/reservations">{t("reservationLink")}</a>
         <a href="/privatisation">{t("privatisationLink")}</a>
         <a href="/admin">{t("adminLink")}</a>

@@ -36,4 +36,8 @@ export class InMemoryGalleryRepository implements GalleryRepository {
       .filter((photo) => photo.event_slug === eventSlug)
       .sort((first, second) => first.order - second.order);
   }
+
+  async listEventSlugs() {
+    return [...new Set(this.photos.map((photo) => photo.event_slug))];
+  }
 }

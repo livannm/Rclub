@@ -12,7 +12,7 @@
     "startsAt": "Debut",
     "adminLink": "Acceder a l'espace admin",
     "agendaLink": "Voir l'agenda",
-    "galleryLink": "Voir la galerie Cash Out",
+    "galleryLink": "Voir la galerie",
     "privatisationLink": "Demande de privatisation",
     "reservationLink": "Demande de reservation"
   },
@@ -23,10 +23,14 @@
     "location": "Lieu",
     "ticket": "Billetterie"
   },
+  "GalleryIndex": {
+    "title": "Galerie",
+    "empty": "Aucune galerie disponible pour le moment.",
+    "sectionLabel": "Evenements en galerie"
+  },
   "Gallery": {
-    "title": "Galerie Cash Out",
-    "description": "Decouvrez les photos de la soiree Cash Out.",
+    "backToGallery": "Retour a la galerie",
     "empty": "Aucune photo disponible pour le moment.",
-    "sectionLabel": "Photos Cash Out"
+    "sectionLabel": "Photos"
   }
 }

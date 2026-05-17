@@ -1,20 +1,39 @@
+import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { resolveLocale } from "@/i18n/locales";
-import { localizeGalleryPhotos } from "@/lib/gallery/gallery-localized";
 import { galleryService } from "@/lib/gallery/gallery-service-instance";
+import { eventService } from "@/lib/events/events-service-instance";
+import { localizeGalleryPhotos } from "@/lib/gallery/gallery-localized";
+import { getLocalizedEventContent } from "@/lib/events/event-localized";
 
-export default async function CashOutGalleryPage() {
+type Props = { params: Promise<{ slug: string }> };
+
+export default async function GalerieEventPage({ params }: Props) {
+  const { slug } = await params;
   const locale = resolveLocale(await getLocale());
   const t = await getTranslations("Gallery");
-  const photos = await galleryService.listEventPhotos("cash-out");
+
+  const [photos, event] = await Promise.all([
+    galleryService.listEventPhotos(slug),
+    eventService.findBySlug(slug)
+  ]);
+
+  if (photos.length === 0 && !event) {
+    notFound();
+  }
+
   const localizedPhotos = localizeGalleryPhotos(photos, locale);
+  const localized = event ? getLocalizedEventContent(event, locale) : null;
+  const title = localized?.title ?? slug;
 
   return (
     <main style={{ padding: "2rem", display: "grid", gap: "1rem" }}>
-      <h1>{t("title")}</h1>
-      <p>{t("description")}</p>
+      <a href="/galerie" style={{ fontSize: "0.9rem" }}>{t("backToGallery")}</a>
+      <h1>{title}</h1>
 
-      {localizedPhotos.length === 0 ? <p data-testid="gallery-empty">{t("empty")}</p> : null}
+      {localizedPhotos.length === 0 ? (
+        <p data-testid="gallery-empty">{t("empty")}</p>
+      ) : null}
 
       <section
         aria-label={t("sectionLabel")}

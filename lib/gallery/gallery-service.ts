@@ -6,4 +6,8 @@ export class GalleryService {
   async listEventPhotos(eventSlug: string) {
     return this.repository.listByEventSlug(eventSlug);
   }
+
+  async listEventSlugs() {
+    return this.repository.listEventSlugs();
+  }
 }

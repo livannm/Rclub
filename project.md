@@ -12,7 +12,8 @@ Créer un site web premium pour une boîte de nuit réputée à Strasbourg, avec
 ## Pages attendues (MVP)
 - Accueil
 - Agenda des événements
-- Galerie
+- Galerie (`/galerie`) → liste des événements ayant des photos
+- Galerie d'un événement (`/galerie/[slug]`) → photos de cet événement
 - Réservations
 - Contact
 
@@ -35,12 +36,26 @@ Créer un site web premium pour une boîte de nuit réputée à Strasbourg, avec
 - `starts_at`: datetime (obligatoire)
 - `ends_at`: datetime (optionnel)
 - `location`: string (optionnel, défaut = nom du club)
-- `cover_image_url`: string (obligatoire)
+- `cover_image_url`: string (obligatoire — uploadée par l'admin depuis son espace)
 - `hero_video_url`: string (optionnel)
 - `ticket_url`: string (optionnel)
 - `is_published`: boolean (défaut `false`)
 - `created_at`: datetime
 - `updated_at`: datetime
+
+> Note : `cover_image_url` est l'image principale de l'événement (affichée dans l'agenda et en tête de la galerie). Elle est uploadée par l'admin lors de la création ou modification de l'événement (F-10).
+
+### Entité: EventMedia
+- `id`: UUID
+- `event_id`: UUID (référence `Event.id`, obligatoire)
+- `url`: string (URL du fichier, obligatoire)
+- `type`: enum (`photo`, `video`) — défaut `photo`
+- `caption_fr`: string (optionnel)
+- `caption_en`: string (optionnel)
+- `sort_order`: integer (ordre d'affichage, défaut 0)
+- `created_at`: datetime
+
+> La galerie visiteur (`/galerie/[slug]`) affiche les `EventMedia` d'un événement. La page `/galerie` liste tous les événements publiés ayant au moins un média.
 
 ### Entité: ReservationRequest
 - `id`: UUID
@@ -108,7 +123,8 @@ Créer un site web premium pour une boîte de nuit réputée à Strasbourg, avec
 
 ## Points à préciser (recommandé)
 - Priorité des pages pour le MVP (ordre de livraison)
-- Données minimales d'un événement (titre, date, heure, prix, description, visuel, lien billetterie?)
+- ~~Données minimales d'un événement~~ → validé : titre (FR/EN), date, description (FR/EN), image de couverture uploadable
+- ~~Galerie par événement~~ → validé : `/galerie` liste les événements, `/galerie/[slug]` affiche les photos de l'événement
 - Champs exacts des formulaires réservation / privatisation
 - Règles anti-spam et RGPD (consentement, durée de conservation des demandes)
 
