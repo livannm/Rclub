@@ -1,22 +1,5 @@
 # Suivi d'avancement - Rclub
 
-## Légende statuts
-- `todo`: non démarré
-- `in_progress`: en cours
-- `blocked`: bloqué
-- `review`: prêt pour revue
-- `done`: terminé (tests passants)
-
-## Backlog P0
-| Feature | Titre | Owner | Statut | Tests | PR | Notes |
-|---|---|---|---|---|---|---|
-| F-07 | Connexion admin | Codex | done | unit+integration+e2e OK | [#1](https://github.com/livannm/Rclub/pull/1) | Auth.js v5 credentials + proxy guard |
-| F-10 | CRUD événements | Codex | done | unit+integration+e2e OK | [#1](https://github.com/livannm/Rclub/pull/1) | Service events + admin CRUD |
-| F-01 | Highlight prochain événement | Codex | done | e2e OK | [#2](https://github.com/livannm/Rclub/pull/2) | Highlight nearest event + fallback |
-| F-05 | Agenda événements | Codex | done | unit+e2e OK | [#3](https://github.com/livannm/Rclub/pull/3) | Agenda trié + fallback vide |
-| F-04 | Demande réservation | Codex | done | unit+integration+e2e OK | - | Formulaire réservation + consentement RGPD |
-# Suivi d'avancement - Rclub
-
 ## Objectif
 Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et plusieurs agents ouvriers.
 
@@ -32,18 +15,18 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 ### P0
 | Feature | Titre | Owner | Statut | Tests | PR | Notes |
 |---|---|---|---|---|---|---|
-| F-07 | Connexion admin | Codex | done | unit+integration+e2e OK | - | Auth.js v5 credentials, proxy guard `/admin`, session JWT 8h |
-| F-10 | CRUD événements | Codex | done | unit+integration+e2e OK | - | Admin CRUD + agenda public + is_published |
-| F-01 | Highlight prochain événement | Codex | done | unit+integration+e2e OK | - | Bloc accueil affiche l'evenement publie le plus proche |
-| F-05 | Agenda événements | Codex | done | unit+integration+e2e OK | - | Agenda a venir trie par date croissante + fallback vide |
-| F-04 | Demande réservation | - | todo | - | - | Inclure consentement RGPD |
-| F-02 | Bascule FR/EN | Codex | review | lint+test+typecheck+build+e2e OK | - | Switch global FR/EN + persistance cookie `NEXT_LOCALE` (DB mock mémoire conservée) |
-| F-09 | Édition texte accueil | - | todo | - | - | Dépend de F-07 |
+| F-07 | Connexion admin | Codex | done | unit+integration+e2e OK | [#1](https://github.com/livannm/Rclub/pull/1) | Auth.js v5 credentials, proxy guard `/admin`, session JWT 8h |
+| F-10 | CRUD événements | Codex | done | unit+integration+e2e OK | [#1](https://github.com/livannm/Rclub/pull/1) | Admin CRUD + agenda public + is_published |
+| F-01 | Highlight prochain événement | Codex | done | unit+integration+e2e OK | [#2](https://github.com/livannm/Rclub/pull/2) | Bloc accueil affiche l'événement publié le plus proche |
+| F-05 | Agenda événements | Codex | done | unit+integration+e2e OK | [#3](https://github.com/livannm/Rclub/pull/3) | Agenda à venir trié par date croissante + fallback vide |
+| F-04 | Demande réservation | Codex | done | unit+integration+e2e OK | [#4](https://github.com/livannm/Rclub/pull/4) | Formulaire réservation + consentement RGPD |
+| F-02 | Bascule FR/EN | Codex | review | lint+test+typecheck+build+e2e OK | [#5](https://github.com/livannm/Rclub/pull/5) | Switch global FR/EN + persistance cookie `NEXT_LOCALE` |
+| F-09 | Édition texte accueil | Codex | review | lint+test+typecheck+build+e2e OK | [#6](https://github.com/livannm/Rclub/pull/6) | Edition admin du texte homepage FR/EN |
 
 ### P1
 | Feature | Titre | Owner | Statut | Tests | PR | Notes |
 |---|---|---|---|---|---|---|
-| F-03 | Galerie Cash Out (visiteur) | - | todo | - | - | |
+| F-03 | Galerie Cash Out (visiteur) | Codex | review | lint+test+typecheck+build+e2e OK | [#9](https://github.com/livannm/Rclub/pull/9) | Galerie visiteur `cash-out` avec source media en memoire |
 | F-06 | Demande privatisation | - | todo | - | - | Inclure consentement RGPD |
 | F-08 | Changer logo | - | todo | - | - | Dépend de F-07 |
 | F-11 | Gérer photos Cash Out | - | todo | - | - | Dépend de F-07 et F-10 |
@@ -65,6 +48,9 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 | 2026-05-17 | F-10 livré avec modèle Event, service CRUD, UI admin, agenda public et tests | Débloque F-01 et F-05 | Codex |
 | 2026-05-17 | F-01/F-05 livrés avec highlight homepage et agenda trié + fallback | Couvre la visibilité visiteur des événements à venir | Codex |
 | 2026-05-17 | F-02 livré avec switch FR/EN global, persistance locale et couverture tests mise à jour | Active l'i18n MVP sans changer la stratégie DB mock en mémoire | Codex |
+| 2026-05-17 | F-04 livré avec formulaire réservation, consentement RGPD et statut initial `new` | Couvre la demande de réservation visiteur MVP | Codex |
+| 2026-05-17 | F-09 livré avec édition admin du texte homepage FR/EN | Débloque la gestion éditoriale côté admin | Codex |
+| 2026-05-17 | F-03 livré avec galerie Cash Out (source media mock + page visiteur + i18n) | Couvre la consultation des photos Cash Out côté visiteur | Codex |
 
 ## Blocages ouverts
 - Aucun pour le moment.

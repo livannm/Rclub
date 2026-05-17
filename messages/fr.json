@@ -11,7 +11,8 @@
     "nextEventEmpty": "Programmation a venir.",
     "startsAt": "Debut",
     "adminLink": "Acceder a l'espace admin",
-    "agendaLink": "Voir l'agenda"
+    "agendaLink": "Voir l'agenda",
+    "galleryLink": "Voir la galerie Cash Out"
   },
   "Agenda": {
     "title": "Agenda des evenements",
@@ -19,5 +20,11 @@
     "startsAt": "Debut",
     "location": "Lieu",
     "ticket": "Billetterie"
+  },
+  "Gallery": {
+    "title": "Galerie Cash Out",
+    "description": "Decouvrez les photos de la soiree Cash Out.",
+    "empty": "Aucune photo disponible pour le moment.",
+    "sectionLabel": "Photos Cash Out"
   }
 }
