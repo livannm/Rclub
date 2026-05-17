@@ -20,14 +20,14 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 | F-01 | Highlight prochain événement | Codex | done | unit+integration+e2e OK | [#2](https://github.com/livannm/Rclub/pull/2) | Bloc accueil affiche l'événement publié le plus proche |
 | F-05 | Agenda événements | Codex | done | unit+integration+e2e OK | [#3](https://github.com/livannm/Rclub/pull/3) | Agenda à venir trié par date croissante + fallback vide |
 | F-04 | Demande réservation | Codex | done | unit+integration+e2e OK | [#4](https://github.com/livannm/Rclub/pull/4) | Formulaire réservation + consentement RGPD |
-| F-02 | Bascule FR/EN | Codex | review | lint+test+typecheck+build+e2e OK | [#5](https://github.com/livannm/Rclub/pull/5) | Switch global FR/EN + persistance cookie `NEXT_LOCALE` |
-| F-09 | Édition texte accueil | Codex | review | lint+test+typecheck+build+e2e OK | [#6](https://github.com/livannm/Rclub/pull/6) | Edition admin du texte homepage FR/EN |
+| F-02 | Bascule FR/EN | Codex | done | lint+test+typecheck+build+e2e OK | [#5](https://github.com/livannm/Rclub/pull/5) | Switch global FR/EN + persistance cookie `NEXT_LOCALE` |
+| F-09 | Édition texte accueil | Codex | done | lint+test+typecheck+build+e2e OK | [#6](https://github.com/livannm/Rclub/pull/6) | Edition admin du texte homepage FR/EN |
 
 ### P1
 | Feature | Titre | Owner | Statut | Tests | PR | Notes |
 |---|---|---|---|---|---|---|
-| F-03 | Galerie par événement (visiteur) | Codex | review | lint+test+typecheck+build+e2e OK | [#9](https://github.com/livannm/Rclub/pull/9) | `/galerie` liste événements avec photos, `/galerie/[slug]` photos d'un event — Cash Out est un event |
-| F-06 | Demande privatisation | Codex | review | lint+test+typecheck+build+e2e OK | [#10](https://github.com/livannm/Rclub/pull/10) | Formulaire privatisation + consentement RGPD |
+| F-03 | Galerie par événement (visiteur) | Codex | done | lint+test+typecheck+build+e2e OK | [#9](https://github.com/livannm/Rclub/pull/9) | `/galerie` liste événements avec photos, `/galerie/[slug]` photos d'un event — Cash Out est un event |
+| F-06 | Demande privatisation | Codex | done | lint+test+typecheck+build+e2e OK | [#10](https://github.com/livannm/Rclub/pull/10) | Formulaire privatisation + consentement RGPD |
 | F-08 | Changer logo | - | todo | - | - | Dépend de F-07 |
 | F-11 | Gérer photos par événement (admin) | - | todo | - | - | Upload/suppression/ordre photos depuis la fiche admin d'un event — Dépend de F-07 et F-10 |
 | F-12 | Changer vidéo hero | - | todo | - | - | Dépend de F-07 |
