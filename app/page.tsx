@@ -27,6 +27,9 @@ export default async function HomePage() {
       <p>
         <a href="/agenda">Voir l&apos;agenda</a>
       </p>
+      <p>
+        <a href="/reservations">Faire une demande de reservation</a>
+      </p>
     </main>
   );
 }

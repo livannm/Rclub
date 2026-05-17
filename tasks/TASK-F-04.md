@@ -11,17 +11,18 @@
 Permettre l'envoi d'une demande de réservation via un formulaire valide avec confirmation utilisateur.
 
 ## Plan de tests (à écrire en premier)
-- [ ] Unitaire: validation des champs obligatoires
-- [ ] Intégration: persistance/envoi de la demande
-- [ ] E2E: soumission réussie + message de confirmation
-- [ ] Cas erreur: champs invalides / envoi impossible
+- [ ] Base de données mock créée si nécessaire
+- [x] Unitaire: validation des champs obligatoires
+- [x] Intégration: persistance/envoi de la demande
+- [x] E2E: soumission réussie + message de confirmation
+- [x] Cas erreur: champs invalides / envoi impossible
 
 ## Critères d'acceptation (DoD)
-- [ ] Le scénario `F-04` de `features.md` passe
-- [ ] Consentement RGPD obligatoire
-- [ ] Statut initial `new` correctement assigné
-- [ ] Tests, lint et typecheck OK
-- [ ] `progress.md` mis à jour
+- [x] Le scénario `F-04` de `features.md` passe
+- [x] Consentement RGPD obligatoire
+- [x] Statut initial `new` correctement assigné
+- [x] Tests, lint et typecheck OK
+- [x] `progress.md` mis à jour
 
 ## Checklist PR
 - [ ] PR liée à `F-04`

@@ -1,5 +1,22 @@
 # Suivi d'avancement - Rclub
 
+## Légende statuts
+- `todo`: non démarré
+- `in_progress`: en cours
+- `blocked`: bloqué
+- `review`: prêt pour revue
+- `done`: terminé (tests passants)
+
+## Backlog P0
+| Feature | Titre | Owner | Statut | Tests | PR | Notes |
+|---|---|---|---|---|---|---|
+| F-07 | Connexion admin | Codex | done | unit+integration+e2e OK | [#1](https://github.com/livannm/Rclub/pull/1) | Auth.js v5 credentials + proxy guard |
+| F-10 | CRUD événements | Codex | done | unit+integration+e2e OK | [#1](https://github.com/livannm/Rclub/pull/1) | Service events + admin CRUD |
+| F-01 | Highlight prochain événement | Codex | done | e2e OK | [#2](https://github.com/livannm/Rclub/pull/2) | Highlight nearest event + fallback |
+| F-05 | Agenda événements | Codex | done | unit+e2e OK | [#3](https://github.com/livannm/Rclub/pull/3) | Agenda trié + fallback vide |
+| F-04 | Demande réservation | Codex | done | unit+integration+e2e OK | - | Formulaire réservation + consentement RGPD |
+# Suivi d'avancement - Rclub
+
 ## Objectif
 Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et plusieurs agents ouvriers.
 
