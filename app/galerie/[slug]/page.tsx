@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { resolveLocale } from "@/i18n/locales";
 import { galleryService } from "@/lib/gallery/gallery-service-instance";
@@ -28,7 +29,7 @@ export default async function GalerieEventPage({ params }: Props) {
 
   return (
     <main style={{ padding: "2rem", display: "grid", gap: "1rem" }}>
-      <a href="/galerie" style={{ fontSize: "0.9rem" }}>{t("backToGallery")}</a>
+      <Link href="/galerie" style={{ fontSize: "0.9rem" }}>{t("backToGallery")}</Link>
       <h1>{title}</h1>
 
       {localizedPhotos.length === 0 ? (

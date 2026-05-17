@@ -24,6 +24,10 @@ export class EventService {
     return this.repository.listPublishedUpcoming(new Date().toISOString());
   }
 
+  async findById(id: string) {
+    return this.repository.findById(id);
+  }
+
   async findBySlug(slug: string) {
     return this.repository.findBySlug(slug);
   }

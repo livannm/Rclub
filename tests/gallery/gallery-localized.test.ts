@@ -5,6 +5,7 @@ describe("localizeGalleryPhotos", () => {
   const photos = [
     {
       id: "photo-1",
+      event_id: "cash-out-seed-event-id",
       event_slug: "cash-out",
       image_url: "/media/a.jpg",
       alt_fr: "Photo FR",

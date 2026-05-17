@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model AdminUser {
@@ -17,21 +16,34 @@ model AdminUser {
 }
 
 model Event {
-  id            String   @id @default(uuid())
-  slug          String   @unique
+  id            String       @id @default(uuid())
+  slug          String       @unique
   titleFr       String
   titleEn       String
   descriptionFr String
   descriptionEn String
   startsAt      DateTime
   endsAt        DateTime?
-  location      String   @default("Rclub Strasbourg")
+  location      String       @default("Rclub Strasbourg")
   coverImageUrl String
   heroVideoUrl  String?
   ticketUrl     String?
-  isPublished   Boolean  @default(false)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  isPublished   Boolean      @default(false)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  medias        EventMedia[]
+}
+
+model EventMedia {
+  id         String    @id @default(uuid())
+  eventId    String
+  event      Event     @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  url        String
+  type       MediaType @default(photo)
+  captionFr  String?
+  captionEn  String?
+  sortOrder  Int       @default(0)
+  createdAt  DateTime  @default(now())
 }
 
 model ReservationRequest {
@@ -64,6 +76,14 @@ model PrivatizationRequest {
   createdAt    DateTime                 @default(now())
 }
 
+model SiteAsset {
+  id        String       @id @default(uuid())
+  key       SiteAssetKey
+  value     String
+  locale    String       @default("global")
+  updatedAt DateTime     @updatedAt
+}
+
 enum ReservationRequestStatus {
   new
   reviewed
@@ -74,4 +94,15 @@ enum ReservationRequestStatus {
 enum Role {
   super_admin
   editor
+}
+
+enum MediaType {
+  photo
+  video
+}
+
+enum SiteAssetKey {
+  logo
+  home_hero_video
+  home_hero_poster
 }
