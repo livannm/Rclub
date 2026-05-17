@@ -36,13 +36,13 @@ export default async function RootLayout({
     <html lang={locale}>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <header style={{ padding: "1rem 2rem", display: "flex", alignItems: "center", gap: "1rem" }}>
+          <header className="site-header">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={logoUrl}
               alt="Logo Rclub"
               data-testid="site-logo"
-              style={{ height: "40px", width: "auto" }}
+              className="site-logo"
             />
             <LocaleSwitcher />
           </header>

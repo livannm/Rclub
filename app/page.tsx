@@ -23,7 +23,7 @@ export default async function HomePage() {
   const nextEventJsonLd = nextEvent ? buildEventJsonLd(nextEvent, locale) : null;
 
   return (
-    <main style={{ padding: "2rem" }}>
+    <main>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
@@ -34,10 +34,8 @@ export default async function HomePage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(nextEventJsonLd) }}
         />
       ) : null}
-      <h1>{t("title")}</h1>
-      <p>{t("description")}</p>
 
-      <section aria-label="Hero video" style={{ marginTop: "1rem", marginBottom: "1rem" }}>
+      <section aria-label="Hero video" className="hero">
         <video
           data-testid="hero-video"
           src={heroVideoUrl}
@@ -46,29 +44,44 @@ export default async function HomePage() {
           muted
           loop
           playsInline
-          style={{ width: "100%", maxHeight: "480px", objectFit: "cover" }}
+          className="hero-video"
         />
+        <div className="hero-content">
+          <p className="page-kicker">Strasbourg nightlife</p>
+          <h1 className="page-title">{t("title")}</h1>
+          <p className="page-lead">{t("description")}</p>
+          <div className="hero-actions">
+            <Link className="button" href="/reservations">
+              {t("reservationLink")}
+            </Link>
+            <Link className="button button-secondary" href="/agenda">
+              {t("agendaLink")}
+            </Link>
+          </div>
+        </div>
       </section>
 
       <section
         aria-label={t("nextEventTitle")}
-        style={{ marginTop: "1.5rem", marginBottom: "1.5rem" }}
+        className="page-shell home-highlight"
       >
-        <h2>{t("nextEventTitle")}</h2>
-        {!nextEvent || !localizedNextEvent ? (
-          <p data-testid="home-next-event-empty">{t("nextEventEmpty")}</p>
-        ) : (
-          <article style={{ border: "1px solid #333", padding: "1rem", display: "grid", gap: "0.5rem" }}>
-            <h3 data-testid="home-next-event-title">{localizedNextEvent.title}</h3>
-            <p>{localizedNextEvent.description}</p>
-            <p>
-              {t("startsAt")}: {formatEventDateTime(nextEvent.starts_at, locale)}
-            </p>
-          </article>
-        )}
+        <div className="section-panel">
+          <p className="page-kicker">{t("nextEventTitle")}</p>
+          {!nextEvent || !localizedNextEvent ? (
+            <p data-testid="home-next-event-empty">{t("nextEventEmpty")}</p>
+          ) : (
+            <article className="event-card">
+              <h2 data-testid="home-next-event-title">{localizedNextEvent.title}</h2>
+              <p>{localizedNextEvent.description}</p>
+              <p>
+                {t("startsAt")}: {formatEventDateTime(nextEvent.starts_at, locale)}
+              </p>
+            </article>
+          )}
+        </div>
       </section>
 
-      <nav aria-label="Pages principales" style={{ display: "grid", gap: "0.5rem" }}>
+      <nav aria-label="Pages principales" className="page-shell nav-grid">
         <Link href="/agenda">{t("agendaLink")}</Link>
         <Link href="/galerie">{t("galleryLink")}</Link>
         <Link href="/reservations">{t("reservationLink")}</Link>

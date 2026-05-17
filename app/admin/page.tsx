@@ -32,26 +32,25 @@ export default async function AdminDashboardPage() {
   }
 
   return (
-    <main style={{ padding: "2rem", display: "grid", gap: "1.5rem" }}>
-      <h1>Tableau de bord admin</h1>
-      <p>Connecte en tant que: {session?.user?.email ?? "admin"}</p>
-      <p>
-        <a href="/admin/events">Gerer les evenements</a>
-      </p>
+    <main className="admin-shell">
+      <header className="admin-header">
+        <div>
+          <p className="page-kicker">Admin</p>
+          <h1>Tableau de bord admin</h1>
+          <p>Connecte en tant que: {session?.user?.email ?? "admin"}</p>
+        </div>
+        <div className="admin-actions">
+          <a className="button button-secondary" href="/admin/events">Gerer les evenements</a>
+        </div>
+      </header>
 
       <section
         aria-labelledby="stats-heading"
-        style={{ border: "1px solid #333", padding: "1rem" }}
+        className="admin-card"
       >
         <h2 id="stats-heading">Statistiques rapides</h2>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(10rem, 1fr))",
-            gap: "0.75rem"
-          }}
-        >
-          <article style={{ border: "1px solid #555", padding: "0.75rem" }}>
+        <div className="stats-grid">
+          <article className="section-panel">
             <h3>Evenements</h3>
             <p data-testid="admin-stat-events-total">Total: {stats.events.total}</p>
             <p data-testid="admin-stat-events-published">Publies: {stats.events.published}</p>
@@ -59,7 +58,7 @@ export default async function AdminDashboardPage() {
               A venir publies: {stats.events.upcomingPublished}
             </p>
           </article>
-          <article style={{ border: "1px solid #555", padding: "0.75rem" }}>
+          <article className="section-panel">
             <h3>Demandes</h3>
             <p data-testid="admin-stat-reservations">
               Reservations: {stats.requests.reservationsTotal}
@@ -74,7 +73,7 @@ export default async function AdminDashboardPage() {
               Nouvelles privatisations: {stats.requests.privatizationsNew}
             </p>
           </article>
-          <article style={{ border: "1px solid #555", padding: "0.75rem" }}>
+          <article className="section-panel">
             <h3>Galerie</h3>
             <p data-testid="admin-stat-gallery-photos">Photos: {stats.gallery.photosTotal}</p>
             <p data-testid="admin-stat-gallery-events">
@@ -84,7 +83,7 @@ export default async function AdminDashboardPage() {
         </div>
       </section>
 
-      <section style={{ border: "1px solid #333", padding: "1rem" }}>
+      <section className="admin-card admin-section">
         <h2>Logo du site</h2>
         <p>
           URL actuelle:{" "}
@@ -96,30 +95,31 @@ export default async function AdminDashboardPage() {
             src={currentLogo}
             alt="Logo actuel"
             data-testid="current-logo-preview"
-            style={{ maxHeight: "60px", marginTop: "0.5rem" }}
+            className="site-logo"
           />
         )}
         <form
           action={updateLogoAction}
-          style={{ display: "grid", gap: "0.5rem", marginTop: "0.75rem" }}
+          className="admin-form"
         >
-          <label htmlFor="logo_url">Nouvelle URL du logo</label>
-          <input
-            id="logo_url"
-            name="logo_url"
-            type="url"
-            placeholder="https://... ou /media/logo.svg"
-            defaultValue={currentLogo}
-            required
-            style={{ padding: "0.25rem" }}
-          />
-          <button type="submit" style={{ width: "fit-content" }}>
+          <label htmlFor="logo_url">
+            Nouvelle URL du logo
+            <input
+              id="logo_url"
+              name="logo_url"
+              type="url"
+              placeholder="https://... ou /media/logo.svg"
+              defaultValue={currentLogo}
+              required
+            />
+          </label>
+          <button type="submit">
             Mettre a jour le logo
           </button>
         </form>
       </section>
 
-      <section style={{ border: "1px solid #333", padding: "1rem" }}>
+      <section className="admin-card admin-section">
         <h2>Video Hero</h2>
         <p>
           URL actuelle:{" "}
@@ -127,19 +127,20 @@ export default async function AdminDashboardPage() {
         </p>
         <form
           action={updateHeroVideoAction}
-          style={{ display: "grid", gap: "0.5rem", marginTop: "0.75rem" }}
+          className="admin-form"
         >
-          <label htmlFor="hero_video_url">Nouvelle URL de la video hero</label>
-          <input
-            id="hero_video_url"
-            name="hero_video_url"
-            type="url"
-            placeholder="https://... ou /media/hero.mp4"
-            defaultValue={currentHeroVideo}
-            required
-            style={{ padding: "0.25rem" }}
-          />
-          <button type="submit" style={{ width: "fit-content" }}>
+          <label htmlFor="hero_video_url">
+            Nouvelle URL de la video hero
+            <input
+              id="hero_video_url"
+              name="hero_video_url"
+              type="url"
+              placeholder="https://... ou /media/hero.mp4"
+              defaultValue={currentHeroVideo}
+              required
+            />
+          </label>
+          <button type="submit">
             Mettre a jour la video
           </button>
         </form>

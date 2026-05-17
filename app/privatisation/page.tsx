@@ -40,55 +40,70 @@ export default async function PrivatisationPage({ searchParams }: PrivatisationP
   }
 
   return (
-    <main style={{ padding: "2rem", maxWidth: "680px" }}>
+    <main className="page-shell page-shell-narrow">
+      <p className="page-kicker">Rclub</p>
       <h1>Privatisation</h1>
-      <p>Envoyez votre demande de privatisation pour un evenement prive.</p>
+      <p className="page-lead">Envoyez votre demande de privatisation pour un evenement prive.</p>
       {params.status === "success" ? (
-        <p data-testid="privatisation-success" style={{ color: "#4ade80" }}>
+        <p data-testid="privatisation-success" className="status status-success">
           Votre demande de privatisation a ete envoyee avec succes.
         </p>
       ) : null}
       {params.status === "error" ? (
-        <p data-testid="privatisation-error" style={{ color: "#f87171" }}>
+        <p data-testid="privatisation-error" className="status status-error">
           {params.message ?? "La demande est invalide."}
         </p>
       ) : null}
 
-      <form action={createPrivatizationAction} style={{ display: "grid", gap: "0.75rem" }}>
-        <div aria-hidden="true" style={{ position: "absolute", left: "-10000px" }}>
+      <form action={createPrivatizationAction} className="form-panel form-grid two-column">
+        <div aria-hidden="true" className="sr-trap">
           <label htmlFor="privatisation_website">Site web</label>
           <input id="privatisation_website" name="website" tabIndex={-1} autoComplete="off" />
         </div>
 
-        <label htmlFor="full_name">Nom complet</label>
-        <input id="full_name" name="full_name" required />
+        <label htmlFor="full_name">
+          Nom complet
+          <input id="full_name" name="full_name" required />
+        </label>
 
-        <label htmlFor="email">Email</label>
-        <input id="email" name="email" type="email" required />
+        <label htmlFor="email">
+          Email
+          <input id="email" name="email" type="email" required />
+        </label>
 
-        <label htmlFor="phone">Telephone</label>
-        <input id="phone" name="phone" required />
+        <label htmlFor="phone">
+          Telephone
+          <input id="phone" name="phone" required />
+        </label>
 
-        <label htmlFor="guest_count">Nombre de personnes</label>
-        <input id="guest_count" name="guest_count" type="number" min={1} required />
+        <label htmlFor="guest_count">
+          Nombre de personnes
+          <input id="guest_count" name="guest_count" type="number" min={1} required />
+        </label>
 
-        <label htmlFor="event_date">Date de l&apos;evenement</label>
-        <input id="event_date" name="event_date" type="date" />
+        <label htmlFor="event_date">
+          Date de l&apos;evenement
+          <input id="event_date" name="event_date" type="date" />
+        </label>
 
-        <label htmlFor="budget_range">Budget indicatif</label>
-        <input id="budget_range" name="budget_range" placeholder="Ex: 5k - 10k EUR" />
+        <label htmlFor="budget_range">
+          Budget indicatif
+          <input id="budget_range" name="budget_range" placeholder="Ex: 5k - 10k EUR" />
+        </label>
 
-        <label htmlFor="message">Message</label>
-        <textarea id="message" name="message" />
+        <label htmlFor="message" className="full-span">
+          Message
+          <textarea id="message" name="message" />
+        </label>
 
         <input type="hidden" name="source_locale" value="fr" />
 
-        <label htmlFor="consent_rgpd">
+        <label htmlFor="consent_rgpd" className="checkbox-label full-span">
           <input id="consent_rgpd" name="consent_rgpd" type="checkbox" required /> J&apos;accepte
           le traitement de mes donnees (RGPD)
         </label>
 
-        <button type="submit">Envoyer la demande</button>
+        <button type="submit" className="full-span">Envoyer la demande</button>
       </form>
     </main>
   );

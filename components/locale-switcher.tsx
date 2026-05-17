@@ -15,14 +15,6 @@ function persistLocale(locale: AppLocale) {
   document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=${COOKIE_MAX_AGE_SECONDS}; samesite=lax`;
 }
 
-const buttonStyle = {
-  background: "none",
-  border: "none",
-  padding: 0,
-  color: "inherit",
-  cursor: "pointer"
-} as const;
-
 export function LocaleSwitcher() {
   const t = useTranslations("LocaleSwitcher");
   const pathname = usePathname();
@@ -35,12 +27,11 @@ export function LocaleSwitcher() {
   }
 
   return (
-    <nav aria-label={t("label")} style={{ display: "flex", gap: "0.75rem", marginBottom: "1rem" }}>
+    <nav aria-label={t("label")} className="locale-switcher">
       <button
         data-testid="locale-switch-fr"
         type="button"
         onClick={() => switchLocale("fr")}
-        style={buttonStyle}
       >
         {t("fr")}
       </button>
@@ -48,7 +39,6 @@ export function LocaleSwitcher() {
         data-testid="locale-switch-en"
         type="button"
         onClick={() => switchLocale("en")}
-        style={buttonStyle}
       >
         {t("en")}
       </button>

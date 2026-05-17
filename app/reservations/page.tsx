@@ -40,52 +40,65 @@ export default async function ReservationsPage({ searchParams }: ReservationsPag
   }
 
   return (
-    <main style={{ padding: "2rem", maxWidth: "680px" }}>
+    <main className="page-shell page-shell-narrow">
+      <p className="page-kicker">Rclub</p>
       <h1>Reservations</h1>
-      <p>Fais une demande de reservation pour une soiree ou un service VIP.</p>
+      <p className="page-lead">Fais une demande de reservation pour une soiree ou un service VIP.</p>
       {params.status === "success" ? (
-        <p data-testid="reservation-success" style={{ color: "#4ade80" }}>
+        <p data-testid="reservation-success" className="status status-success">
           Votre demande a ete envoyee avec succes.
         </p>
       ) : null}
       {params.status === "error" ? (
-        <p data-testid="reservation-error" style={{ color: "#f87171" }}>
+        <p data-testid="reservation-error" className="status status-error">
           {params.message ?? "La demande est invalide."}
         </p>
       ) : null}
 
-      <form action={createReservationAction} style={{ display: "grid", gap: "0.75rem" }}>
-        <div aria-hidden="true" style={{ position: "absolute", left: "-10000px" }}>
+      <form action={createReservationAction} className="form-panel form-grid two-column">
+        <div aria-hidden="true" className="sr-trap">
           <label htmlFor="reservation_website">Site web</label>
           <input id="reservation_website" name="website" tabIndex={-1} autoComplete="off" />
         </div>
 
-        <label htmlFor="full_name">Nom complet</label>
-        <input id="full_name" name="full_name" required />
+        <label htmlFor="full_name">
+          Nom complet
+          <input id="full_name" name="full_name" required />
+        </label>
 
-        <label htmlFor="email">Email</label>
-        <input id="email" name="email" type="email" required />
+        <label htmlFor="email">
+          Email
+          <input id="email" name="email" type="email" required />
+        </label>
 
-        <label htmlFor="phone">Telephone</label>
-        <input id="phone" name="phone" required />
+        <label htmlFor="phone">
+          Telephone
+          <input id="phone" name="phone" required />
+        </label>
 
-        <label htmlFor="guest_count">Nombre de personnes</label>
-        <input id="guest_count" name="guest_count" type="number" min={1} required />
+        <label htmlFor="guest_count">
+          Nombre de personnes
+          <input id="guest_count" name="guest_count" type="number" min={1} required />
+        </label>
 
-        <label htmlFor="date_requested">Date souhaitee</label>
-        <input id="date_requested" name="date_requested" type="date" />
+        <label htmlFor="date_requested" className="full-span">
+          Date souhaitee
+          <input id="date_requested" name="date_requested" type="date" />
+        </label>
 
-        <label htmlFor="message">Message</label>
-        <textarea id="message" name="message" />
+        <label htmlFor="message" className="full-span">
+          Message
+          <textarea id="message" name="message" />
+        </label>
 
         <input type="hidden" name="source_locale" value="fr" />
 
-        <label htmlFor="consent_rgpd">
+        <label htmlFor="consent_rgpd" className="checkbox-label full-span">
           <input id="consent_rgpd" name="consent_rgpd" type="checkbox" required /> J&apos;accepte
           le traitement de mes donnees (RGPD)
         </label>
 
-        <button type="submit">Envoyer ma demande</button>
+        <button type="submit" className="full-span">Envoyer ma demande</button>
       </form>
     </main>
   );

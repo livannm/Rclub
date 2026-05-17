@@ -42,13 +42,13 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 ### P3 – Design
 | Feature | Titre | Owner | Statut | Tests | PR | Notes |
 |---|---|---|---|---|---|---|
-| D-01 | Identité visuelle globale | - | todo | - | - | Palette couleurs, typographie, espacement — cohérence sur toutes les pages |
-| D-02 | Page d'accueil (hero + highlight) | - | todo | - | - | Mise en page hero vidéo + bloc événement mis en avant |
-| D-03 | Agenda & cartes événements | - | todo | - | - | Layout liste/grille, cartes événements responsive |
-| D-04 | Formulaires (réservation / privatisation) | - | todo | - | - | UX formulaires, feedback d'erreur, confirmation |
-| D-05 | Galerie Cash Out | - | todo | - | - | Grille photos, lightbox, responsive mobile |
-| D-06 | Interface admin | - | todo | - | - | Dashboard admin : tables, modales CRUD, feedback toast |
-| D-07 | Responsive & accessibilité | - | todo | - | - | Breakpoints mobile/tablette/desktop, contrastes WCAG AA |
+| D-01 | Identité visuelle globale | Codex | done | lint+typecheck+build OK | - | Tokens design appliqués dans `app/globals.css`, base noir/or, typographie, surfaces, boutons, inputs, cartes |
+| D-02 | Page d'accueil (hero + highlight) | Codex | done | lint+typecheck+build OK | - | Hero vidéo plein écran avec overlay 55%, CTA, highlight prochain événement au-dessus du contenu |
+| D-03 | Agenda & cartes événements | Codex | done | lint+typecheck+build OK | - | Grille responsive, cartes événements avec media ratio stable et CTA billetterie |
+| D-04 | Formulaires (réservation / privatisation) | Codex | done | lint+typecheck+build OK | - | Formulaires en panneaux, champs tactiles, feedback succès/erreur, consentement RGPD visible |
+| D-05 | Galerie Cash Out | Codex | done | lint+typecheck+build OK | - | Galerie par événement en grille responsive 2 colonnes mobile, media cards stables |
+| D-06 | Interface admin | Codex | done | lint+typecheck+build OK | - | Dashboard, login et gestion événements harmonisés avec panneaux admin, stats, formulaires et listes photos |
+| D-07 | Responsive & accessibilité | Codex | review | lint+typecheck+build OK | - | Breakpoints CSS, focus visible, tailles cibles 44px, contrastes tokens; QA visuelle Playwright multi-viewports encore à exécuter |
 
 ## Journal des décisions
 | Date | Décision | Impact | Owner |
@@ -69,6 +69,7 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 
 | 2026-05-17 | X-02 livré avec métadonnées SEO avancées, sitemap/robots et JSON-LD homepage | Améliore l’indexation des pages publiques et protège admin/API de l’indexation | Codex |
 | 2026-05-17 | X-03 livré avec service de statistiques dashboard admin et bloc `Statistiques rapides` | Donne une synthèse admin des événements, demandes et photos | Codex |
+| 2026-05-17 | Passe P3 design livrée: tokens globaux, hero vidéo, cartes agenda/galerie, formulaires, admin et responsive CSS | Harmonise l'expérience publique et admin selon `design.md`; reste une QA visuelle multi-viewports à faire | Codex |
 
 ## Blocages ouverts
 - Aucun pour le moment.

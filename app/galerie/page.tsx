@@ -15,18 +15,15 @@ export default async function GaleriePage() {
   const events = await Promise.all(slugs.map((slug) => eventService.findBySlug(slug)));
 
   return (
-    <main style={{ padding: "2rem", display: "grid", gap: "1.5rem" }}>
+    <main className="page-shell site-grid">
+      <p className="page-kicker">Rclub</p>
       <h1>{t("title")}</h1>
 
       {slugs.length === 0 ? <p data-testid="gallery-index-empty">{t("empty")}</p> : null}
 
       <section
         aria-label={t("sectionLabel")}
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-          gap: "1rem"
-        }}
+        className="card-grid"
       >
         {slugs.map((slug, index) => {
           const event = events[index];
@@ -39,7 +36,7 @@ export default async function GaleriePage() {
               key={slug}
               href={`/galerie/${slug}`}
               data-testid={`gallery-index-item-${index}`}
-              style={{ border: "1px solid #333", padding: "0.5rem", display: "grid", gap: "0.5rem", textDecoration: "none", color: "inherit" }}
+              className="media-card media-link"
             >
               {coverUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -47,10 +44,10 @@ export default async function GaleriePage() {
                   src={coverUrl}
                   alt={title}
                   loading="lazy"
-                  style={{ width: "100%", height: "200px", objectFit: "cover", display: "block" }}
+                  className="media-card-image"
                 />
               ) : null}
-              <h2 style={{ margin: 0, fontSize: "1rem" }}>{title}</h2>
+              <h2 className="media-card-body">{title}</h2>
             </a>
           );
         })}

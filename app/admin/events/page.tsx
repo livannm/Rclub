@@ -164,52 +164,49 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
   }
 
   return (
-    <main style={{ padding: "2rem", display: "grid", gap: "1.5rem" }}>
-      <h1>Administration - Evenements</h1>
-      <p>
-        Cree, modifie et supprime les evenements. Les evenements publies apparaissent sur
-        l&apos;agenda.
-      </p>
-      {params.message ? <p style={{ color: "#f87171" }}>{params.message}</p> : null}
+    <main className="admin-shell">
+      <header className="admin-header">
+        <div>
+          <p className="page-kicker">Admin</p>
+          <h1>Administration - Evenements</h1>
+          <p>
+            Cree, modifie et supprime les evenements. Les evenements publies apparaissent sur
+            l&apos;agenda.
+          </p>
+        </div>
+        <div className="admin-actions">
+          <a className="button button-secondary" href="/admin">Retour dashboard</a>
+        </div>
+      </header>
+      {params.message ? <p className="status status-error">{params.message}</p> : null}
 
-      <section style={{ border: "1px solid #333", padding: "1rem" }}>
+      <section className="admin-card admin-section">
         <h2>Creer un evenement</h2>
-        <form action={createEventAction} style={{ display: "grid", gap: "0.5rem" }}>
-          <label htmlFor="slug">Slug</label>
-          <input id="slug" name="slug" required />
-          <label htmlFor="title_fr">Titre (FR)</label>
-          <input id="title_fr" name="title_fr" required />
-          <label htmlFor="title_en">Titre (EN)</label>
-          <input id="title_en" name="title_en" required />
-          <label htmlFor="description_fr">Description (FR)</label>
-          <textarea id="description_fr" name="description_fr" required />
-          <label htmlFor="description_en">Description (EN)</label>
-          <textarea id="description_en" name="description_en" required />
-          <label htmlFor="starts_at">Debut</label>
-          <input id="starts_at" name="starts_at" type="datetime-local" required />
-          <label htmlFor="ends_at">Fin</label>
-          <input id="ends_at" name="ends_at" type="datetime-local" />
-          <label htmlFor="location">Lieu</label>
-          <input id="location" name="location" defaultValue="Rclub Strasbourg" required />
-          <label htmlFor="cover_image_url">Cover image URL</label>
-          <input id="cover_image_url" name="cover_image_url" type="url" required />
-          <label htmlFor="hero_video_url">Hero video URL</label>
-          <input id="hero_video_url" name="hero_video_url" type="url" />
-          <label htmlFor="ticket_url">Ticket URL</label>
-          <input id="ticket_url" name="ticket_url" type="url" />
-          <label htmlFor="is_published">
+        <form action={createEventAction} className="admin-form">
+          <label htmlFor="slug">Slug<input id="slug" name="slug" required /></label>
+          <label htmlFor="title_fr">Titre (FR)<input id="title_fr" name="title_fr" required /></label>
+          <label htmlFor="title_en">Titre (EN)<input id="title_en" name="title_en" required /></label>
+          <label htmlFor="description_fr">Description (FR)<textarea id="description_fr" name="description_fr" required /></label>
+          <label htmlFor="description_en">Description (EN)<textarea id="description_en" name="description_en" required /></label>
+          <label htmlFor="starts_at">Debut<input id="starts_at" name="starts_at" type="datetime-local" required /></label>
+          <label htmlFor="ends_at">Fin<input id="ends_at" name="ends_at" type="datetime-local" /></label>
+          <label htmlFor="location">Lieu<input id="location" name="location" defaultValue="Rclub Strasbourg" required /></label>
+          <label htmlFor="cover_image_url">Cover image URL<input id="cover_image_url" name="cover_image_url" type="url" required /></label>
+          <label htmlFor="hero_video_url">Hero video URL<input id="hero_video_url" name="hero_video_url" type="url" /></label>
+          <label htmlFor="ticket_url">Ticket URL<input id="ticket_url" name="ticket_url" type="url" /></label>
+          <label htmlFor="is_published" className="checkbox-label">
             <input id="is_published" name="is_published" type="checkbox" /> Publier
           </label>
           <button type="submit">Ajouter l&apos;evenement</button>
         </form>
       </section>
 
-      <section style={{ border: "1px solid #333", padding: "1rem" }}>
+      <section className="admin-card admin-section">
         <h2>Evenements existants</h2>
         {eventsWithPhotos.length === 0 ? <p>Aucun evenement pour le moment.</p> : null}
-        <div style={{ display: "grid", gap: "1rem" }}>
+        <div className="site-grid">
           {eventsWithPhotos.map(({ event, photos }) => (
-            <article key={event.id} style={{ border: "1px solid #444", padding: "1rem" }}>
+            <article key={event.id} className="event-admin-card">
               <h3>
                 {event.title_fr} ({event.slug})
               </h3>
@@ -218,7 +215,7 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
                 {event.is_published ? "oui" : "non"}
               </p>
 
-              <form action={updateEventAction} style={{ display: "grid", gap: "0.35rem" }}>
+              <form action={updateEventAction} className="admin-form">
                 <input type="hidden" name="event_id" value={event.id} />
                 <label>
                   Titre FR
@@ -285,25 +282,25 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
                 <button type="submit">Modifier</button>
               </form>
 
-              <form action={deleteEventAction} style={{ marginTop: "0.75rem" }}>
+              <form action={deleteEventAction}>
                 <input type="hidden" name="event_id" value={event.id} />
-                <button type="submit">Supprimer</button>
+                <button type="submit" className="button-secondary">Supprimer</button>
               </form>
 
               {/* Section gestion des photos */}
               <section
                 data-testid={`photos-section-${event.slug}`}
-                style={{ marginTop: "1rem", borderTop: "1px solid #555", paddingTop: "1rem" }}
+                className="admin-section"
               >
                 <h4>Photos ({photos.length})</h4>
 
                 {photos.length > 0 ? (
-                  <ul style={{ listStyle: "none", padding: 0, display: "grid", gap: "0.5rem" }}>
+                  <ul className="admin-photo-list">
                     {photos.map((photo, index) => (
                       <li
                         key={photo.id}
                         data-testid={`admin-photo-item-${event.slug}-${index}`}
-                        style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}
+                        className="admin-photo-item"
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
@@ -311,25 +308,23 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
                           alt={photo.alt_fr}
                           width={60}
                           height={40}
-                          style={{ objectFit: "cover", flexShrink: 0 }}
                         />
-                        <span style={{ flex: 1, fontSize: "0.85rem", wordBreak: "break-all" }}>
+                        <span className="admin-photo-url">
                           {photo.image_url}
                         </span>
 
-                        <form action={reorderPhotoAction} style={{ display: "flex", gap: "0.25rem", alignItems: "center" }}>
+                        <form action={reorderPhotoAction} className="inline-form">
                           <input type="hidden" name="photo_id" value={photo.id} />
                           <input type="hidden" name="event_slug" value={event.slug} />
-                          <label style={{ fontSize: "0.8rem" }}>
+                          <label>
                             Ordre
                             <input
                               name="sort_order"
                               type="number"
                               defaultValue={photo.order}
-                              style={{ width: "4rem", marginLeft: "0.25rem" }}
                             />
                           </label>
-                          <button type="submit" style={{ fontSize: "0.8rem" }}>
+                          <button type="submit" className="button-ghost">
                             Reordonner
                           </button>
                         </form>
@@ -340,7 +335,7 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
                           <button
                             type="submit"
                             data-testid={`delete-photo-${photo.id}`}
-                            style={{ fontSize: "0.8rem" }}
+                            className="button-secondary"
                           >
                             Supprimer la photo
                           </button>
@@ -349,7 +344,7 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
                     ))}
                   </ul>
                 ) : (
-                  <p data-testid={`photos-empty-${event.slug}`} style={{ fontSize: "0.9rem", color: "#888" }}>
+                  <p data-testid={`photos-empty-${event.slug}`}>
                     Aucune photo pour cet evenement.
                   </p>
                 )}
@@ -357,7 +352,7 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
                 <form
                   action={addPhotoAction}
                   data-testid={`add-photo-form-${event.slug}`}
-                  style={{ marginTop: "0.75rem", display: "grid", gap: "0.35rem" }}
+                  className="admin-form"
                 >
                   <input type="hidden" name="event_id" value={event.id} />
                   <input type="hidden" name="event_slug" value={event.slug} />
@@ -393,7 +388,6 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
                       name="sort_order"
                       type="number"
                       defaultValue={photos.length + 1}
-                      style={{ width: "5rem", marginLeft: "0.35rem" }}
                       aria-label={`Ordre photo ${event.slug}`}
                     />
                   </label>

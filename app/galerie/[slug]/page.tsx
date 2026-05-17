@@ -42,8 +42,8 @@ export default async function GalerieEventPage({ params }: Props) {
   const title = localized?.title ?? slug;
 
   return (
-    <main style={{ padding: "2rem", display: "grid", gap: "1rem" }}>
-      <Link href="/galerie" style={{ fontSize: "0.9rem" }}>{t("backToGallery")}</Link>
+    <main className="page-shell site-grid">
+      <Link href="/galerie" className="back-link">{t("backToGallery")}</Link>
       <h1>{title}</h1>
 
       {localizedPhotos.length === 0 ? (
@@ -52,23 +52,19 @@ export default async function GalerieEventPage({ params }: Props) {
 
       <section
         aria-label={t("sectionLabel")}
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: "1rem"
-        }}
+        className="gallery-grid"
       >
         {localizedPhotos.map((photo, index) => (
-          <figure key={photo.id} style={{ border: "1px solid #333", padding: "0.5rem", margin: 0 }}>
+          <figure key={photo.id} className="media-card">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               data-testid={`gallery-photo-${index}`}
               src={photo.image_url}
               alt={photo.alt}
               loading="lazy"
-              style={{ width: "100%", height: "220px", objectFit: "cover", display: "block" }}
+              className="gallery-photo"
             />
-            <figcaption style={{ marginTop: "0.5rem", fontSize: "0.9rem" }}>{photo.alt}</figcaption>
+            <figcaption className="media-card-body">{photo.alt}</figcaption>
           </figure>
         ))}
       </section>

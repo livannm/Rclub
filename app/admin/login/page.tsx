@@ -35,17 +35,22 @@ export default async function AdminLoginPage({ searchParams }: LoginPageProps) {
   }
 
   return (
-    <main style={{ padding: "2rem", maxWidth: "420px" }}>
+    <main className="page-shell page-shell-narrow">
+      <p className="page-kicker">Admin</p>
       <h1>Connexion admin</h1>
-      <p>Utilise les identifiants admin configures en environnement.</p>
-      {showError ? <p style={{ color: "#f87171" }}>Identifiants invalides.</p> : null}
+      <p className="page-lead">Utilise les identifiants admin configures en environnement.</p>
+      {showError ? <p className="status status-error">Identifiants invalides.</p> : null}
 
-      <form action={loginAction} style={{ display: "grid", gap: "0.75rem" }}>
-        <label htmlFor="email">Email</label>
-        <input id="email" name="email" type="email" required />
+      <form action={loginAction} className="form-panel form-grid">
+        <label htmlFor="email">
+          Email
+          <input id="email" name="email" type="email" required />
+        </label>
 
-        <label htmlFor="password">Mot de passe</label>
-        <input id="password" name="password" type="password" required />
+        <label htmlFor="password">
+          Mot de passe
+          <input id="password" name="password" type="password" required />
+        </label>
 
         <button type="submit">Se connecter</button>
       </form>
