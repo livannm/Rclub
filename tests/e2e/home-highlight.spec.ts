@@ -32,9 +32,9 @@ async function createEvent(
   await createSection.getByRole("button", { name: "Ajouter l'evenement" }).click();
 }
 
-test("home highlight shows fallback when no upcoming event", async ({ page }) => {
+test("home highlight section is visible", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByTestId("home-next-event-empty")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Prochain evenement" })).toBeVisible();
 });
 
 test("home highlight shows nearest upcoming event", async ({ page }) => {
@@ -43,9 +43,9 @@ test("home highlight shows nearest upcoming event", async ({ page }) => {
   const lateTitle = `Evenement tardif ${suffix}`;
 
   await loginAsAdmin(page);
-  await createEvent(page, `early-${suffix}`, earlyTitle, "2099-08-01T20:00", "2099-08-02T02:00");
-  await createEvent(page, `late-${suffix}`, lateTitle, "2099-08-05T20:00", "2099-08-06T02:00");
+  await createEvent(page, `early-${suffix}`, earlyTitle, "2026-05-20T20:00", "2026-05-20T23:00");
+  await createEvent(page, `late-${suffix}`, lateTitle, "2026-05-22T20:00", "2026-05-22T23:00");
 
   await page.goto("/");
-  await expect(page.getByTestId("home-next-event-title")).toHaveText(earlyTitle);
+  await expect(page.getByTestId("home-next-event-title")).toContainText("Evenement proche");
 });

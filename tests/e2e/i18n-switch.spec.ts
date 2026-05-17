@@ -1,0 +1,19 @@
+import { expect, test } from "@playwright/test";
+
+test("switches from french to english while keeping current page", async ({ page }) => {
+  await page.goto("/agenda");
+  await expect(page.getByRole("heading", { name: "Agenda des evenements" })).toBeVisible();
+
+  await page.getByTestId("locale-switch-en").click();
+
+  await expect(page).toHaveURL(/\/agenda$/);
+  await expect(page.getByRole("heading", { name: "Events schedule" })).toBeVisible();
+});
+
+test("shows english text on homepage after locale switch", async ({ page }) => {
+  await page.goto("/");
+  await page.getByTestId("locale-switch-en").click();
+
+  await expect(page.getByText("MVP foundation in progress: admin auth and event management are available.")).toBeVisible();
+  await expect(page.getByRole("link", { name: "See the events schedule" })).toBeVisible();
+});

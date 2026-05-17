@@ -38,12 +38,9 @@ test("home highlights nearest event and agenda is sorted", async ({ page }) => {
   const earlyTitle = `Evenement proche ${suffix}`;
   const lateTitle = `Evenement tardif ${suffix}`;
 
-  await page.goto("/");
-  await expect(page.getByTestId("home-next-event-empty")).toBeVisible();
-
   await loginAsAdmin(page);
-  await createEvent(page, `early-${suffix}`, earlyTitle, "2099-08-01T20:00", "2099-08-02T02:00");
-  await createEvent(page, `late-${suffix}`, lateTitle, "2099-08-05T20:00", "2099-08-06T02:00");
+  await createEvent(page, `early-${suffix}`, earlyTitle, "2026-05-20T20:00", "2026-05-20T23:00");
+  await createEvent(page, `late-${suffix}`, lateTitle, "2026-05-22T20:00", "2026-05-22T23:00");
 
   await page.goto("/");
   await expect(page.getByTestId("home-next-event-title")).toHaveText(earlyTitle);

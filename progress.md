@@ -1,5 +1,22 @@
 # Suivi d'avancement - Rclub
 
+## Légende statuts
+- `todo`: non démarré
+- `in_progress`: en cours
+- `blocked`: bloqué
+- `review`: prêt pour revue
+- `done`: terminé (tests passants)
+
+## Backlog P0
+| Feature | Titre | Owner | Statut | Tests | PR | Notes |
+|---|---|---|---|---|---|---|
+| F-07 | Connexion admin | Codex | done | unit+integration+e2e OK | [#1](https://github.com/livannm/Rclub/pull/1) | Auth.js v5 credentials + proxy guard |
+| F-10 | CRUD événements | Codex | done | unit+integration+e2e OK | [#1](https://github.com/livannm/Rclub/pull/1) | Service events + admin CRUD |
+| F-01 | Highlight prochain événement | Codex | done | e2e OK | [#2](https://github.com/livannm/Rclub/pull/2) | Highlight nearest event + fallback |
+| F-05 | Agenda événements | Codex | done | unit+e2e OK | [#3](https://github.com/livannm/Rclub/pull/3) | Agenda trié + fallback vide |
+| F-04 | Demande réservation | Codex | done | unit+integration+e2e OK | - | Formulaire réservation + consentement RGPD |
+# Suivi d'avancement - Rclub
+
 ## Objectif
 Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et plusieurs agents ouvriers.
 
@@ -20,7 +37,7 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 | F-01 | Highlight prochain événement | Codex | done | unit+integration+e2e OK | - | Bloc accueil affiche l'evenement publie le plus proche |
 | F-05 | Agenda événements | Codex | done | unit+integration+e2e OK | - | Agenda a venir trie par date croissante + fallback vide |
 | F-04 | Demande réservation | - | todo | - | - | Inclure consentement RGPD |
-| F-02 | Bascule FR/EN | - | todo | - | - | Prévoir switch global |
+| F-02 | Bascule FR/EN | Codex | review | lint+test+typecheck+build+e2e OK | - | Switch global FR/EN + persistance cookie `NEXT_LOCALE` (DB mock mémoire conservée) |
 | F-09 | Édition texte accueil | - | todo | - | - | Dépend de F-07 |
 
 ### P1
@@ -47,6 +64,7 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 | 2026-05-17 | Stack validée implémentée pour F-07 (Auth.js v5, Prisma, Vitest, Playwright) | Établit le socle auth admin et tests | Codex |
 | 2026-05-17 | F-10 livré avec modèle Event, service CRUD, UI admin, agenda public et tests | Débloque F-01 et F-05 | Codex |
 | 2026-05-17 | F-01/F-05 livrés avec highlight homepage et agenda trié + fallback | Couvre la visibilité visiteur des événements à venir | Codex |
+| 2026-05-17 | F-02 livré avec switch FR/EN global, persistance locale et couverture tests mise à jour | Active l'i18n MVP sans changer la stratégie DB mock en mémoire | Codex |
 
 ## Blocages ouverts
 - Aucun pour le moment.

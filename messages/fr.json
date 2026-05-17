@@ -1,0 +1,23 @@
+{
+  "LocaleSwitcher": {
+    "label": "Langue",
+    "fr": "FR",
+    "en": "EN"
+  },
+  "Home": {
+    "title": "Rclub",
+    "description": "Socle MVP en cours: auth admin et gestion des evenements.",
+    "nextEventTitle": "Prochain evenement",
+    "nextEventEmpty": "Programmation a venir.",
+    "startsAt": "Debut",
+    "adminLink": "Acceder a l'espace admin",
+    "agendaLink": "Voir l'agenda"
+  },
+  "Agenda": {
+    "title": "Agenda des evenements",
+    "empty": "Aucun evenement a venir.",
+    "startsAt": "Debut",
+    "location": "Lieu",
+    "ticket": "Billetterie"
+  }
+}
