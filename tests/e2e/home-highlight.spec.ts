@@ -1,0 +1,51 @@
+import { expect, test, type Page } from "@playwright/test";
+
+async function loginAsAdmin(page: Page) {
+  await page.goto("/admin/login");
+  await page.getByLabel("Email").fill("admin@rclub.fr");
+  await page.getByLabel("Mot de passe").fill("secret1234");
+  await page.getByRole("button", { name: "Se connecter" }).click();
+  await expect(page).toHaveURL(/\/admin$/);
+}
+
+async function createEvent(
+  page: Page,
+  slug: string,
+  title: string,
+  startsAt: string,
+  endsAt: string
+) {
+  await page.goto("/admin/events");
+  const createSection = page.locator("section").filter({ hasText: "Creer un evenement" });
+  await createSection.getByLabel("Slug").fill(slug);
+  await createSection.getByLabel("Titre (FR)").fill(title);
+  await createSection.getByLabel("Titre (EN)").fill(title);
+  await createSection.getByLabel("Description (FR)").fill("Description FR");
+  await createSection.getByLabel("Description (EN)").fill("Description EN");
+  await createSection.getByLabel("Debut").fill(startsAt);
+  await createSection.getByLabel("Fin").fill(endsAt);
+  await createSection.getByLabel("Lieu").fill("Rclub Strasbourg");
+  await createSection.getByLabel("Cover image URL").fill("https://example.com/cover.jpg");
+  await createSection.getByLabel("Hero video URL").fill("https://example.com/hero.mp4");
+  await createSection.getByLabel("Ticket URL").fill("https://example.com/tickets");
+  await createSection.getByLabel("Publier").check();
+  await createSection.getByRole("button", { name: "Ajouter l'evenement" }).click();
+}
+
+test("home highlight shows fallback when no upcoming event", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByTestId("home-next-event-empty")).toBeVisible();
+});
+
+test("home highlight shows nearest upcoming event", async ({ page }) => {
+  const suffix = Date.now();
+  const earlyTitle = `Evenement proche ${suffix}`;
+  const lateTitle = `Evenement tardif ${suffix}`;
+
+  await loginAsAdmin(page);
+  await createEvent(page, `early-${suffix}`, earlyTitle, "2099-08-01T20:00", "2099-08-02T02:00");
+  await createEvent(page, `late-${suffix}`, lateTitle, "2099-08-05T20:00", "2099-08-06T02:00");
+
+  await page.goto("/");
+  await expect(page.getByTestId("home-next-event-title")).toHaveText(earlyTitle);
+});
