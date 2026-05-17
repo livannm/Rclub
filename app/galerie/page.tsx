@@ -1,8 +1,11 @@
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { getLocale, getTranslations } from "next-intl/server";
 import { resolveLocale } from "@/i18n/locales";
 import { galleryService } from "@/lib/gallery/gallery-service-instance";
 import { eventService } from "@/lib/events/events-service-instance";
 import { getLocalizedEventContent } from "@/lib/events/event-localized";
+
+export const metadata = buildPageMetadata("gallery");
 
 export default async function GaleriePage() {
   const locale = resolveLocale(await getLocale());

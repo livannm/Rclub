@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
@@ -6,8 +7,21 @@ import { galleryService } from "@/lib/gallery/gallery-service-instance";
 import { eventService } from "@/lib/events/events-service-instance";
 import { localizeGalleryPhotos } from "@/lib/gallery/gallery-localized";
 import { getLocalizedEventContent } from "@/lib/events/event-localized";
+import { buildEventGalleryMetadata, buildPageMetadata } from "@/lib/seo/metadata";
 
 type Props = { params: Promise<{ slug: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const locale = resolveLocale(await getLocale());
+  const event = await eventService.findBySlug(slug);
+
+  if (!event || !event.is_published) {
+    return buildPageMetadata("gallery");
+  }
+
+  return buildEventGalleryMetadata(event, locale);
+}
 
 export default async function GalerieEventPage({ params }: Props) {
   const { slug } = await params;

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { LocaleSwitcher } from "@/components/locale-switcher";
@@ -6,8 +6,23 @@ import { siteAssetService } from "@/lib/site-assets/site-asset-service-instance"
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Rclub",
-  description: "Site du club - MVP en construction"
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://rclub.fr"),
+  title: {
+    default: "Rclub Strasbourg - Club premium, soirées et événements",
+    template: "%s"
+  },
+  description:
+    "Découvrez Rclub Strasbourg, une expérience nightlife premium avec agenda des soirées, galerie photos, réservations VIP et privatisations.",
+  applicationName: "Rclub Strasbourg",
+  robots: {
+    index: true,
+    follow: true
+  }
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0A0A0A",
+  colorScheme: "dark"
 };
 
 export default async function RootLayout({

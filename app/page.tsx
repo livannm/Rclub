@@ -1,10 +1,13 @@
 import Link from "next/link";
+import { buildEventJsonLd, buildOrganizationJsonLd, buildPageMetadata } from "@/lib/seo/metadata";
 import { getLocale, getTranslations } from "next-intl/server";
 import { resolveLocale } from "@/i18n/locales";
 import { eventService } from "@/lib/events/events-service-instance";
 import { siteAssetService } from "@/lib/site-assets/site-asset-service-instance";
 import { getLocalizedEventContent } from "@/lib/events/event-localized";
 import { formatEventDateTime } from "@/lib/utils/format-date";
+
+export const metadata = buildPageMetadata("home");
 
 export default async function HomePage() {
   const locale = resolveLocale(await getLocale());
@@ -15,9 +18,22 @@ export default async function HomePage() {
 
   const heroVideoUrl = await siteAssetService.getHeroVideo();
   const heroPosterUrl = await siteAssetService.getHeroPoster();
+  const logoUrl = await siteAssetService.getLogo();
+  const organizationJsonLd = buildOrganizationJsonLd(undefined, logoUrl);
+  const nextEventJsonLd = nextEvent ? buildEventJsonLd(nextEvent, locale) : null;
 
   return (
     <main style={{ padding: "2rem" }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+      />
+      {nextEventJsonLd ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(nextEventJsonLd) }}
+        />
+      ) : null}
       <h1>{t("title")}</h1>
       <p>{t("description")}</p>
 
