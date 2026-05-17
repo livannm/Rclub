@@ -38,7 +38,7 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 | F-05 | Agenda événements | Codex | done | unit+integration+e2e OK | - | Agenda a venir trie par date croissante + fallback vide |
 | F-04 | Demande réservation | - | todo | - | - | Inclure consentement RGPD |
 | F-02 | Bascule FR/EN | Codex | review | lint+test+typecheck+build+e2e OK | - | Switch global FR/EN + persistance cookie `NEXT_LOCALE` (DB mock mémoire conservée) |
-| F-09 | Édition texte accueil | Codex | review | lint+test+typecheck+build+e2e OK | - | Admin édite texte FR/EN de l'accueil, stocké en mémoire avec `updated_at` |
+| F-09 | Édition texte accueil | Codex | review | lint+test+typecheck+build+e2e OK | [#6](https://github.com/livannm/Rclub/pull/6) | Admin édite texte FR/EN de l'accueil, stocké en mémoire avec `updated_at` |
 
 ### P1
 | Feature | Titre | Owner | Statut | Tests | PR | Notes |

@@ -24,5 +24,5 @@ Permettre à l'admin de modifier les textes éditoriaux de la page d'accueil.
 - [x] `progress.md` mis à jour
 
 ## Checklist PR
-- [ ] PR liée à `F-09`
+- [x] PR liée à `F-09`
 - [ ] Capture d'écran formulaire admin
