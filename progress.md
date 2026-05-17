@@ -28,8 +28,8 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 |---|---|---|---|---|---|---|
 | F-03 | Galerie par événement (visiteur) | Codex | done | lint+test+typecheck+build+e2e OK | [#9](https://github.com/livannm/Rclub/pull/9) | `/galerie` liste événements avec photos, `/galerie/[slug]` photos d'un event — Cash Out est un event |
 | F-06 | Demande privatisation | Codex | done | lint+test+typecheck+build+e2e OK | [#10](https://github.com/livannm/Rclub/pull/10) | Formulaire privatisation + consentement RGPD |
-| F-08 | Changer logo | - | todo | - | - | Dépend de F-07 |
-| F-11 | Gérer photos par événement (admin) | - | todo | - | - | Upload/suppression/ordre photos depuis la fiche admin d'un event — Dépend de F-07 et F-10 |
+| F-08 | Changer logo | Codex | done | unit+integration+e2e OK | - | PUT /api/admin/site-assets/logo, section admin, logo dynamique dans layout (fallback /media/logo.svg) |
+| F-11 | Gérer photos par événement (admin) | Codex | done | unit+intégration+e2e OK | feat/F-12-update-video-hero | EventMedia schema, service CRUD, API routes admin, UI admin photos, pages galerie visiteur |
 | F-12 | Changer vidéo hero | Codex | done | unit+integration+e2e OK | - | SiteAssetService, PUT /api/admin/site-assets/hero-video, vidéo hero sur homepage |
 
 ### P2
@@ -63,6 +63,8 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 | 2026-05-17 | F-09 livré avec édition admin du texte homepage FR/EN | Débloque la gestion éditoriale côté admin | Codex |
 | 2026-05-17 | F-06 livré avec formulaire privatisation, consentement RGPD et statut `new` | Couvre la demande de privatisation visiteur | Codex |
 | 2026-05-17 | F-03 livré avec galerie Cash Out (source media mock + page visiteur + i18n) | Couvre la consultation des photos Cash Out côté visiteur | Codex |
+
+| 2026-05-17 | F-11 livré avec EventMedia schema, CRUD gallery service, API routes admin photos, UI admin (add/delete/reorder), pages galerie visiteur + tests | Débloque la gestion de la galerie photos par l'admin | Codex |
 
 ## Blocages ouverts
 - Aucun pour le moment.

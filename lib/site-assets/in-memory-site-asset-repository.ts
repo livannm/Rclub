@@ -1,7 +1,9 @@
 import type { SiteAssetKey } from "@/lib/site-assets/site-asset-types";
+import { DEFAULT_LOGO_URL } from "@/lib/site-assets/site-asset-types";
 import type { SiteAssetRepository } from "@/lib/site-assets/site-asset-repository";
 
 const DEFAULTS: Partial<Record<SiteAssetKey, string>> = {
+  logo: DEFAULT_LOGO_URL,
   home_hero_video: "/media/hero.mp4",
   home_hero_poster: "/media/hero-poster.jpg"
 };

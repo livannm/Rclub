@@ -13,10 +13,16 @@ export class PrismaSiteAssetRepository implements SiteAssetRepository {
   }
 
   async set(key: SiteAssetKey, value: string): Promise<void> {
-    await this.prisma.siteAsset.upsert({
-      where: { key_locale: { key, locale: "global" } },
-      create: { key, value, locale: "global" },
-      update: { value }
-    });
+    const existing = await this.prisma.siteAsset.findFirst({ where: { key } });
+    if (existing) {
+      await this.prisma.siteAsset.update({
+        where: { id: existing.id },
+        data: { value }
+      });
+    } else {
+      await this.prisma.siteAsset.create({
+        data: { key, value }
+      });
+    }
   }
 }

@@ -7,3 +7,5 @@ export type SiteAsset = {
   locale: string;
   updatedAt: string;
 };
+
+export const DEFAULT_LOGO_URL = "/media/logo.svg";

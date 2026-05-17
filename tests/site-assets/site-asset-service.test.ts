@@ -42,20 +42,29 @@ describe("SiteAssetService", () => {
   });
 
   describe("getLogo()", () => {
-    it("returns an empty string when no logo is set", async () => {
+    it("returns the default logo URL when no logo has been updated", async () => {
       const service = makeService();
       const url = await service.getLogo();
-      expect(url).toBe("");
+      expect(url).toBe("/media/logo.svg");
     });
   });
 
   describe("updateLogo()", () => {
     it("updates the logo URL and returns it", async () => {
       const service = makeService();
-      const returned = await service.updateLogo("/media/logo.svg");
-      expect(returned).toBe("/media/logo.svg");
+      const newUrl = "https://example.com/new-logo.png";
+      const returned = await service.updateLogo(newUrl);
+      expect(returned).toBe(newUrl);
       const url = await service.getLogo();
-      expect(url).toBe("/media/logo.svg");
+      expect(url).toBe(newUrl);
+    });
+
+    it("replaces a previous logo update", async () => {
+      const service = makeService();
+      await service.updateLogo("https://example.com/logo-v1.png");
+      await service.updateLogo("https://example.com/logo-v2.png");
+      const url = await service.getLogo();
+      expect(url).toBe("https://example.com/logo-v2.png");
     });
   });
 });

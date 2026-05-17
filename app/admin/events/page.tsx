@@ -3,12 +3,14 @@ import { redirect } from "next/navigation";
 import { eventPayloadFromFormData } from "@/lib/events/event-form";
 import { EventServiceError } from "@/lib/events/events-service";
 import { eventService } from "@/lib/events/events-service-instance";
+import { galleryService } from "@/lib/gallery/gallery-service-instance";
 
 type AdminEventsPageProps = {
   searchParams: Promise<{ message?: string }>;
 };
 
 const EVENT_REVALIDATION_PATHS = ["/admin/events", "/agenda", "/"] as const;
+const GALLERY_REVALIDATION_PATHS = ["/galerie"] as const;
 
 function toDatetimeLocalValue(value: string) {
   return new Date(value).toISOString().slice(0, 16);
@@ -18,6 +20,13 @@ function revalidateEventViews() {
   for (const path of EVENT_REVALIDATION_PATHS) {
     revalidatePath(path);
   }
+}
+
+function revalidateGalleryViews(slug: string) {
+  for (const path of GALLERY_REVALIDATION_PATHS) {
+    revalidatePath(path);
+  }
+  revalidatePath(`/galerie/${slug}`);
 }
 
 function redirectAfterEventActionError(error: unknown): never {
@@ -31,6 +40,13 @@ function redirectAfterEventActionError(error: unknown): never {
 export default async function AdminEventsPage({ searchParams }: AdminEventsPageProps) {
   const params = await searchParams;
   const events = await eventService.listAll();
+
+  const eventsWithPhotos = await Promise.all(
+    events.map(async (event) => ({
+      event,
+      photos: await galleryService.getPhotosForEvent(event.id)
+    }))
+  );
 
   async function createEventAction(formData: FormData) {
     "use server";
@@ -80,6 +96,73 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
     redirect("/admin/events");
   }
 
+  async function addPhotoAction(formData: FormData) {
+    "use server";
+    const eventId = formData.get("event_id");
+    const eventSlug = formData.get("event_slug");
+    const imageUrl = formData.get("image_url");
+    const altFr = formData.get("alt_fr");
+    const altEn = formData.get("alt_en");
+    const sortOrderRaw = formData.get("sort_order");
+
+    if (
+      typeof eventId !== "string" ||
+      typeof eventSlug !== "string" ||
+      typeof imageUrl !== "string" ||
+      !imageUrl
+    ) {
+      redirect(`/admin/events?message=${encodeURIComponent("URL de la photo requise.")}`);
+    }
+
+    const sortOrder = sortOrderRaw ? parseInt(String(sortOrderRaw), 10) : 0;
+
+    await galleryService.addPhoto({
+      event_id: eventId,
+      event_slug: eventSlug,
+      image_url: imageUrl,
+      alt_fr: typeof altFr === "string" ? altFr : "",
+      alt_en: typeof altEn === "string" ? altEn : "",
+      order: isNaN(sortOrder) ? 0 : sortOrder
+    });
+
+    revalidateGalleryViews(eventSlug);
+    redirect("/admin/events");
+  }
+
+  async function deletePhotoAction(formData: FormData) {
+    "use server";
+    const photoId = formData.get("photo_id");
+    const eventSlug = formData.get("event_slug");
+
+    if (typeof photoId !== "string" || typeof eventSlug !== "string") {
+      return;
+    }
+
+    await galleryService.deletePhoto(photoId);
+    revalidateGalleryViews(eventSlug);
+    redirect("/admin/events");
+  }
+
+  async function reorderPhotoAction(formData: FormData) {
+    "use server";
+    const photoId = formData.get("photo_id");
+    const sortOrderRaw = formData.get("sort_order");
+    const eventSlug = formData.get("event_slug");
+
+    if (typeof photoId !== "string" || typeof eventSlug !== "string") {
+      return;
+    }
+
+    const sortOrder = parseInt(String(sortOrderRaw), 10);
+    if (isNaN(sortOrder)) {
+      return;
+    }
+
+    await galleryService.reorderPhoto(photoId, sortOrder);
+    revalidateGalleryViews(eventSlug);
+    redirect("/admin/events");
+  }
+
   return (
     <main style={{ padding: "2rem", display: "grid", gap: "1.5rem" }}>
       <h1>Administration - Evenements</h1>
@@ -123,9 +206,9 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
 
       <section style={{ border: "1px solid #333", padding: "1rem" }}>
         <h2>Evenements existants</h2>
-        {events.length === 0 ? <p>Aucun evenement pour le moment.</p> : null}
+        {eventsWithPhotos.length === 0 ? <p>Aucun evenement pour le moment.</p> : null}
         <div style={{ display: "grid", gap: "1rem" }}>
-          {events.map((event) => (
+          {eventsWithPhotos.map(({ event, photos }) => (
             <article key={event.id} style={{ border: "1px solid #444", padding: "1rem" }}>
               <h3>
                 {event.title_fr} ({event.slug})
@@ -206,6 +289,119 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
                 <input type="hidden" name="event_id" value={event.id} />
                 <button type="submit">Supprimer</button>
               </form>
+
+              {/* Section gestion des photos */}
+              <section
+                data-testid={`photos-section-${event.slug}`}
+                style={{ marginTop: "1rem", borderTop: "1px solid #555", paddingTop: "1rem" }}
+              >
+                <h4>Photos ({photos.length})</h4>
+
+                {photos.length > 0 ? (
+                  <ul style={{ listStyle: "none", padding: 0, display: "grid", gap: "0.5rem" }}>
+                    {photos.map((photo, index) => (
+                      <li
+                        key={photo.id}
+                        data-testid={`admin-photo-item-${event.slug}-${index}`}
+                        style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={photo.image_url}
+                          alt={photo.alt_fr}
+                          width={60}
+                          height={40}
+                          style={{ objectFit: "cover", flexShrink: 0 }}
+                        />
+                        <span style={{ flex: 1, fontSize: "0.85rem", wordBreak: "break-all" }}>
+                          {photo.image_url}
+                        </span>
+
+                        <form action={reorderPhotoAction} style={{ display: "flex", gap: "0.25rem", alignItems: "center" }}>
+                          <input type="hidden" name="photo_id" value={photo.id} />
+                          <input type="hidden" name="event_slug" value={event.slug} />
+                          <label style={{ fontSize: "0.8rem" }}>
+                            Ordre
+                            <input
+                              name="sort_order"
+                              type="number"
+                              defaultValue={photo.order}
+                              style={{ width: "4rem", marginLeft: "0.25rem" }}
+                            />
+                          </label>
+                          <button type="submit" style={{ fontSize: "0.8rem" }}>
+                            Reordonner
+                          </button>
+                        </form>
+
+                        <form action={deletePhotoAction}>
+                          <input type="hidden" name="photo_id" value={photo.id} />
+                          <input type="hidden" name="event_slug" value={event.slug} />
+                          <button
+                            type="submit"
+                            data-testid={`delete-photo-${photo.id}`}
+                            style={{ fontSize: "0.8rem" }}
+                          >
+                            Supprimer la photo
+                          </button>
+                        </form>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p data-testid={`photos-empty-${event.slug}`} style={{ fontSize: "0.9rem", color: "#888" }}>
+                    Aucune photo pour cet evenement.
+                  </p>
+                )}
+
+                <form
+                  action={addPhotoAction}
+                  data-testid={`add-photo-form-${event.slug}`}
+                  style={{ marginTop: "0.75rem", display: "grid", gap: "0.35rem" }}
+                >
+                  <input type="hidden" name="event_id" value={event.id} />
+                  <input type="hidden" name="event_slug" value={event.slug} />
+                  <label>
+                    URL de la photo
+                    <input
+                      name="image_url"
+                      type="url"
+                      placeholder="https://example.com/photo.jpg"
+                      aria-label={`URL photo ${event.slug}`}
+                      required
+                    />
+                  </label>
+                  <label>
+                    Legende FR
+                    <input
+                      name="alt_fr"
+                      placeholder="Legende en francais"
+                      aria-label={`Legende FR ${event.slug}`}
+                    />
+                  </label>
+                  <label>
+                    Legende EN
+                    <input
+                      name="alt_en"
+                      placeholder="Caption in English"
+                      aria-label={`Legende EN ${event.slug}`}
+                    />
+                  </label>
+                  <label>
+                    Ordre
+                    <input
+                      name="sort_order"
+                      type="number"
+                      defaultValue={photos.length + 1}
+                      style={{ width: "5rem", marginLeft: "0.35rem" }}
+                      aria-label={`Ordre photo ${event.slug}`}
+                    />
+                  </label>
+                  <button type="submit" data-testid={`add-photo-btn-${event.slug}`}>
+                    Ajouter la photo
+                  </button>
+                </form>
+              </section>
             </article>
           ))}
         </div>
