@@ -23,10 +23,13 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 # local env files
 .env*.local
 .env
+.env.*
+!.env.example
 
 # vercel
 .vercel
@@ -34,3 +37,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# caches / tooling
+.turbo
+.cache
+.eslintcache
+
+# test outputs
+playwright-report
+test-results
+
+# build outputs
+dist
