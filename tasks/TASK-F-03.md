@@ -24,5 +24,5 @@ Afficher les photos liées à l'événement "Cash Out" sur la galerie visiteur.
 - [x] `progress.md` mis à jour
 
 ## Checklist PR
-- [ ] PR liée à `F-03`
-- [ ] Vérification perf image (lazy/optimisation)
+- [x] PR liée à `F-03`
+- [x] Vérification perf image (lazy/optimisation)
