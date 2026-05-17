@@ -28,7 +28,7 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 |---|---|---|---|---|---|---|
 | F-03 | Galerie par événement (visiteur) | Codex | done | lint+test+typecheck+build+e2e OK | [#9](https://github.com/livannm/Rclub/pull/9) | `/galerie` liste événements avec photos, `/galerie/[slug]` photos d'un event — Cash Out est un event |
 | F-06 | Demande privatisation | Codex | done | lint+test+typecheck+build+e2e OK | [#10](https://github.com/livannm/Rclub/pull/10) | Formulaire privatisation + consentement RGPD |
-| F-08 | Changer logo | Codex | done | unit+integration+e2e OK | - | PUT /api/admin/site-assets/logo, section admin, logo dynamique dans layout (fallback /media/logo.svg) |
+| F-08 | Changer logo | Codex | done | unit+integration+e2e OK | [#11](https://github.com/livannm/Rclub/pull/11) | PUT /api/admin/site-assets/logo, section admin, logo dynamique dans layout (fallback /media/logo.svg) |
 | F-11 | Gérer photos par événement (admin) | Codex | done | unit+intégration+e2e OK | feat/F-12-update-video-hero | EventMedia schema, service CRUD, API routes admin, UI admin photos, pages galerie visiteur |
 | F-12 | Changer vidéo hero | Codex | done | unit+integration+e2e OK | - | SiteAssetService, PUT /api/admin/site-assets/hero-video, vidéo hero sur homepage |
 
