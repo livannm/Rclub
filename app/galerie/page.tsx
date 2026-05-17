@@ -1,11 +1,13 @@
-import { buildPageMetadata } from "@/lib/seo/metadata";
+import { buildLocalizedPageMetadata } from "@/lib/seo/metadata";
 import { getLocale, getTranslations } from "next-intl/server";
 import { resolveLocale } from "@/i18n/locales";
 import { galleryService } from "@/lib/gallery/gallery-service-instance";
 import { eventService } from "@/lib/events/events-service-instance";
 import { getLocalizedEventContent } from "@/lib/events/event-localized";
 
-export const metadata = buildPageMetadata("gallery");
+export async function generateMetadata() {
+  return buildLocalizedPageMetadata("gallery");
+}
 
 export default async function GaleriePage() {
   const locale = resolveLocale(await getLocale());
@@ -17,7 +19,7 @@ export default async function GaleriePage() {
   return (
     <main className="page-shell site-grid">
       <p className="page-kicker">Rclub</p>
-      <h1>{t("title")}</h1>
+      <h1 className="page-title">{t("title")}</h1>
 
       {slugs.length === 0 ? <p data-testid="gallery-index-empty">{t("empty")}</p> : null}
 

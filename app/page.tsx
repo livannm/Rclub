@@ -1,5 +1,9 @@
 import Link from "next/link";
-import { buildEventJsonLd, buildOrganizationJsonLd, buildPageMetadata } from "@/lib/seo/metadata";
+import {
+  buildEventJsonLd,
+  buildLocalizedPageMetadata,
+  buildOrganizationJsonLd
+} from "@/lib/seo/metadata";
 import { getLocale, getTranslations } from "next-intl/server";
 import { resolveLocale } from "@/i18n/locales";
 import { eventService } from "@/lib/events/events-service-instance";
@@ -7,7 +11,9 @@ import { siteAssetService } from "@/lib/site-assets/site-asset-service-instance"
 import { getLocalizedEventContent } from "@/lib/events/event-localized";
 import { formatEventDateTime } from "@/lib/utils/format-date";
 
-export const metadata = buildPageMetadata("home");
+export async function generateMetadata() {
+  return buildLocalizedPageMetadata("home");
+}
 
 export default async function HomePage() {
   const locale = resolveLocale(await getLocale());
@@ -35,7 +41,7 @@ export default async function HomePage() {
         />
       ) : null}
 
-      <section aria-label="Hero video" className="hero">
+      <section aria-label={t("heroAriaLabel")} className="hero">
         <video
           data-testid="hero-video"
           src={heroVideoUrl}
@@ -47,7 +53,7 @@ export default async function HomePage() {
           className="hero-video"
         />
         <div className="hero-content">
-          <p className="page-kicker">Strasbourg nightlife</p>
+          <p className="page-kicker">{t("kicker")}</p>
           <h1 className="page-title">{t("title")}</h1>
           <p className="page-lead">{t("description")}</p>
           <div className="hero-actions">
@@ -81,7 +87,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <nav aria-label="Pages principales" className="page-shell nav-grid">
+      <nav aria-label={t("mainNavAriaLabel")} className="page-shell nav-grid">
         <Link href="/agenda">{t("agendaLink")}</Link>
         <Link href="/galerie">{t("galleryLink")}</Link>
         <Link href="/reservations">{t("reservationLink")}</Link>

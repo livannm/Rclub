@@ -44,7 +44,7 @@ export default async function GalerieEventPage({ params }: Props) {
   return (
     <main className="page-shell site-grid">
       <Link href="/galerie" className="back-link">{t("backToGallery")}</Link>
-      <h1>{title}</h1>
+      <h1 className="page-title">{title}</h1>
 
       {localizedPhotos.length === 0 ? (
         <p data-testid="gallery-empty">{t("empty")}</p>

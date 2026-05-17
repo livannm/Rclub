@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { getLocale, getTranslations } from "next-intl/server";
 import type { ClubEvent } from "@/lib/events/event-schema";
 import { getLocalizedEventContent } from "@/lib/events/event-localized";
 import type { AppLocale } from "@/i18n/locales";
+import { resolveLocale } from "@/i18n/locales";
 
 export const defaultSiteUrl = "https://rclub.fr";
 
@@ -79,6 +81,40 @@ export function buildPageMetadata(page: SeoPageKey, baseUrl = getSiteUrl()): Met
       card: "summary_large_image",
       title: config.title,
       description: config.description
+    }
+  };
+}
+
+export async function buildLocalizedPageMetadata(
+  page: SeoPageKey,
+  baseUrl = getSiteUrl()
+): Promise<Metadata> {
+  const locale = resolveLocale(await getLocale());
+  const t = await getTranslations(`Seo.${page}`);
+  const path = seoPages[page].path;
+  const url = absoluteUrl(path, baseUrl);
+  const title = t("title");
+  const description = t("description");
+  const openGraphLocale = locale === "en" ? "en_US" : "fr_FR";
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: url
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "Rclub Strasbourg",
+      locale: openGraphLocale,
+      type: "website"
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description
     }
   };
 }

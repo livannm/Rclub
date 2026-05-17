@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
+import Link from "next/link";
 import { NextIntlClientProvider } from "next-intl";
-import { getLocale, getMessages } from "next-intl/server";
+import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { siteAssetService } from "@/lib/site-assets/site-asset-service-instance";
 import "./globals.css";
@@ -30,6 +31,7 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const locale = await getLocale();
   const messages = await getMessages();
+  const t = await getTranslations("Layout");
   const logoUrl = await siteAssetService.getLogo();
 
   return (
@@ -37,13 +39,15 @@ export default async function RootLayout({
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <header className="site-header">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={logoUrl}
-              alt="Logo Rclub"
-              data-testid="site-logo"
-              className="site-logo"
-            />
+            <Link href="/" aria-label={t("logoAlt")}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={logoUrl}
+                alt=""
+                data-testid="site-logo"
+                className="site-logo"
+              />
+            </Link>
             <LocaleSwitcher />
           </header>
           {children}

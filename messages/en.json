@@ -4,12 +4,18 @@
     "fr": "FR",
     "en": "EN"
   },
+  "Layout": {
+    "logoAlt": "Rclub Strasbourg logo"
+  },
   "Home": {
     "title": "Rclub",
-    "description": "MVP foundation in progress: admin auth and event management are available.",
+    "kicker": "Premium nightlife",
+    "description": "Premium nightlife in Strasbourg: signature nights, photo gallery, VIP reservations and bespoke private events.",
+    "heroAriaLabel": "Homepage hero video",
     "nextEventTitle": "Next event",
     "nextEventEmpty": "Lineup coming soon.",
     "startsAt": "Starts",
+    "mainNavAriaLabel": "Main navigation",
     "adminLink": "Go to admin area",
     "agendaLink": "See the events schedule",
     "galleryLink": "See the gallery",
@@ -32,5 +38,59 @@
     "backToGallery": "Back to gallery",
     "empty": "No photos available yet.",
     "sectionLabel": "Photos"
+  },
+  "Reservations": {
+    "title": "Reservations",
+    "lead": "Send a reservation request for a night out or VIP service.",
+    "success": "Your request has been sent successfully.",
+    "errorDefault": "The request is invalid.",
+    "submit": "Send my request",
+    "honeypotLabel": "Website",
+    "fullName": "Full name",
+    "email": "Email",
+    "phone": "Phone",
+    "guestCount": "Number of guests",
+    "dateRequested": "Preferred date",
+    "message": "Message",
+    "consent": "I agree to the processing of my data (GDPR)"
+  },
+  "Privatisation": {
+    "title": "Private hire",
+    "lead": "Send your private hire request for a corporate or private event.",
+    "success": "Your private hire request has been sent successfully.",
+    "errorDefault": "The request is invalid.",
+    "submit": "Send request",
+    "honeypotLabel": "Website",
+    "fullName": "Full name",
+    "email": "Email",
+    "phone": "Phone",
+    "guestCount": "Number of guests",
+    "eventDate": "Event date",
+    "budgetRange": "Estimated budget",
+    "budgetPlaceholder": "e.g. 5k - 10k EUR",
+    "message": "Message",
+    "consent": "I agree to the processing of my data (GDPR)"
+  },
+  "Seo": {
+    "home": {
+      "title": "Rclub Strasbourg - Premium club, nights and events",
+      "description": "Discover Rclub Strasbourg, a premium nightlife experience with event schedule, photo galleries, VIP reservations and private hire."
+    },
+    "agenda": {
+      "title": "Events schedule - Rclub Strasbourg",
+      "description": "Browse upcoming nights and events at Rclub Strasbourg, with dates, practical info and ticket links."
+    },
+    "gallery": {
+      "title": "Photo gallery - Rclub Strasbourg",
+      "description": "Relive Rclub Strasbourg nights with photo galleries from published events."
+    },
+    "reservations": {
+      "title": "VIP reservations - Rclub Strasbourg",
+      "description": "Send your reservation request for a Rclub Strasbourg night or VIP service."
+    },
+    "privatization": {
+      "title": "Private hire - Rclub Strasbourg",
+      "description": "Hire Rclub Strasbourg for a private, corporate or bespoke event."
+    }
   }
 }

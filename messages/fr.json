@@ -4,12 +4,18 @@
     "fr": "FR",
     "en": "EN"
   },
+  "Layout": {
+    "logoAlt": "Logo Rclub Strasbourg"
+  },
   "Home": {
     "title": "Rclub",
-    "description": "Socle MVP en cours: auth admin et gestion des evenements.",
+    "kicker": "Nightlife premium",
+    "description": "Experience nightlife premium a Strasbourg : soirees signature, galerie, reservations VIP et privatisations sur mesure.",
+    "heroAriaLabel": "Video d'accueil",
     "nextEventTitle": "Prochain evenement",
     "nextEventEmpty": "Programmation a venir.",
     "startsAt": "Debut",
+    "mainNavAriaLabel": "Navigation principale",
     "adminLink": "Acceder a l'espace admin",
     "agendaLink": "Voir l'agenda",
     "galleryLink": "Voir la galerie",
@@ -32,5 +38,59 @@
     "backToGallery": "Retour a la galerie",
     "empty": "Aucune photo disponible pour le moment.",
     "sectionLabel": "Photos"
+  },
+  "Reservations": {
+    "title": "Reservations",
+    "lead": "Fais une demande de reservation pour une soiree ou un service VIP.",
+    "success": "Votre demande a ete envoyee avec succes.",
+    "errorDefault": "La demande est invalide.",
+    "submit": "Envoyer ma demande",
+    "honeypotLabel": "Site web",
+    "fullName": "Nom complet",
+    "email": "Email",
+    "phone": "Telephone",
+    "guestCount": "Nombre de personnes",
+    "dateRequested": "Date souhaitee",
+    "message": "Message",
+    "consent": "J'accepte le traitement de mes donnees (RGPD)"
+  },
+  "Privatisation": {
+    "title": "Privatisation",
+    "lead": "Envoyez votre demande de privatisation pour un evenement prive.",
+    "success": "Votre demande de privatisation a ete envoyee avec succes.",
+    "errorDefault": "La demande est invalide.",
+    "submit": "Envoyer la demande",
+    "honeypotLabel": "Site web",
+    "fullName": "Nom complet",
+    "email": "Email",
+    "phone": "Telephone",
+    "guestCount": "Nombre de personnes",
+    "eventDate": "Date de l'evenement",
+    "budgetRange": "Budget indicatif",
+    "budgetPlaceholder": "Ex: 5k - 10k EUR",
+    "message": "Message",
+    "consent": "J'accepte le traitement de mes donnees (RGPD)"
+  },
+  "Seo": {
+    "home": {
+      "title": "Rclub Strasbourg - Club premium, soirees et evenements",
+      "description": "Decouvrez Rclub Strasbourg, une experience nightlife premium avec agenda des soirees, galerie photos, reservations VIP et privatisations."
+    },
+    "agenda": {
+      "title": "Agenda des evenements - Rclub Strasbourg",
+      "description": "Consultez les prochaines soirees et evenements de Rclub Strasbourg, avec dates, informations pratiques et liens de billetterie."
+    },
+    "gallery": {
+      "title": "Galerie photos - Rclub Strasbourg",
+      "description": "Revivez les soirees Rclub Strasbourg avec les galeries photos des evenements publies."
+    },
+    "reservations": {
+      "title": "Reservations VIP - Rclub Strasbourg",
+      "description": "Envoyez votre demande de reservation pour une soiree Rclub Strasbourg ou un service VIP."
+    },
+    "privatization": {
+      "title": "Privatisation - Rclub Strasbourg",
+      "description": "Privatisez Rclub Strasbourg pour un evenement prive, professionnel ou une soiree sur mesure."
+    }
   }
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useSearchParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import type { AppLocale } from "@/i18n/locales";
 
 const COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 365;
@@ -17,12 +17,17 @@ function persistLocale(locale: AppLocale) {
 
 export function LocaleSwitcher() {
   const t = useTranslations("LocaleSwitcher");
+  const locale = useLocale() as AppLocale;
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const redirectTo = buildRedirectPath(pathname, searchParams);
 
-  function switchLocale(locale: AppLocale) {
-    persistLocale(locale);
+  function switchLocale(nextLocale: AppLocale) {
+    if (nextLocale === locale) {
+      return;
+    }
+
+    persistLocale(nextLocale);
     window.location.assign(redirectTo);
   }
 
@@ -31,6 +36,8 @@ export function LocaleSwitcher() {
       <button
         data-testid="locale-switch-fr"
         type="button"
+        className={locale === "fr" ? "is-active" : undefined}
+        aria-current={locale === "fr" ? "true" : undefined}
         onClick={() => switchLocale("fr")}
       >
         {t("fr")}
@@ -38,6 +45,8 @@ export function LocaleSwitcher() {
       <button
         data-testid="locale-switch-en"
         type="button"
+        className={locale === "en" ? "is-active" : undefined}
+        aria-current={locale === "en" ? "true" : undefined}
         onClick={() => switchLocale("en")}
       >
         {t("en")}

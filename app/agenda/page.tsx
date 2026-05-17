@@ -1,11 +1,13 @@
-import { buildPageMetadata } from "@/lib/seo/metadata";
+import { buildLocalizedPageMetadata } from "@/lib/seo/metadata";
 import { eventService } from "@/lib/events/events-service-instance";
 import { getLocalizedEventContent } from "@/lib/events/event-localized";
 import { resolveLocale } from "@/i18n/locales";
 import { formatEventDateTime } from "@/lib/utils/format-date";
 import { getLocale, getTranslations } from "next-intl/server";
 
-export const metadata = buildPageMetadata("agenda");
+export async function generateMetadata() {
+  return buildLocalizedPageMetadata("agenda");
+}
 
 export default async function AgendaPage() {
   const locale = resolveLocale(await getLocale());
@@ -15,7 +17,7 @@ export default async function AgendaPage() {
   return (
     <main className="page-shell site-grid">
       <p className="page-kicker">Rclub</p>
-      <h1>{t("title")}</h1>
+      <h1 className="page-title">{t("title")}</h1>
       {events.length === 0 ? <p data-testid="agenda-empty">{t("empty")}</p> : null}
 
       <section className="card-grid" aria-label={t("title")}>
