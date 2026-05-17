@@ -35,7 +35,7 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 ### P2
 | Feature | Titre | Owner | Statut | Tests | PR | Notes |
 |---|---|---|---|---|---|---|
-| X-01 | Anti-spam formulaires | - | todo | - | - | Rate limit + honeypot/captcha |
+| X-01 | Anti-spam formulaires | Codex | done | unit+integration OK, e2e bloque (navigateurs Playwright absents) | - | Rate limit en memoire + honeypot sur reservation et privatisation |
 | X-02 | SEO avancé | - | todo | - | - | |
 | X-03 | Stats dashboard admin | - | todo | - | - | |
 
@@ -62,6 +62,7 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 | 2026-05-17 | F-04 livré avec formulaire réservation, consentement RGPD et statut initial `new` | Couvre la demande de réservation visiteur MVP | Codex |
 | 2026-05-17 | F-09 livré avec édition admin du texte homepage FR/EN | Débloque la gestion éditoriale côté admin | Codex |
 | 2026-05-17 | F-06 livré avec formulaire privatisation, consentement RGPD et statut `new` | Couvre la demande de privatisation visiteur | Codex |
+| 2026-05-17 | X-01 livré avec honeypot et rate-limit en memoire sur les formulaires reservation/privatisation | Reduit le spam formulaires avant stockage des demandes | Codex |
 | 2026-05-17 | F-03 livré avec galerie Cash Out (source media mock + page visiteur + i18n) | Couvre la consultation des photos Cash Out côté visiteur | Codex |
 
 | 2026-05-17 | F-11 livré avec EventMedia schema, CRUD gallery service, API routes admin photos, UI admin (add/delete/reorder), pages galerie visiteur + tests | Débloque la gestion de la galerie photos par l'admin | Codex |

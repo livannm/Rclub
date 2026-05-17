@@ -1,4 +1,7 @@
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { FormProtectionError, assertFormSubmissionAllowed } from "@/lib/anti-spam/form-protection";
+import { getFormSubmissionIdentifier } from "@/lib/anti-spam/request-identifier";
 import { privatizationPayloadFromFormData } from "@/lib/privatizations/privatization-form";
 import { PrivatizationServiceError } from "@/lib/privatizations/privatization-service";
 import { privatizationService } from "@/lib/privatizations/privatization-service-instance";
@@ -14,10 +17,16 @@ export default async function PrivatisationPage({ searchParams }: PrivatisationP
     "use server";
 
     try {
+      const headersList = await headers();
+      assertFormSubmissionAllowed({
+        formName: "privatisation",
+        identifier: getFormSubmissionIdentifier(headersList),
+        honeypot: formData.get("website")?.toString()
+      });
       const payload = privatizationPayloadFromFormData(formData);
       await privatizationService.create(payload);
     } catch (error) {
-      if (error instanceof PrivatizationServiceError) {
+      if (error instanceof PrivatizationServiceError || error instanceof FormProtectionError) {
         redirect(`/privatisation?status=error&message=${encodeURIComponent(error.message)}`);
       }
 
@@ -43,6 +52,11 @@ export default async function PrivatisationPage({ searchParams }: PrivatisationP
       ) : null}
 
       <form action={createPrivatizationAction} style={{ display: "grid", gap: "0.75rem" }}>
+        <div aria-hidden="true" style={{ position: "absolute", left: "-10000px" }}>
+          <label htmlFor="privatisation_website">Site web</label>
+          <input id="privatisation_website" name="website" tabIndex={-1} autoComplete="off" />
+        </div>
+
         <label htmlFor="full_name">Nom complet</label>
         <input id="full_name" name="full_name" required />
 
