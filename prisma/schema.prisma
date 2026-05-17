@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String?
+  role         Role     @default(editor)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Event {
+  id            String   @id @default(uuid())
+  slug          String   @unique
+  titleFr       String
+  titleEn       String
+  descriptionFr String
+  descriptionEn String
+  startsAt      DateTime
+  endsAt        DateTime?
+  location      String   @default("Rclub Strasbourg")
+  coverImageUrl String
+  heroVideoUrl  String?
+  ticketUrl     String?
+  isPublished   Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+enum Role {
+  super_admin
+  editor
+}
