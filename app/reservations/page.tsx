@@ -16,7 +16,6 @@ export default async function ReservationsPage({ searchParams }: ReservationsPag
     try {
       const payload = reservationPayloadFromFormData(formData);
       await reservationService.create(payload);
-      redirect("/reservations?status=success");
     } catch (error) {
       if (error instanceof ReservationServiceError) {
         redirect(`/reservations?status=error&message=${encodeURIComponent(error.message)}`);
@@ -24,6 +23,8 @@ export default async function ReservationsPage({ searchParams }: ReservationsPag
 
       throw error;
     }
+
+    redirect("/reservations?status=success");
   }
 
   return (

@@ -16,7 +16,6 @@ export default async function PrivatisationPage({ searchParams }: PrivatisationP
     try {
       const payload = privatizationPayloadFromFormData(formData);
       await privatizationService.create(payload);
-      redirect("/privatisation?status=success");
     } catch (error) {
       if (error instanceof PrivatizationServiceError) {
         redirect(`/privatisation?status=error&message=${encodeURIComponent(error.message)}`);
@@ -24,6 +23,8 @@ export default async function PrivatisationPage({ searchParams }: PrivatisationP
 
       throw error;
     }
+
+    redirect("/privatisation?status=success");
   }
 
   return (

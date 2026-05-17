@@ -12,7 +12,9 @@
     "startsAt": "Debut",
     "adminLink": "Acceder a l'espace admin",
     "agendaLink": "Voir l'agenda",
-    "galleryLink": "Voir la galerie Cash Out"
+    "galleryLink": "Voir la galerie Cash Out",
+    "privatisationLink": "Demande de privatisation",
+    "reservationLink": "Demande de reservation"
   },
   "Agenda": {
     "title": "Agenda des evenements",

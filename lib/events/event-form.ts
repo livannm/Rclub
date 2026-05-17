@@ -1,12 +1,9 @@
 import type { EventPayload } from "@/lib/events/event-schema";
+import { asCheckbox, asOptionalString, asString } from "@/lib/utils/form-data";
 
-function asString(value: FormDataEntryValue | null) {
-  return typeof value === "string" ? value.trim() : "";
-}
-
-function toIsoDatetime(value: string) {
+function toIsoDatetime(value: string | undefined): string | undefined {
   if (!value) {
-    return "";
+    return undefined;
   }
 
   return new Date(value).toISOString();
@@ -19,12 +16,12 @@ export function eventPayloadFromFormData(formData: FormData): EventPayload {
     title_en: asString(formData.get("title_en")),
     description_fr: asString(formData.get("description_fr")),
     description_en: asString(formData.get("description_en")),
-    starts_at: toIsoDatetime(asString(formData.get("starts_at"))),
-    ends_at: toIsoDatetime(asString(formData.get("ends_at"))) || undefined,
+    starts_at: toIsoDatetime(asString(formData.get("starts_at"))) ?? "",
+    ends_at: toIsoDatetime(asOptionalString(formData.get("ends_at"))),
     location: asString(formData.get("location")) || "Rclub Strasbourg",
     cover_image_url: asString(formData.get("cover_image_url")),
-    hero_video_url: asString(formData.get("hero_video_url")) || undefined,
-    ticket_url: asString(formData.get("ticket_url")) || undefined,
-    is_published: formData.get("is_published") === "on"
+    hero_video_url: asOptionalString(formData.get("hero_video_url")),
+    ticket_url: asOptionalString(formData.get("ticket_url")),
+    is_published: asCheckbox(formData.get("is_published"))
   };
 }

@@ -1,5 +1,46 @@
 :root {
   color-scheme: dark;
+
+  /* Surfaces */
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #121212;
+  --surface-primary: #171717;
+  --surface-elevated: #1f1f1f;
+
+  /* Texte */
+  --text-primary: #f5f5f5;
+  --text-secondary: #b3b3b3;
+  --text-muted: #8a8a8a;
+
+  /* Accent or */
+  --accent-gold: #d4af37;
+  --accent-gold-hover: #e6c35a;
+  --accent-gold-soft: rgba(212, 175, 55, 0.15);
+
+  /* Bordures */
+  --border-default: #2a2a2a;
+  --border-strong: #3a3a3a;
+
+  /* Etats */
+  --state-success: #2e7d32;
+  --state-error: #c62828;
+  --state-warning: #ed6c02;
+
+  /* Layout */
+  --radius-none: 0px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --container-max: 1200px;
+
+  /* Effets */
+  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 12px 32px rgba(0, 0, 0, 0.4);
+  --glow-gold-soft: 0 0 0 1px rgba(212, 175, 55, 0.35), 0 0 24px rgba(212, 175, 55, 0.12);
+  --hero-overlay: rgba(0, 0, 0, 0.55);
+  --transition-fast: 150ms ease-out;
+  --transition-base: 200ms ease-out;
+  --transition-slow: 250ms ease-out;
 }
 
 * {
@@ -10,7 +51,33 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: #0b0b0b;
-  color: #f4d27d;
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+}
+
+a {
+  color: var(--accent-gold);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-gold-hover);
+  text-decoration: underline;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
 }

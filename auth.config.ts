@@ -2,6 +2,10 @@ import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { authenticateAdminUser } from "@/lib/auth/admin-auth";
 
+function readString(value: unknown): string | undefined {
+  return typeof value === "string" ? value : undefined;
+}
+
 export default {
   pages: {
     signIn: "/admin/login"
@@ -20,8 +24,8 @@ export default {
       authorize: async (credentials) => {
         return authenticateAdminUser(
           {
-            email: credentials?.email as string | undefined,
-            password: credentials?.password as string | undefined
+            email: readString(credentials?.email),
+            password: readString(credentials?.password)
           },
           {
             adminEmail: process.env.ADMIN_EMAIL,

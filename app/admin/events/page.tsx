@@ -8,8 +8,24 @@ type AdminEventsPageProps = {
   searchParams: Promise<{ message?: string }>;
 };
 
+const EVENT_REVALIDATION_PATHS = ["/admin/events", "/agenda", "/"] as const;
+
 function toDatetimeLocalValue(value: string) {
   return new Date(value).toISOString().slice(0, 16);
+}
+
+function revalidateEventViews() {
+  for (const path of EVENT_REVALIDATION_PATHS) {
+    revalidatePath(path);
+  }
+}
+
+function redirectAfterEventActionError(error: unknown): never {
+  if (error instanceof EventServiceError) {
+    redirect(`/admin/events?message=${encodeURIComponent(error.message)}`);
+  }
+
+  throw error;
 }
 
 export default async function AdminEventsPage({ searchParams }: AdminEventsPageProps) {
@@ -21,16 +37,12 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
     try {
       const payload = eventPayloadFromFormData(formData);
       await eventService.create(payload);
-      revalidatePath("/admin/events");
-      revalidatePath("/agenda");
-      revalidatePath("/");
-      redirect("/admin/events");
     } catch (error) {
-      if (error instanceof EventServiceError) {
-        redirect(`/admin/events?message=${encodeURIComponent(error.message)}`);
-      }
-      throw error;
+      redirectAfterEventActionError(error);
     }
+
+    revalidateEventViews();
+    redirect("/admin/events");
   }
 
   async function updateEventAction(formData: FormData) {
@@ -40,11 +52,14 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
       return;
     }
 
-    const payload = eventPayloadFromFormData(formData);
-    await eventService.update(eventId, payload);
-    revalidatePath("/admin/events");
-    revalidatePath("/agenda");
-    revalidatePath("/");
+    try {
+      const payload = eventPayloadFromFormData(formData);
+      await eventService.update(eventId, payload);
+    } catch (error) {
+      redirectAfterEventActionError(error);
+    }
+
+    revalidateEventViews();
     redirect("/admin/events");
   }
 
@@ -55,10 +70,13 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
       return;
     }
 
-    await eventService.delete(eventId);
-    revalidatePath("/admin/events");
-    revalidatePath("/agenda");
-    revalidatePath("/");
+    try {
+      await eventService.delete(eventId);
+    } catch (error) {
+      redirectAfterEventActionError(error);
+    }
+
+    revalidateEventViews();
     redirect("/admin/events");
   }
 

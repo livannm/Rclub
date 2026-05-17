@@ -1,12 +1,5 @@
-import { expect, test, type Page } from "@playwright/test";
-
-async function loginAsAdmin(page: Page) {
-  await page.goto("/admin/login");
-  await page.getByLabel("Email").fill("admin@rclub.fr");
-  await page.getByLabel("Mot de passe").fill("secret1234");
-  await page.getByRole("button", { name: "Se connecter" }).click();
-  await expect(page).toHaveURL(/\/admin$/);
-}
+import { expect, test } from "@playwright/test";
+import { loginAsAdmin } from "./utils/admin";
 
 test("admin can create update and delete an event", async ({ page }) => {
   const slug = `cash-out-${Date.now()}`;

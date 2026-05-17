@@ -1,6 +1,7 @@
 import { eventService } from "@/lib/events/events-service-instance";
 import { getLocalizedEventContent } from "@/lib/events/event-localized";
 import { resolveLocale } from "@/i18n/locales";
+import { formatEventDateTime } from "@/lib/utils/format-date";
 import { getLocale, getTranslations } from "next-intl/server";
 
 export default async function AgendaPage() {
@@ -21,8 +22,7 @@ export default async function AgendaPage() {
             <h2 data-testid={`agenda-event-title-${index}`}>{localized.title}</h2>
             <p>{localized.description}</p>
             <p>
-              {t("startsAt")}:{" "}
-              {new Date(event.starts_at).toLocaleString(locale === "en" ? "en-US" : "fr-FR")}
+              {t("startsAt")}: {formatEventDateTime(event.starts_at, locale)}
             </p>
             <p>
               {t("location")}: {event.location}
