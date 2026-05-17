@@ -30,7 +30,7 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 | F-06 | Demande privatisation | Codex | done | lint+test+typecheck+build+e2e OK | [#10](https://github.com/livannm/Rclub/pull/10) | Formulaire privatisation + consentement RGPD |
 | F-08 | Changer logo | - | todo | - | - | Dépend de F-07 |
 | F-11 | Gérer photos par événement (admin) | - | todo | - | - | Upload/suppression/ordre photos depuis la fiche admin d'un event — Dépend de F-07 et F-10 |
-| F-12 | Changer vidéo hero | - | todo | - | - | Dépend de F-07 |
+| F-12 | Changer vidéo hero | Codex | done | unit+integration+e2e OK | - | SiteAssetService, PUT /api/admin/site-assets/hero-video, vidéo hero sur homepage |
 
 ### P2
 | Feature | Titre | Owner | Statut | Tests | PR | Notes |
