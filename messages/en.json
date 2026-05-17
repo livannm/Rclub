@@ -11,7 +11,8 @@
     "nextEventEmpty": "Lineup coming soon.",
     "startsAt": "Starts",
     "adminLink": "Go to admin area",
-    "agendaLink": "See the events schedule"
+    "agendaLink": "See the events schedule",
+    "galleryLink": "View Cash Out gallery"
   },
   "Agenda": {
     "title": "Events schedule",
@@ -19,5 +20,11 @@
     "startsAt": "Starts",
     "location": "Location",
     "ticket": "Tickets"
+  },
+  "Gallery": {
+    "title": "Cash Out Gallery",
+    "description": "Explore photos from the Cash Out event.",
+    "empty": "No photos available yet.",
+    "sectionLabel": "Cash Out photos"
   }
 }

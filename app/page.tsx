@@ -37,7 +37,7 @@ export default async function HomePage() {
         <a href="/agenda">{t("agendaLink")}</a>
       </p>
       <p>
-        <a href="/reservations">Faire une demande de reservation</a>
+        <a href="/gallery/cash-out">{t("galleryLink")}</a>
       </p>
     </main>
   );
