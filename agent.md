@@ -11,7 +11,7 @@ Créer le site web du club en t'appuyant sur:
 
 ## Méthode de travail attendue
 - Travailler feature par feature
-- Commencer chaque feature par ses tests
+- Commencer chaque feature par ses tests (créer une base de données mock si nécessaire)
 - Considérer une feature terminée uniquement quand tous ses tests passent
 - Poser une question dès qu'un point est ambigu
 - Suivre la priorité `P0 > P1 > P2` définie dans `features.md`

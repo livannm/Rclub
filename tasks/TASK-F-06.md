@@ -11,6 +11,7 @@
 Permettre l'envoi d'une demande de privatisation avec collecte des informations nécessaires.
 
 ## Plan de tests (à écrire en premier)
+- [ ] Base de données mock créée si nécessaire
 - [ ] Unitaire: validation champs obligatoires
 - [ ] Intégration: persistance/envoi demande privatisation
 - [ ] E2E: soumission réussie + confirmation

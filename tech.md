@@ -13,7 +13,7 @@
 - ORM / couche d'accès aux données: proposer une option adaptée à PostgreSQL et au besoin admin
 - UI / Design system: proposer une librairie ou approche cohérente (composants réutilisables, thème noir/or)
 - i18n: proposer une solution simple et robuste FR/EN
-- Tests: proposer la stack de test (unitaires, intégration, e2e) avant implémentation massive
+- Tests: proposer la stack de test (unitaires, intégration, e2e) avant implémentation massive, avec stratégie de base de données mock si nécessaire
 
 ## Contraintes techniques
 - Le code doit rester modulaire et maintenable (composants encapsulés, séparation UI / logique)

@@ -11,6 +11,7 @@
 Permettre à l'admin de modifier les textes éditoriaux de la page d'accueil.
 
 ## Plan de tests (à écrire en premier)
+- [ ] Base de données mock créée si nécessaire
 - [ ] Unitaire: validation texte (longueur, champs requis)
 - [ ] Intégration: sauvegarde des contenus
 - [ ] E2E: édition admin visible côté visiteur

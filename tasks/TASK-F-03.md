@@ -11,6 +11,7 @@
 Afficher les photos liées à l'événement "Cash Out" sur la galerie visiteur.
 
 ## Plan de tests (à écrire en premier)
+- [ ] Base de données mock créée si nécessaire
 - [ ] Unitaire: mapping photos -> galerie
 - [ ] Intégration: récupération médias événement
 - [ ] E2E: navigation vers galerie Cash Out

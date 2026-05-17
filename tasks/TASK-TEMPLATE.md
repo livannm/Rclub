@@ -19,7 +19,7 @@ Décrire en 2-3 lignes le résultat attendu côté utilisateur.
 
 ## Plan de tests (à écrire en premier)
 - [ ] Test unitaire(s)
-- [ ] Test intégration API / service
+- [ ] Test intégration API / service (base de données mock si nécessaire)
 - [ ] Test e2e principal du scénario
 - [ ] Cas d'erreur / validation
 

@@ -11,6 +11,7 @@
 Permettre à l'admin de remplacer la vidéo hero de la page d'accueil.
 
 ## Plan de tests (à écrire en premier)
+- [ ] Base de données mock créée si nécessaire
 - [ ] Unitaire: validation source vidéo
 - [ ] Intégration: sauvegarde asset vidéo hero
 - [ ] E2E: vidéo remplacée et visible sur accueil

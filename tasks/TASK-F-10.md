@@ -11,6 +11,7 @@
 Permettre à l'admin de créer, modifier et supprimer des événements.
 
 ## Plan de tests (à écrire en premier)
+- [x] Base de données mock créée si nécessaire
 - [x] Unitaire: validation modèle Event
 - [x] Intégration: endpoints/services create/update/delete
 - [x] E2E: parcours CRUD complet en admin
