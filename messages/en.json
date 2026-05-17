@@ -1,0 +1,23 @@
+{
+  "LocaleSwitcher": {
+    "label": "Language",
+    "fr": "FR",
+    "en": "EN"
+  },
+  "Home": {
+    "title": "Rclub",
+    "description": "MVP foundation in progress: admin auth and event management are available.",
+    "nextEventTitle": "Next event",
+    "nextEventEmpty": "Lineup coming soon.",
+    "startsAt": "Starts",
+    "adminLink": "Go to admin area",
+    "agendaLink": "See the events schedule"
+  },
+  "Agenda": {
+    "title": "Events schedule",
+    "empty": "No upcoming events.",
+    "startsAt": "Starts",
+    "location": "Location",
+    "ticket": "Tickets"
+  }
+}

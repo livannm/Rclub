@@ -7,15 +7,10 @@ export default defineConfig({
     baseURL: "http://127.0.0.1:3000"
   },
   webServer: {
-    command: "pnpm dev",
+    command:
+      "NEXTAUTH_SECRET=test-secret-for-e2e NEXTAUTH_URL=http://127.0.0.1:3000 ADMIN_EMAIL=admin@rclub.fr ADMIN_PASSWORD=secret1234 pnpm dev",
     url: "http://127.0.0.1:3000",
-    env: {
-      NEXTAUTH_SECRET: "test-secret-for-e2e",
-      NEXTAUTH_URL: "http://127.0.0.1:3000",
-      ADMIN_EMAIL: "admin@rclub.fr",
-      ADMIN_PASSWORD: "secret1234"
-    },
-    reuseExistingServer: true
+    reuseExistingServer: false
   },
   projects: [
     {
