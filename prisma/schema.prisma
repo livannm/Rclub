@@ -49,6 +49,21 @@ model ReservationRequest {
   createdAt    DateTime                  @default(now())
 }
 
+model PrivatizationRequest {
+  id           String                   @id @default(uuid())
+  fullName     String
+  email        String
+  phone        String
+  eventDate    DateTime?
+  guestCount   Int
+  budgetRange  String?
+  message      String?
+  status       ReservationRequestStatus @default(new)
+  sourceLocale String
+  consentRgpd  Boolean
+  createdAt    DateTime                 @default(now())
+}
+
 enum ReservationRequestStatus {
   new
   reviewed

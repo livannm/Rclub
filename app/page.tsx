@@ -39,6 +39,9 @@ export default async function HomePage() {
       <p>
         <a href="/gallery/cash-out">{t("galleryLink")}</a>
       </p>
+      <p>
+        <a href="/privatisation">Demande de privatisation</a>
+      </p>
     </main>
   );
 }
