@@ -34,6 +34,28 @@ model Event {
   updatedAt     DateTime @updatedAt
 }
 
+model ReservationRequest {
+  id           String                    @id @default(uuid())
+  fullName     String
+  email        String
+  phone        String
+  eventId      String?
+  dateRequested DateTime?
+  guestCount   Int
+  message      String?
+  status       ReservationRequestStatus  @default(new)
+  sourceLocale String
+  consentRgpd  Boolean
+  createdAt    DateTime                  @default(now())
+}
+
+enum ReservationRequestStatus {
+  new
+  reviewed
+  contacted
+  closed
+}
+
 enum Role {
   super_admin
   editor
