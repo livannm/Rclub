@@ -37,7 +37,7 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 |---|---|---|---|---|---|---|
 | X-01 | Anti-spam formulaires | Codex | done | unit+integration OK, e2e bloque (navigateurs Playwright absents) | - | Rate limit en memoire + honeypot sur reservation et privatisation |
 | X-02 | SEO avancé | Codex | done | unit OK, lint/typecheck/build OK | - | Métadonnées dédiées, canoniques, Open Graph/Twitter, sitemap, robots.txt, noindex admin, JSON-LD organisation + événement |
-| X-03 | Stats dashboard admin | - | todo | - | - | |
+| X-03 | Stats dashboard admin | Codex | done | unit+lint+typecheck OK | - | Bloc stats rapides admin: événements, demandes, galerie |
 
 ### P3 – Design
 | Feature | Titre | Owner | Statut | Tests | PR | Notes |
@@ -68,6 +68,7 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 | 2026-05-17 | F-11 livré avec EventMedia schema, CRUD gallery service, API routes admin photos, UI admin (add/delete/reorder), pages galerie visiteur + tests | Débloque la gestion de la galerie photos par l'admin | Codex |
 
 | 2026-05-17 | X-02 livré avec métadonnées SEO avancées, sitemap/robots et JSON-LD homepage | Améliore l’indexation des pages publiques et protège admin/API de l’indexation | Codex |
+| 2026-05-17 | X-03 livré avec service de statistiques dashboard admin et bloc `Statistiques rapides` | Donne une synthèse admin des événements, demandes et photos | Codex |
 
 ## Blocages ouverts
 - Aucun pour le moment.
