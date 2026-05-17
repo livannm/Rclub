@@ -1,3 +1,4 @@
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { FormProtectionError, assertFormSubmissionAllowed } from "@/lib/anti-spam/form-protection";
@@ -9,6 +10,8 @@ import { reservationService } from "@/lib/reservations/reservation-service-insta
 type ReservationsPageProps = {
   searchParams: Promise<{ status?: "success" | "error"; message?: string }>;
 };
+
+export const metadata = buildPageMetadata("reservations");
 
 export default async function ReservationsPage({ searchParams }: ReservationsPageProps) {
   const params = await searchParams;

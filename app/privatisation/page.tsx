@@ -1,3 +1,4 @@
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { FormProtectionError, assertFormSubmissionAllowed } from "@/lib/anti-spam/form-protection";
@@ -9,6 +10,8 @@ import { privatizationService } from "@/lib/privatizations/privatization-service
 type PrivatisationPageProps = {
   searchParams: Promise<{ status?: "success" | "error"; message?: string }>;
 };
+
+export const metadata = buildPageMetadata("privatization");
 
 export default async function PrivatisationPage({ searchParams }: PrivatisationPageProps) {
   const params = await searchParams;

@@ -1,8 +1,11 @@
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { eventService } from "@/lib/events/events-service-instance";
 import { getLocalizedEventContent } from "@/lib/events/event-localized";
 import { resolveLocale } from "@/i18n/locales";
 import { formatEventDateTime } from "@/lib/utils/format-date";
 import { getLocale, getTranslations } from "next-intl/server";
+
+export const metadata = buildPageMetadata("agenda");
 
 export default async function AgendaPage() {
   const locale = resolveLocale(await getLocale());
@@ -18,7 +21,7 @@ export default async function AgendaPage() {
         const localized = getLocalizedEventContent(event, locale);
 
         return (
-          <article key={event.id} style={{ border: "1px solid #333", padding: "1rem", display: "grid", gap: "0.5rem" }}>
+          <article id={event.slug} key={event.id} style={{ border: "1px solid #333", padding: "1rem", display: "grid", gap: "0.5rem" }}>
             {event.cover_image_url ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
