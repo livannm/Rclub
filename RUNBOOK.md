@@ -32,7 +32,7 @@ Exécuter les features rapidement avec un orchestrateur et plusieurs agents, san
 - `git checkout -b feat/F-XX-slug-court`
 
 ### 3) Implémentation (test-first)
-1. Écrire les tests de la feature
+1. Écrire les tests de la feature (créer une base de données mock si nécessaire)
 2. Implémenter le minimum pour faire passer les tests
 3. Refactor léger si nécessaire
 
@@ -103,7 +103,7 @@ Feature `F-XX` - <titre>
 
 ### Tests
 - [x] Unitaires
-- [x] Intégration
+- [x] Intégration (avec base de données mock si nécessaire)
 - [x] E2E
 
 ### Vérifications

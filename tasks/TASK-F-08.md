@@ -11,6 +11,7 @@
 Permettre à l'admin de remplacer le logo du site depuis l'interface d'administration.
 
 ## Plan de tests (à écrire en premier)
+- [ ] Base de données mock créée si nécessaire
 - [ ] Unitaire: validation format/taille fichier
 - [ ] Intégration: upload + sauvegarde asset
 - [ ] E2E: remplacement logo visible côté visiteur

@@ -11,6 +11,7 @@
 Permettre à l'admin d'ajouter et supprimer les photos de l'événement "Cash Out".
 
 ## Plan de tests (à écrire en premier)
+- [ ] Base de données mock créée si nécessaire
 - [ ] Unitaire: ajout/suppression média
 - [ ] Intégration: liaison média <-> événement
 - [ ] E2E: upload puis suppression depuis admin

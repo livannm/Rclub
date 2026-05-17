@@ -1,7 +1,7 @@
 # Règles de travail
 
 ## Process de développement
-- Chaque feature doit commencer par la définition de ses tests
+- Chaque feature doit commencer par la définition de ses tests (inclure une base de données mock si nécessaire)
 - Chaque feature doit avoir:
   - sa branche dédiée
   - au moins 1 commit dédié

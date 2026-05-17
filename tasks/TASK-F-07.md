@@ -11,6 +11,7 @@
 Permettre à un admin de se connecter et d'accéder à l'espace d'administration sécurisé.
 
 ## Plan de tests (à écrire en premier)
+- [x] Base de données mock créée si nécessaire
 - [x] Unitaire: règles d'accès (auth guard)
 - [x] Intégration: login réussi/échoué
 - [x] E2E: accès dashboard après connexion
