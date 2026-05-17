@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model AdminUser {
@@ -64,6 +63,14 @@ model PrivatizationRequest {
   createdAt    DateTime                 @default(now())
 }
 
+model SiteAsset {
+  id        String       @id @default(uuid())
+  key       SiteAssetKey
+  value     String
+  locale    String       @default("global")
+  updatedAt DateTime     @updatedAt
+}
+
 enum ReservationRequestStatus {
   new
   reviewed
@@ -74,4 +81,10 @@ enum ReservationRequestStatus {
 enum Role {
   super_admin
   editor
+}
+
+enum SiteAssetKey {
+  logo
+  home_hero_video
+  home_hero_poster
 }
