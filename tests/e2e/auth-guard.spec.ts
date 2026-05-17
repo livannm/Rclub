@@ -16,6 +16,7 @@ test("allows admin login and access to dashboard", async ({ page }) => {
 
   await expect(page).toHaveURL(/\/admin$/);
   await expect(page.getByRole("heading", { name: "Tableau de bord admin" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Statistiques rapides" })).toBeVisible();
 });
 
 test("shows an error for invalid login", async ({ page }) => {

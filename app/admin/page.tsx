@@ -1,11 +1,13 @@
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
+import { adminDashboardStatsService } from "@/lib/admin-stats/admin-dashboard-stats-instance";
 import { siteAssetService } from "@/lib/site-assets/site-asset-service-instance";
 
 export default async function AdminDashboardPage() {
   const session = await auth();
   const currentHeroVideo = await siteAssetService.getHeroVideo();
   const currentLogo = await siteAssetService.getLogo();
+  const stats = await adminDashboardStatsService.getStats();
 
   async function updateHeroVideoAction(formData: FormData) {
     "use server";
@@ -36,6 +38,51 @@ export default async function AdminDashboardPage() {
       <p>
         <a href="/admin/events">Gerer les evenements</a>
       </p>
+
+      <section
+        aria-labelledby="stats-heading"
+        style={{ border: "1px solid #333", padding: "1rem" }}
+      >
+        <h2 id="stats-heading">Statistiques rapides</h2>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(10rem, 1fr))",
+            gap: "0.75rem"
+          }}
+        >
+          <article style={{ border: "1px solid #555", padding: "0.75rem" }}>
+            <h3>Evenements</h3>
+            <p data-testid="admin-stat-events-total">Total: {stats.events.total}</p>
+            <p data-testid="admin-stat-events-published">Publies: {stats.events.published}</p>
+            <p data-testid="admin-stat-events-upcoming">
+              A venir publies: {stats.events.upcomingPublished}
+            </p>
+          </article>
+          <article style={{ border: "1px solid #555", padding: "0.75rem" }}>
+            <h3>Demandes</h3>
+            <p data-testid="admin-stat-reservations">
+              Reservations: {stats.requests.reservationsTotal}
+            </p>
+            <p data-testid="admin-stat-reservations-new">
+              Nouvelles reservations: {stats.requests.reservationsNew}
+            </p>
+            <p data-testid="admin-stat-privatizations">
+              Privatisations: {stats.requests.privatizationsTotal}
+            </p>
+            <p data-testid="admin-stat-privatizations-new">
+              Nouvelles privatisations: {stats.requests.privatizationsNew}
+            </p>
+          </article>
+          <article style={{ border: "1px solid #555", padding: "0.75rem" }}>
+            <h3>Galerie</h3>
+            <p data-testid="admin-stat-gallery-photos">Photos: {stats.gallery.photosTotal}</p>
+            <p data-testid="admin-stat-gallery-events">
+              Evenements avec photos: {stats.gallery.eventsWithPhotos}
+            </p>
+          </article>
+        </div>
+      </section>
 
       <section style={{ border: "1px solid #333", padding: "1rem" }}>
         <h2>Logo du site</h2>
