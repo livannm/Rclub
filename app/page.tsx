@@ -2,18 +2,22 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { resolveLocale } from "@/i18n/locales";
 import { eventService } from "@/lib/events/events-service-instance";
 import { getLocalizedEventContent } from "@/lib/events/event-localized";
+import { homepageContentService } from "@/lib/homepage/homepage-content-service-instance";
+import { getLocalizedHomepageContent } from "@/lib/homepage/homepage-localized";
 
 export default async function HomePage() {
   const locale = resolveLocale(await getLocale());
   const t = await getTranslations("Home");
+  const homepageContent = await homepageContentService.get();
+  const localizedHomepageContent = getLocalizedHomepageContent(homepageContent, locale);
   const events = await eventService.listPublishedUpcoming();
   const nextEvent = events[0];
   const localizedNextEvent = nextEvent ? getLocalizedEventContent(nextEvent, locale) : null;
 
   return (
     <main style={{ padding: "2rem" }}>
-      <h1>{t("title")}</h1>
-      <p>{t("description")}</p>
+      <h1>{localizedHomepageContent.title}</h1>
+      <p>{localizedHomepageContent.description}</p>
 
       <section aria-label={t("nextEventTitle")} style={{ marginTop: "1.5rem", marginBottom: "1.5rem" }}>
         <h2>{t("nextEventTitle")}</h2>

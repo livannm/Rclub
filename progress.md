@@ -38,7 +38,7 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 | F-05 | Agenda événements | Codex | done | unit+integration+e2e OK | - | Agenda a venir trie par date croissante + fallback vide |
 | F-04 | Demande réservation | - | todo | - | - | Inclure consentement RGPD |
 | F-02 | Bascule FR/EN | Codex | review | lint+test+typecheck+build+e2e OK | - | Switch global FR/EN + persistance cookie `NEXT_LOCALE` (DB mock mémoire conservée) |
-| F-09 | Édition texte accueil | - | todo | - | - | Dépend de F-07 |
+| F-09 | Édition texte accueil | Codex | review | lint+test+typecheck+build+e2e OK | [#6](https://github.com/livannm/Rclub/pull/6) | Admin édite texte FR/EN de l'accueil, stocké en mémoire avec `updated_at` |
 
 ### P1
 | Feature | Titre | Owner | Statut | Tests | PR | Notes |
@@ -65,6 +65,7 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 | 2026-05-17 | F-10 livré avec modèle Event, service CRUD, UI admin, agenda public et tests | Débloque F-01 et F-05 | Codex |
 | 2026-05-17 | F-01/F-05 livrés avec highlight homepage et agenda trié + fallback | Couvre la visibilité visiteur des événements à venir | Codex |
 | 2026-05-17 | F-02 livré avec switch FR/EN global, persistance locale et couverture tests mise à jour | Active l'i18n MVP sans changer la stratégie DB mock en mémoire | Codex |
+| 2026-05-17 | F-09 livré avec édition admin du texte d'accueil FR/EN et affichage visiteur | Rend les contenus éditoriaux homepage administrables sans DB (mock mémoire) | Codex |
 
 ## Blocages ouverts
 - Aucun pour le moment.

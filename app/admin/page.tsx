@@ -10,6 +10,9 @@ export default async function AdminDashboardPage() {
       <p>
         <a href="/admin/events">Gerer les evenements</a>
       </p>
+      <p>
+        <a href="/admin/homepage">Editer le texte d&apos;accueil</a>
+      </p>
     </main>
   );
 }
