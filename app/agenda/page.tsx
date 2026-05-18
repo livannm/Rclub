@@ -23,9 +23,18 @@ export default async function AgendaPage() {
       <section className="card-grid" aria-label={t("title")}>
         {events.map((event, index) => {
           const localized = getLocalizedEventContent(event, locale);
+          const d = new Date(event.starts_at);
+          const eventDay = String(d.getDate()).padStart(2, "0");
+          const eventMonth = d
+            .toLocaleDateString(locale === "fr" ? "fr-FR" : "en-GB", { month: "short" })
+            .toUpperCase();
 
           return (
             <article id={event.slug} key={event.id} className="event-card">
+              <div className="event-date-badge" aria-hidden="true">
+                <span className="event-date-day">{eventDay}</span>
+                <span className="event-date-month">{eventMonth}</span>
+              </div>
               {event.cover_image_url ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img

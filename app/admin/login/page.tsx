@@ -38,7 +38,7 @@ export default async function AdminLoginPage({ searchParams }: LoginPageProps) {
     <main className="page-shell page-shell-narrow">
       <p className="page-kicker">Admin</p>
       <h1>Connexion admin</h1>
-      <p className="page-lead">Utilise les identifiants admin configures en environnement.</p>
+      <p className="page-lead">Utilisez les identifiants admin configurés en variable d&apos;environnement.</p>
       {showError ? <p className="status status-error">Identifiants invalides.</p> : null}
 
       <form action={loginAction} className="form-panel form-grid">

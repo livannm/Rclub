@@ -168,20 +168,20 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
       <header className="admin-header">
         <div>
           <p className="page-kicker">Admin</p>
-          <h1>Administration - Evenements</h1>
+          <h1>Administration – Événements</h1>
           <p>
-            Cree, modifie et supprime les evenements. Les evenements publies apparaissent sur
+            Créez, modifiez et supprimez les événements. Les événements publiés apparaissent sur
             l&apos;agenda.
           </p>
         </div>
         <div className="admin-actions">
-          <a className="button button-secondary" href="/admin">Retour dashboard</a>
+          <a className="button button-secondary" href="/admin">Retour au dashboard</a>
         </div>
       </header>
       {params.message ? <p className="status status-error">{params.message}</p> : null}
 
       <section className="admin-card admin-section">
-        <h2>Creer un evenement</h2>
+        <h2>Créer un événement</h2>
         <form action={createEventAction} className="admin-form">
           <label htmlFor="slug">Slug<input id="slug" name="slug" required /></label>
           <label htmlFor="title_fr">Titre (FR)<input id="title_fr" name="title_fr" required /></label>
@@ -191,19 +191,19 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
           <label htmlFor="starts_at">Debut<input id="starts_at" name="starts_at" type="datetime-local" required /></label>
           <label htmlFor="ends_at">Fin<input id="ends_at" name="ends_at" type="datetime-local" /></label>
           <label htmlFor="location">Lieu<input id="location" name="location" defaultValue="Rclub Strasbourg" required /></label>
-          <label htmlFor="cover_image_url">Cover image URL<input id="cover_image_url" name="cover_image_url" type="url" required /></label>
-          <label htmlFor="hero_video_url">Hero video URL<input id="hero_video_url" name="hero_video_url" type="url" /></label>
-          <label htmlFor="ticket_url">Ticket URL<input id="ticket_url" name="ticket_url" type="url" /></label>
+          <label htmlFor="cover_image_url">URL image de couverture<input id="cover_image_url" name="cover_image_url" type="url" required /></label>
+          <label htmlFor="hero_video_url">URL vidéo hero<input id="hero_video_url" name="hero_video_url" type="url" /></label>
+          <label htmlFor="ticket_url">URL billetterie<input id="ticket_url" name="ticket_url" type="url" /></label>
           <label htmlFor="is_published" className="checkbox-label">
             <input id="is_published" name="is_published" type="checkbox" /> Publier
           </label>
-          <button type="submit">Ajouter l&apos;evenement</button>
+          <button type="submit">Ajouter l&apos;événement</button>
         </form>
       </section>
 
       <section className="admin-card admin-section">
-        <h2>Evenements existants</h2>
-        {eventsWithPhotos.length === 0 ? <p>Aucun evenement pour le moment.</p> : null}
+        <h2>Événements existants</h2>
+        {eventsWithPhotos.length === 0 ? <p>Aucun événement pour le moment.</p> : null}
         <div className="site-grid">
           {eventsWithPhotos.map(({ event, photos }) => (
             <article key={event.id} className="event-admin-card">
@@ -211,7 +211,7 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
                 {event.title_fr} ({event.slug})
               </h3>
               <p>
-                Debut: {new Date(event.starts_at).toLocaleString("fr-FR")} - Publie:{" "}
+                Début&nbsp;: {new Date(event.starts_at).toLocaleString("fr-FR")} — Publié&nbsp;:{" "}
                 {event.is_published ? "oui" : "non"}
               </p>
 
@@ -243,7 +243,7 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
                   <textarea name="description_en" defaultValue={event.description_en} required />
                 </label>
                 <label>
-                  Debut
+                  Début
                   <input
                     name="starts_at"
                     type="datetime-local"
@@ -264,15 +264,15 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
                   <input name="location" defaultValue={event.location} required />
                 </label>
                 <label>
-                  Cover image URL
+                  URL image de couverture
                   <input name="cover_image_url" type="url" defaultValue={event.cover_image_url} required />
                 </label>
                 <label>
-                  Hero video URL
+                  URL vidéo hero
                   <input name="hero_video_url" type="url" defaultValue={event.hero_video_url ?? ""} />
                 </label>
                 <label>
-                  Ticket URL
+                  URL billetterie
                   <input name="ticket_url" type="url" defaultValue={event.ticket_url ?? ""} />
                 </label>
                 <label>
@@ -284,7 +284,7 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
 
               <form action={deleteEventAction}>
                 <input type="hidden" name="event_id" value={event.id} />
-                <button type="submit" className="button-secondary">Supprimer</button>
+                <button type="submit" className="button-secondary">Supprimer l&apos;événement</button>
               </form>
 
               {/* Section gestion des photos */}
@@ -292,7 +292,7 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
                 data-testid={`photos-section-${event.slug}`}
                 className="admin-section"
               >
-                <h4>Photos ({photos.length})</h4>
+                <h4>Photos ({photos.length} photo{photos.length !== 1 ? "s" : ""})</h4>
 
                 {photos.length > 0 ? (
                   <ul className="admin-photo-list">
@@ -345,7 +345,7 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
                   </ul>
                 ) : (
                   <p data-testid={`photos-empty-${event.slug}`}>
-                    Aucune photo pour cet evenement.
+                    Aucune photo pour cet événement.
                   </p>
                 )}
 
@@ -367,19 +367,19 @@ export default async function AdminEventsPage({ searchParams }: AdminEventsPageP
                     />
                   </label>
                   <label>
-                    Legende FR
+                    Légende FR
                     <input
                       name="alt_fr"
-                      placeholder="Legende en francais"
-                      aria-label={`Legende FR ${event.slug}`}
+                      placeholder="Légende en français"
+                      aria-label={`Légende FR ${event.slug}`}
                     />
                   </label>
                   <label>
-                    Legende EN
+                    Légende EN
                     <input
                       name="alt_en"
                       placeholder="Caption in English"
-                      aria-label={`Legende EN ${event.slug}`}
+                      aria-label={`Légende EN ${event.slug}`}
                     />
                   </label>
                   <label>

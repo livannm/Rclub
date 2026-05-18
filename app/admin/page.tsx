@@ -37,10 +37,10 @@ export default async function AdminDashboardPage() {
         <div>
           <p className="page-kicker">Admin</p>
           <h1>Tableau de bord admin</h1>
-          <p>Connecte en tant que: {session?.user?.email ?? "admin"}</p>
+          <p>Connecté en tant que : {session?.user?.email ?? "admin"}</p>
         </div>
         <div className="admin-actions">
-          <a className="button button-secondary" href="/admin/events">Gerer les evenements</a>
+          <a className="button button-secondary" href="/admin/events">Gérer les événements</a>
         </div>
       </header>
 
@@ -51,20 +51,20 @@ export default async function AdminDashboardPage() {
         <h2 id="stats-heading">Statistiques rapides</h2>
         <div className="stats-grid">
           <article className="section-panel">
-            <h3>Evenements</h3>
-            <p data-testid="admin-stat-events-total">Total: {stats.events.total}</p>
-            <p data-testid="admin-stat-events-published">Publies: {stats.events.published}</p>
+            <h3>Événements</h3>
+            <p data-testid="admin-stat-events-total">Total : {stats.events.total}</p>
+            <p data-testid="admin-stat-events-published">Publiés : {stats.events.published}</p>
             <p data-testid="admin-stat-events-upcoming">
-              A venir publies: {stats.events.upcomingPublished}
+              À venir publiés : {stats.events.upcomingPublished}
             </p>
           </article>
           <article className="section-panel">
             <h3>Demandes</h3>
             <p data-testid="admin-stat-reservations">
-              Reservations: {stats.requests.reservationsTotal}
+              Réservations : {stats.requests.reservationsTotal}
             </p>
             <p data-testid="admin-stat-reservations-new">
-              Nouvelles reservations: {stats.requests.reservationsNew}
+              Nouvelles réservations : {stats.requests.reservationsNew}
             </p>
             <p data-testid="admin-stat-privatizations">
               Privatisations: {stats.requests.privatizationsTotal}
@@ -77,7 +77,7 @@ export default async function AdminDashboardPage() {
             <h3>Galerie</h3>
             <p data-testid="admin-stat-gallery-photos">Photos: {stats.gallery.photosTotal}</p>
             <p data-testid="admin-stat-gallery-events">
-              Evenements avec photos: {stats.gallery.eventsWithPhotos}
+              Événements avec photos : {stats.gallery.eventsWithPhotos}
             </p>
           </article>
         </div>
@@ -86,7 +86,7 @@ export default async function AdminDashboardPage() {
       <section className="admin-card admin-section">
         <h2>Logo du site</h2>
         <p>
-          URL actuelle:{" "}
+          URL actuelle&nbsp;:{" "}
           <code data-testid="current-logo-url">{currentLogo}</code>
         </p>
         {currentLogo && (
@@ -114,15 +114,15 @@ export default async function AdminDashboardPage() {
             />
           </label>
           <button type="submit">
-            Mettre a jour le logo
+            Mettre à jour le logo
           </button>
         </form>
       </section>
 
       <section className="admin-card admin-section">
-        <h2>Video Hero</h2>
+        <h2>Vidéo hero</h2>
         <p>
-          URL actuelle:{" "}
+          URL actuelle&nbsp;:{" "}
           <code data-testid="current-hero-video-url">{currentHeroVideo}</code>
         </p>
         <form
@@ -130,7 +130,7 @@ export default async function AdminDashboardPage() {
           className="admin-form"
         >
           <label htmlFor="hero_video_url">
-            Nouvelle URL de la video hero
+            Nouvelle URL de la vidéo hero
             <input
               id="hero_video_url"
               name="hero_video_url"
@@ -141,7 +141,7 @@ export default async function AdminDashboardPage() {
             />
           </label>
           <button type="submit">
-            Mettre a jour la video
+            Mettre à jour la vidéo
           </button>
         </form>
       </section>

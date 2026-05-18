@@ -1,10 +1,26 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { siteAssetService } from "@/lib/site-assets/site-asset-service-instance";
 import "./globals.css";
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-body",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://rclub.fr"),
@@ -35,7 +51,7 @@ export default async function RootLayout({
   const logoUrl = await siteAssetService.getLogo();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className={`${cormorant.variable} ${dmSans.variable}`}>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <header className="site-header">

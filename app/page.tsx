@@ -77,6 +77,15 @@ export default async function HomePage() {
             <p data-testid="home-next-event-empty">{t("nextEventEmpty")}</p>
           ) : (
             <article className="event-card">
+              {nextEvent.cover_image_url ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={nextEvent.cover_image_url}
+                  alt={localizedNextEvent.title}
+                  loading="lazy"
+                  className="event-card-image"
+                />
+              ) : null}
               <h2 data-testid="home-next-event-title">{localizedNextEvent.title}</h2>
               <p>{localizedNextEvent.description}</p>
               <p>
