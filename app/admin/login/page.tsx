@@ -43,8 +43,8 @@ export default async function AdminLoginPage({ searchParams }: LoginPageProps) {
 
       <form action={loginAction} className="form-panel form-grid">
         <label htmlFor="email">
-          Email
-          <input id="email" name="email" type="email" required />
+          Identifiant
+          <input id="email" name="email" type="text" autoComplete="username" required />
         </label>
 
         <label htmlFor="password">

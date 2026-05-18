@@ -1,42 +1,11 @@
 import type { GalleryRepository } from "@/lib/gallery/gallery-repository";
 import type { GalleryPhoto, CreatePhotoPayload } from "@/lib/gallery/gallery-types";
-
-const CASH_OUT_SEED_EVENT_ID = "cash-out-seed-event-id";
-
-const seedPhotos: GalleryPhoto[] = [
-  {
-    id: "cash-out-1",
-    event_id: CASH_OUT_SEED_EVENT_ID,
-    event_slug: "cash-out",
-    image_url: "/media/cash-out-01.jpg",
-    alt_fr: "Photo Cash Out - piste illuminee",
-    alt_en: "Cash Out photo - lit dancefloor",
-    order: 1
-  },
-  {
-    id: "cash-out-2",
-    event_id: CASH_OUT_SEED_EVENT_ID,
-    event_slug: "cash-out",
-    image_url: "/media/cash-out-02.jpg",
-    alt_fr: "Photo Cash Out - public en fete",
-    alt_en: "Cash Out photo - crowd celebrating",
-    order: 2
-  },
-  {
-    id: "cash-out-3",
-    event_id: CASH_OUT_SEED_EVENT_ID,
-    event_slug: "cash-out",
-    image_url: "/media/cash-out-03.jpg",
-    alt_fr: "Photo Cash Out - DJ set",
-    alt_en: "Cash Out photo - DJ set",
-    order: 3
-  }
-];
+import { DEMO_GALLERY_PHOTOS } from "@/lib/seed/demo-content";
 
 export class InMemoryGalleryRepository implements GalleryRepository {
   private photos: GalleryPhoto[];
 
-  constructor(initialPhotos: GalleryPhoto[] = seedPhotos) {
+  constructor(initialPhotos: GalleryPhoto[] = DEMO_GALLERY_PHOTOS) {
     this.photos = [...initialPhotos];
   }
 

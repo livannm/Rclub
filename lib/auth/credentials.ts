@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const credentialsSchema = z.object({
-  email: z.string().email(),
+  email: z.string().min(2),
   password: z.string().min(8)
 });
 

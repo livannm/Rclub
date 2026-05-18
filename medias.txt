@@ -1,0 +1,25 @@
+Medias locaux (phase 1) — source: ~/Documents/Rclub
+
+Synchronisation:
+  pnpm media:sync
+  # ou: RCLUB_MEDIA_SOURCE=/chemin/vers/Rclub pnpm media:sync
+
+Fichiers servis par Next.js sous /media/* (dossier public/media):
+
+  logo.svg              <- logo_rclub.svg
+  hero.mp4              <- hero.mp4
+  hero-poster.png       <- bg.png (poster desktop + fallback)
+  hero-poster-mobile.png <- mobile-bg.png (poster mobile)
+  emblem.png            <- Embleme OR 1.png
+
+  events/ven-8-mai.png           <- events/VEN 8 MAI post.png
+  events/take-me-back-15-mai.png <- events/TAKE ME BACK 15 MAI.png
+  events/legend-r.png            <- events/LEGEND R.png
+  events/adults-only-v5.png      <- events/ADULTS ONLY V5.png
+  events/r-family.png            <- events/R FAMILY.png
+
+Donnees de demo (lib/seed/demo-content.ts):
+  - 5 evenements publies avec affiches en couverture
+  - Galerie "legend-r" avec 3 visuels
+
+Note: hero.mp4 fait ~93 Mo — a migrer vers Cloudinary en production (voir tech.md).

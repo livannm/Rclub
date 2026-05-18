@@ -3,7 +3,7 @@ import { DEFAULT_LOGO_URL } from "@/lib/site-assets/site-asset-types";
 
 const DEFAULTS = {
   home_hero_video: "/media/hero.mp4",
-  home_hero_poster: "/media/hero-poster.jpg",
+  home_hero_poster: "/media/hero-poster.png",
   logo: DEFAULT_LOGO_URL
 } as const;
 

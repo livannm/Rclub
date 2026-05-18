@@ -709,6 +709,7 @@ figure.media-card:hover {
   align-items: end;
   overflow: hidden;
   border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+  background: center / cover no-repeat url("/media/hero-poster.png");
 }
 
 .hero-video {
@@ -1200,6 +1201,7 @@ figure.media-card:hover {
 
   .hero {
     min-height: 680px;
+    background-image: url("/media/hero-poster-mobile.png");
   }
 
   .hero-actions .button,

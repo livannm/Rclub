@@ -123,10 +123,10 @@ describe("GalleryService – admin CRUD", () => {
 describe("GalleryService – public gallery (existing behaviour)", () => {
   it("listEventPhotos returns photos sorted by order for known slug", async () => {
     const service = new GalleryService(new InMemoryGalleryRepository());
-    const photos = await service.listEventPhotos("cash-out");
+    const photos = await service.listEventPhotos("legend-r");
 
     expect(photos.length).toBeGreaterThan(0);
-    expect(photos[0]?.event_slug).toBe("cash-out");
+    expect(photos[0]?.event_slug).toBe("legend-r");
     expect(photos[0]?.order).toBe(1);
   });
 
@@ -139,6 +139,6 @@ describe("GalleryService – public gallery (existing behaviour)", () => {
   it("listEventSlugs returns slugs that have photos", async () => {
     const service = new GalleryService(new InMemoryGalleryRepository());
     const slugs = await service.listEventSlugs();
-    expect(slugs).toContain("cash-out");
+    expect(slugs).toContain("legend-r");
   });
 });

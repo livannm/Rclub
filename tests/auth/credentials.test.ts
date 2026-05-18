@@ -4,17 +4,17 @@ import { verifyAdminCredentials } from "@/lib/auth/credentials";
 describe("verifyAdminCredentials", () => {
   it("accepts valid credentials", () => {
     const result = verifyAdminCredentials(
-      { email: "admin@rclub.fr", password: "secret1234" },
-      { adminEmail: "admin@rclub.fr", adminPassword: "secret1234" }
+      { email: "adminRclub", password: "strasbourgRClub" },
+      { adminEmail: "adminRclub", adminPassword: "strasbourgRClub" }
     );
 
     expect(result).toEqual({ ok: true });
   });
 
-  it("rejects unknown admin email", () => {
+  it("rejects unknown admin identifier", () => {
     const result = verifyAdminCredentials(
-      { email: "wrong@rclub.fr", password: "secret1234" },
-      { adminEmail: "admin@rclub.fr", adminPassword: "secret1234" }
+      { email: "wrong-user", password: "strasbourgRClub" },
+      { adminEmail: "adminRclub", adminPassword: "strasbourgRClub" }
     );
 
     expect(result).toEqual({
@@ -25,8 +25,8 @@ describe("verifyAdminCredentials", () => {
 
   it("rejects malformed payload", () => {
     const result = verifyAdminCredentials(
-      { email: "bad-email", password: "123" },
-      { adminEmail: "admin@rclub.fr", adminPassword: "secret1234" }
+      { email: "a", password: "123" },
+      { adminEmail: "adminRclub", adminPassword: "strasbourgRClub" }
     );
 
     expect(result).toEqual({

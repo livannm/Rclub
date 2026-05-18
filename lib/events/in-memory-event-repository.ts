@@ -8,7 +8,11 @@ function sortByDateAsc(items: ClubEvent[]) {
 }
 
 export class InMemoryEventRepository implements EventRepository {
-  private events: ClubEvent[] = [];
+  private events: ClubEvent[];
+
+  constructor(initialEvents: ClubEvent[] = []) {
+    this.events = [...initialEvents];
+  }
 
   async listAll() {
     return sortByDateAsc(this.events);

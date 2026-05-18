@@ -4,20 +4,20 @@ import { authenticateAdminUser } from "@/lib/auth/admin-auth";
 describe("authenticateAdminUser", () => {
   it("returns an admin user when credentials are valid", () => {
     const user = authenticateAdminUser(
-      { email: "admin@rclub.fr", password: "secret1234" },
-      { adminEmail: "admin@rclub.fr", adminPassword: "secret1234" }
+      { email: "adminRclub", password: "strasbourgRClub" },
+      { adminEmail: "adminRclub", adminPassword: "strasbourgRClub" }
     );
 
     expect(user).toEqual({
       id: "admin",
-      email: "admin@rclub.fr"
+      email: "adminRclub"
     });
   });
 
   it("returns null when password is invalid", () => {
     const user = authenticateAdminUser(
-      { email: "admin@rclub.fr", password: "wrong-password" },
-      { adminEmail: "admin@rclub.fr", adminPassword: "secret1234" }
+      { email: "adminRclub", password: "wrong-password" },
+      { adminEmail: "adminRclub", adminPassword: "strasbourgRClub" }
     );
 
     expect(user).toBeNull();

@@ -18,7 +18,7 @@ export default {
     Credentials({
       name: "Admin credentials",
       credentials: {
-        email: { label: "Email", type: "email" },
+        email: { label: "Identifiant", type: "text" },
         password: { label: "Password", type: "password" }
       },
       authorize: async (credentials) => {

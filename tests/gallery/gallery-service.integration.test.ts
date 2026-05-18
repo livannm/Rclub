@@ -3,12 +3,12 @@ import { InMemoryGalleryRepository } from "@/lib/gallery/in-memory-gallery-repos
 import { GalleryService } from "@/lib/gallery/gallery-service";
 
 describe("GalleryService", () => {
-  it("returns Cash Out photos sorted by order", async () => {
+  it("returns Legend R photos sorted by order", async () => {
     const service = new GalleryService(new InMemoryGalleryRepository());
-    const photos = await service.listEventPhotos("cash-out");
+    const photos = await service.listEventPhotos("legend-r");
 
     expect(photos.length).toBeGreaterThan(0);
-    expect(photos[0]?.event_slug).toBe("cash-out");
+    expect(photos[0]?.event_slug).toBe("legend-r");
     expect(photos[0]?.order).toBe(1);
   });
 

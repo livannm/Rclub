@@ -23,7 +23,7 @@ test("navigates from gallery index to event gallery", async ({ page }) => {
 });
 
 test("direct access to event gallery displays photos", async ({ page }) => {
-  await page.goto("/galerie/cash-out");
+  await page.goto("/galerie/legend-r");
 
   await expect(page.getByTestId("gallery-photo-0")).toBeVisible();
 });

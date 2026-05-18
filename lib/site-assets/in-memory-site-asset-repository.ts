@@ -5,7 +5,7 @@ import type { SiteAssetRepository } from "@/lib/site-assets/site-asset-repositor
 const DEFAULTS: Partial<Record<SiteAssetKey, string>> = {
   logo: DEFAULT_LOGO_URL,
   home_hero_video: "/media/hero.mp4",
-  home_hero_poster: "/media/hero-poster.jpg"
+  home_hero_poster: "/media/hero-poster.png"
 };
 
 export class InMemorySiteAssetRepository implements SiteAssetRepository {

@@ -19,7 +19,7 @@ describe("SiteAssetService", () => {
     it("returns the default poster URL when no asset is set", async () => {
       const service = makeService();
       const url = await service.getHeroPoster();
-      expect(url).toBe("/media/hero-poster.jpg");
+      expect(url).toBe("/media/hero-poster.png");
     });
   });
 
