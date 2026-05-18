@@ -52,6 +52,10 @@ export default async function HomePage() {
           playsInline
           className="hero-video"
         />
+        <div className="hero-logo-wrap" aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={logoUrl} alt="" className="hero-logo" />
+        </div>
         <div className="hero-content">
           <p className="page-kicker">{t("kicker")}</p>
           <h1 className="page-title">{t("title")}</h1>

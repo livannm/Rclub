@@ -5,7 +5,13 @@
     "en": "EN"
   },
   "Layout": {
-    "logoAlt": "Rclub Strasbourg logo"
+    "logoAlt": "Rclub Strasbourg logo",
+    "navAgenda": "Events",
+    "navGalerie": "Gallery",
+    "navReservations": "Reservations",
+    "navPrivatisation": "Private hire",
+    "navOpenMenu": "Open menu",
+    "navCloseMenu": "Close menu"
   },
   "Home": {
     "title": "Rclub",

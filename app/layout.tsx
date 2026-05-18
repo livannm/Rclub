@@ -4,6 +4,7 @@ import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { LocaleSwitcher } from "@/components/locale-switcher";
+import { SiteNav } from "@/components/site-nav";
 import { siteAssetService } from "@/lib/site-assets/site-asset-service-instance";
 import "./globals.css";
 
@@ -49,6 +50,12 @@ export default async function RootLayout({
   const messages = await getMessages();
   const t = await getTranslations("Layout");
   const logoUrl = await siteAssetService.getLogo();
+  const navLinks = [
+    { href: "/agenda", label: t("navAgenda") },
+    { href: "/galerie", label: t("navGalerie") },
+    { href: "/reservations", label: t("navReservations") },
+    { href: "/privatisation", label: t("navPrivatisation") },
+  ];
 
   return (
     <html lang={locale} className={`${cormorant.variable} ${dmSans.variable}`}>
@@ -64,6 +71,7 @@ export default async function RootLayout({
                 className="site-logo"
               />
             </Link>
+            <SiteNav links={navLinks} />
             <LocaleSwitcher />
           </header>
           {children}
