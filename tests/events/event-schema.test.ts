@@ -21,6 +21,16 @@ describe("eventSchema", () => {
     expect(eventSchema.parse(validPayload)).toMatchObject(validPayload);
   });
 
+  it("accepts local media paths", () => {
+    expect(
+      eventSchema.parse({
+        ...validPayload,
+        cover_image_url: "/media/events/legend-r.png",
+        hero_video_url: "/media/hero.mp4"
+      })
+    ).toBeTruthy();
+  });
+
   it("rejects duplicated invalid end date", () => {
     const parsed = eventSchema.safeParse({
       ...validPayload,

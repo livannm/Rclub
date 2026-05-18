@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { mediaUrlSchema } from "@/lib/events/media-url";
 
 export const eventSchema = z
   .object({
@@ -14,9 +15,9 @@ export const eventSchema = z
     starts_at: z.string().datetime(),
     ends_at: z.string().datetime().optional(),
     location: z.string().min(2).default("Rclub Strasbourg"),
-    cover_image_url: z.string().url(),
-    hero_video_url: z.string().url().optional(),
-    ticket_url: z.string().url().optional(),
+    cover_image_url: mediaUrlSchema,
+    hero_video_url: mediaUrlSchema.optional(),
+    ticket_url: mediaUrlSchema.optional(),
     is_published: z.boolean().default(false)
   })
   .superRefine((value, context) => {

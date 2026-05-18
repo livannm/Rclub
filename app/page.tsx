@@ -18,6 +18,7 @@ export async function generateMetadata() {
 export default async function HomePage() {
   const locale = resolveLocale(await getLocale());
   const t = await getTranslations("Home");
+  const tEvent = await getTranslations("EventDetail");
   const events = await eventService.listPublishedUpcoming();
   const nextEvent = events[0];
   const localizedNextEvent = nextEvent ? getLocalizedEventContent(nextEvent, locale) : null;
@@ -80,33 +81,29 @@ export default async function HomePage() {
           {!nextEvent || !localizedNextEvent ? (
             <p data-testid="home-next-event-empty">{t("nextEventEmpty")}</p>
           ) : (
-            <article className="event-card">
-              {nextEvent.cover_image_url ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={nextEvent.cover_image_url}
-                  alt={localizedNextEvent.title}
-                  loading="lazy"
-                  className="event-card-image"
-                />
-              ) : null}
-              <h2 data-testid="home-next-event-title">{localizedNextEvent.title}</h2>
-              <p>{localizedNextEvent.description}</p>
-              <p>
-                {t("startsAt")}: {formatEventDateTime(nextEvent.starts_at, locale)}
-              </p>
+            <article className="event-card event-card-interactive">
+              <Link href={`/agenda/${nextEvent.slug}`} className="event-card-hit-area">
+                {nextEvent.cover_image_url ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={nextEvent.cover_image_url}
+                    alt={localizedNextEvent.title}
+                    loading="lazy"
+                    className="event-card-image"
+                  />
+                ) : null}
+                <h2 data-testid="home-next-event-title">{localizedNextEvent.title}</h2>
+                <p>{localizedNextEvent.description}</p>
+                <p>
+                  {t("startsAt")}: {formatEventDateTime(nextEvent.starts_at, locale)}
+                </p>
+                <span className="event-card-cta">{tEvent("viewDetails")} →</span>
+              </Link>
             </article>
           )}
         </div>
       </section>
 
-      <nav aria-label={t("mainNavAriaLabel")} className="page-shell nav-grid">
-        <Link href="/agenda">{t("agendaLink")}</Link>
-        <Link href="/galerie">{t("galleryLink")}</Link>
-        <Link href="/reservations">{t("reservationLink")}</Link>
-        <Link href="/privatisation">{t("privatisationLink")}</Link>
-        <Link href="/admin">{t("adminLink")}</Link>
-      </nav>
     </main>
   );
 }

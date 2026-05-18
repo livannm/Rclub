@@ -119,6 +119,41 @@ export async function buildLocalizedPageMetadata(
   };
 }
 
+export function buildEventDetailMetadata(
+  event: ClubEvent,
+  locale: AppLocale,
+  baseUrl = getSiteUrl()
+): Metadata {
+  const localized = getLocalizedEventContent(event, locale);
+  const url = absoluteUrl(`/agenda/${event.slug}`, baseUrl);
+  const title = `${localized.title} - Rclub Strasbourg`;
+  const description = localized.description;
+  const coverUrl = event.cover_image_url.startsWith("/")
+    ? absoluteUrl(event.cover_image_url, baseUrl)
+    : event.cover_image_url;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "Rclub Strasbourg",
+      locale: locale === "en" ? "en_US" : "fr_FR",
+      type: "article",
+      images: [{ url: coverUrl, alt: localized.title }]
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [coverUrl]
+    }
+  };
+}
+
 export function buildEventGalleryMetadata(event: ClubEvent, locale: AppLocale, baseUrl = getSiteUrl()): Metadata {
   const localized = getLocalizedEventContent(event, locale);
   const url = absoluteUrl(`/galerie/${event.slug}`, baseUrl);
@@ -182,7 +217,7 @@ export function buildEventJsonLd(event: ClubEvent, locale: AppLocale, baseUrl = 
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     image: [event.cover_image_url],
-    url: absoluteUrl(`/agenda#${event.slug}`, baseUrl),
+    url: absoluteUrl(`/agenda/${event.slug}`, baseUrl),
     location: {
       "@type": "Place",
       name: event.location ?? "Rclub Strasbourg",

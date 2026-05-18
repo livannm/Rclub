@@ -13,6 +13,16 @@
     "navOpenMenu": "Ouvrir le menu",
     "navCloseMenu": "Fermer le menu"
   },
+  "Footer": {
+    "tagline": "Nightlife premium à Strasbourg",
+    "contactTitle": "Contact",
+    "navTitle": "Explorer",
+    "agenda": "Agenda",
+    "gallery": "Galerie",
+    "reservations": "Réservations",
+    "privatisation": "Privatisation",
+    "copyright": "© {year} Rclub Strasbourg. Tous droits réservés."
+  },
   "Home": {
     "title": "Rclub",
     "kicker": "Nightlife premium",
@@ -34,6 +44,15 @@
     "startsAt": "Début",
     "location": "Lieu",
     "ticket": "Billetterie"
+  },
+  "EventDetail": {
+    "kicker": "Soirée Rclub",
+    "backToAgenda": "Retour à l'agenda",
+    "location": "Lieu",
+    "ticket": "Billetterie",
+    "reserve": "Réserver",
+    "gallery": "Voir la galerie",
+    "viewDetails": "Voir les détails"
   },
   "GalleryIndex": {
     "title": "Galerie",

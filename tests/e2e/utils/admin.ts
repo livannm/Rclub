@@ -2,8 +2,8 @@ import { expect, type Page } from "@playwright/test";
 
 export async function loginAsAdmin(page: Page): Promise<void> {
   await page.goto("/admin/login");
-  await page.getByLabel("Email").fill("admin@rclub.fr");
-  await page.getByLabel("Mot de passe").fill("secret1234");
+  await page.getByLabel("Identifiant").fill("adminRclub");
+  await page.getByLabel("Mot de passe").fill("strasbourgRClub");
   await page.getByRole("button", { name: "Se connecter" }).click();
   await expect(page).toHaveURL(/\/admin$/);
 }
@@ -36,19 +36,18 @@ export async function createEvent(
     ticketUrl = "https://example.com/tickets"
   }: CreateEventInput
 ): Promise<void> {
-  await page.goto("/admin/events");
-  const createSection = page.locator("section").filter({ hasText: "Creer un evenement" });
-  await createSection.getByLabel("Slug").fill(slug);
-  await createSection.getByLabel("Titre (FR)").fill(title);
-  await createSection.getByLabel("Titre (EN)").fill(title);
-  await createSection.getByLabel("Description (FR)").fill(descriptionFr);
-  await createSection.getByLabel("Description (EN)").fill(descriptionEn);
-  await createSection.getByLabel("Debut").fill(startsAt);
-  await createSection.getByLabel("Fin").fill(endsAt);
-  await createSection.getByLabel("Lieu").fill(location);
-  await createSection.getByLabel("Cover image URL").fill(coverImageUrl);
-  await createSection.getByLabel("Hero video URL").fill(heroVideoUrl);
-  await createSection.getByLabel("Ticket URL").fill(ticketUrl);
-  await createSection.getByLabel("Publier").check();
-  await createSection.getByRole("button", { name: "Ajouter l'evenement" }).click();
+  await page.goto("/admin/events/new");
+  await page.getByLabel("Slug").fill(slug);
+  await page.getByLabel("Titre (FR)").fill(title);
+  await page.getByLabel("Titre (EN)").fill(title);
+  await page.getByLabel("Description (FR)").fill(descriptionFr);
+  await page.getByLabel("Description (EN)").fill(descriptionEn);
+  await page.getByLabel("Début").fill(startsAt);
+  await page.getByLabel("Fin").fill(endsAt);
+  await page.getByLabel("Lieu").fill(location);
+  await page.getByLabel("Image de couverture").fill(coverImageUrl);
+  await page.getByLabel("Vidéo hero (optionnel)").fill(heroVideoUrl);
+  await page.getByLabel("Billetterie (optionnel)").fill(ticketUrl);
+  await page.getByLabel("Publier sur l'agenda").check();
+  await page.getByRole("button", { name: "Ajouter l'événement" }).click();
 }

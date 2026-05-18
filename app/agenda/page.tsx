@@ -1,8 +1,7 @@
+import { EventCard } from "@/components/event-card";
 import { buildLocalizedPageMetadata } from "@/lib/seo/metadata";
 import { eventService } from "@/lib/events/events-service-instance";
-import { getLocalizedEventContent } from "@/lib/events/event-localized";
 import { resolveLocale } from "@/i18n/locales";
-import { formatEventDateTime } from "@/lib/utils/format-date";
 import { getLocale, getTranslations } from "next-intl/server";
 
 export async function generateMetadata() {
@@ -12,6 +11,7 @@ export async function generateMetadata() {
 export default async function AgendaPage() {
   const locale = resolveLocale(await getLocale());
   const t = await getTranslations("Agenda");
+  const tDetail = await getTranslations("EventDetail");
   const events = await eventService.listPublishedUpcoming();
 
   return (
@@ -21,47 +21,18 @@ export default async function AgendaPage() {
       {events.length === 0 ? <p data-testid="agenda-empty">{t("empty")}</p> : null}
 
       <section className="card-grid" aria-label={t("title")}>
-        {events.map((event, index) => {
-          const localized = getLocalizedEventContent(event, locale);
-          const d = new Date(event.starts_at);
-          const eventDay = String(d.getDate()).padStart(2, "0");
-          const eventMonth = d
-            .toLocaleDateString(locale === "fr" ? "fr-FR" : "en-GB", { month: "short" })
-            .toUpperCase();
-
-          return (
-            <article id={event.slug} key={event.id} className="event-card">
-              <div className="event-date-badge" aria-hidden="true">
-                <span className="event-date-day">{eventDay}</span>
-                <span className="event-date-month">{eventMonth}</span>
-              </div>
-              {event.cover_image_url ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={event.cover_image_url}
-                  alt={localized.title}
-                  loading="lazy"
-                  className="event-card-image"
-                />
-              ) : null}
-              <h2 data-testid={`agenda-event-title-${index}`}>{localized.title}</h2>
-              <p>{localized.description}</p>
-              <p>
-                {t("startsAt")}: {formatEventDateTime(event.starts_at, locale)}
-              </p>
-              <p>
-                {t("location")}: {event.location}
-              </p>
-              {event.ticket_url ? (
-                <p>
-                  <a className="button button-ghost" href={event.ticket_url}>
-                    {t("ticket")}
-                  </a>
-                </p>
-              ) : null}
-            </article>
-          );
-        })}
+        {events.map((event, index) => (
+          <EventCard
+            key={event.id}
+            event={event}
+            locale={locale}
+            index={index}
+            startsAtLabel={t("startsAt")}
+            locationLabel={t("location")}
+            ticketLabel={t("ticket")}
+            detailsLabel={tDetail("viewDetails")}
+          />
+        ))}
       </section>
     </main>
   );

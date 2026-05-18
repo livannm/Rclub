@@ -69,7 +69,7 @@ describe("SEO metadata", () => {
       name: "Cash Out",
       startDate: "2099-08-01T22:00:00.000Z",
       image: ["https://example.com/cash-out.jpg"],
-      url: "https://club.example/agenda#cash-out",
+      url: "https://club.example/agenda/cash-out",
       offers: {
         "@type": "Offer",
         url: "https://tickets.example.com/cash-out"

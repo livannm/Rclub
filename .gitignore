@@ -49,3 +49,6 @@ test-results
 
 # build outputs
 dist
+
+# Media videos (copier en local via pnpm media:sync)
+*.mp4

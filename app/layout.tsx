@@ -4,6 +4,7 @@ import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { LocaleSwitcher } from "@/components/locale-switcher";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
 import { siteAssetService } from "@/lib/site-assets/site-asset-service-instance";
 import "./globals.css";
@@ -74,7 +75,10 @@ export default async function RootLayout({
             <SiteNav links={navLinks} />
             <LocaleSwitcher />
           </header>
-          {children}
+          <div className="site-body">
+            {children}
+            <SiteFooter />
+          </div>
         </NextIntlClientProvider>
       </body>
     </html>

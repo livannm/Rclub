@@ -10,8 +10,8 @@ test("redirects anonymous users from /admin to /admin/login", async ({ page }) =
 test("allows admin login and access to dashboard", async ({ page }) => {
   await page.goto("/admin");
 
-  await page.getByLabel("Email").fill("admin@rclub.fr");
-  await page.getByLabel("Mot de passe").fill("secret1234");
+  await page.getByLabel("Identifiant").fill("adminRclub");
+  await page.getByLabel("Mot de passe").fill("strasbourgRClub");
   await page.getByRole("button", { name: "Se connecter" }).click();
 
   await expect(page).toHaveURL(/\/admin$/);
@@ -22,7 +22,7 @@ test("allows admin login and access to dashboard", async ({ page }) => {
 test("shows an error for invalid login", async ({ page }) => {
   await page.goto("/admin/login");
 
-  await page.getByLabel("Email").fill("admin@rclub.fr");
+  await page.getByLabel("Identifiant").fill("adminRclub");
   await page.getByLabel("Mot de passe").fill("bad-password");
   await page.getByRole("button", { name: "Se connecter" }).click();
 

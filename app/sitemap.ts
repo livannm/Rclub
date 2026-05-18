@@ -16,14 +16,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const gallerySlugs = await galleryService.listEventSlugs();
   const galleryEvents = await Promise.all(gallerySlugs.map((slug) => eventService.findBySlug(slug)));
 
-  const publishedGalleryEvents = galleryEvents.filter((event): event is NonNullable<typeof event> => Boolean(event?.is_published));
+  const publishedGalleryEvents = galleryEvents.filter((event): event is NonNullable<typeof event> =>
+    Boolean(event?.is_published)
+  );
 
-  const dynamicEntries: MetadataRoute.Sitemap = publishedGalleryEvents.map((event) => ({
+  const upcomingEvents = await eventService.listPublishedUpcoming();
+
+  const galleryEntries: MetadataRoute.Sitemap = publishedGalleryEvents.map((event) => ({
     url: absoluteUrl(`/galerie/${event.slug}`, siteUrl),
     lastModified: new Date(event.updated_at),
     changeFrequency: "monthly",
     priority: 0.7
   }));
 
-  return [...staticEntries, ...dynamicEntries];
+  const eventEntries: MetadataRoute.Sitemap = upcomingEvents.map((event) => ({
+    url: absoluteUrl(`/agenda/${event.slug}`, siteUrl),
+    lastModified: new Date(event.updated_at),
+    changeFrequency: "weekly",
+    priority: 0.85
+  }));
+
+  return [...staticEntries, ...eventEntries, ...galleryEntries];
 }
