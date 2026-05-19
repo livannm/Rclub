@@ -74,6 +74,9 @@ export async function SiteFooter() {
               <li>
                 <Link href="/privatisation">{t("privatisation")}</Link>
               </li>
+              <li>
+                <Link href="/contact">{t("contact")}</Link>
+              </li>
             </ul>
           </section>
         </div>

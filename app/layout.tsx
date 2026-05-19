@@ -52,10 +52,12 @@ export default async function RootLayout({
   const t = await getTranslations("Layout");
   const logoUrl = await siteAssetService.getLogo();
   const navLinks = [
+    { href: "/", label: t("navAccueil") },
     { href: "/agenda", label: t("navAgenda") },
     { href: "/galerie", label: t("navGalerie") },
     { href: "/reservations", label: t("navReservations") },
     { href: "/privatisation", label: t("navPrivatisation") },
+    { href: "/contact", label: t("navContact") },
   ];
 
   return (

@@ -52,3 +52,8 @@ dist
 
 # Media videos (copier en local via pnpm media:sync)
 *.mp4
+
+# Prisma — fichiers locaux (migrations générées, base SQLite de dev)
+prisma/migrations/
+prisma/*.db
+prisma/*.db-journal

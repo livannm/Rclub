@@ -6,10 +6,12 @@
   },
   "Layout": {
     "logoAlt": "Logo Rclub Strasbourg",
+    "navAccueil": "Accueil",
     "navAgenda": "Agenda",
     "navGalerie": "Galerie",
     "navReservations": "Réservations",
     "navPrivatisation": "Privatisation",
+    "navContact": "Contact",
     "navOpenMenu": "Ouvrir le menu",
     "navCloseMenu": "Fermer le menu"
   },
@@ -24,6 +26,7 @@
     "gallery": "Galerie",
     "reservations": "Réservations",
     "privatisation": "Privatisation",
+    "contact": "Contact",
     "copyright": "© {year} Rclub Strasbourg. Tous droits réservés."
   },
   "Home": {
@@ -98,6 +101,20 @@
     "budgetPlaceholder": "Ex : 5k - 10k EUR",
     "message": "Message",
     "consent": "J'accepte le traitement de mes données (RGPD)"
+  },
+  "Contact": {
+    "title": "Contact",
+    "kicker": "Nous trouver",
+    "description": "Retrouvez-nous sur les réseaux ou venez nous rendre visite au 7 Quai des Pêcheurs à Strasbourg.",
+    "instagram": "Instagram",
+    "whatsapp": "WhatsApp",
+    "phone": "Téléphone",
+    "address": "Adresse",
+    "openInMaps": "Ouvrir dans Maps",
+    "followUs": "Suivez-nous",
+    "writeUs": "Écrivez-nous",
+    "callUs": "Appelez-nous",
+    "findUs": "Nous trouver"
   },
   "Seo": {
     "home": {

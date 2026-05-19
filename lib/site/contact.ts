@@ -3,8 +3,10 @@ export type ClubContact = {
   instagramHandle: string;
   phoneDisplay: string;
   phoneHref: string;
+  whatsappUrl: string;
   address: string;
   mapsUrl: string;
+  mapsEmbedUrl: string;
 };
 
 export function getClubContact(): ClubContact {
@@ -19,16 +21,24 @@ export function getClubContact(): ClubContact {
   const mapsUrl =
     process.env.NEXT_PUBLIC_CLUB_MAPS_URL ??
     `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+  const mapsEmbedUrl =
+    process.env.NEXT_PUBLIC_CLUB_MAPS_EMBED_URL ??
+    `https://maps.google.com/maps?q=${encodeURIComponent(address)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
 
   const handleMatch = instagramUrl.match(/instagram\.com\/([^/?#]+)/i);
   const instagramHandle = handleMatch?.[1] ? `@${handleMatch[1]}` : "@rclubstrasbourg";
+
+  const waNumber = phoneHref.replace(/^tel:\+?/, "");
+  const whatsappUrl = `https://wa.me/${waNumber}`;
 
   return {
     instagramUrl,
     instagramHandle,
     phoneDisplay,
     phoneHref,
+    whatsappUrl,
     address,
-    mapsUrl
+    mapsUrl,
+    mapsEmbedUrl
   };
 }
