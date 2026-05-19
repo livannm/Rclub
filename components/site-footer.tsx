@@ -19,33 +19,42 @@ export async function SiteFooter() {
             <h2 id="footer-contact-heading" className="site-footer-heading">
               {t("contactTitle")}
             </h2>
-            <ul className="site-footer-list">
-              <li>
-                <a
-                  href={contact.instagramUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-testid="footer-instagram"
-                >
-                  Instagram · {contact.instagramHandle}
-                </a>
-              </li>
-              <li>
-                <a href={contact.phoneHref} data-testid="footer-phone">
-                  {contact.phoneDisplay}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={contact.mapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-testid="footer-address"
-                >
-                  {contact.address}
-                </a>
-              </li>
-            </ul>
+            <dl className="site-footer-contact">
+              <div className="site-footer-contact-row">
+                <dt>{t("instagramLabel")}</dt>
+                <dd>
+                  <a
+                    href={contact.instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid="footer-instagram"
+                  >
+                    {contact.instagramHandle}
+                  </a>
+                </dd>
+              </div>
+              <div className="site-footer-contact-row">
+                <dt>{t("phoneLabel")}</dt>
+                <dd>
+                  <a href={contact.phoneHref} data-testid="footer-phone">
+                    {contact.phoneDisplay}
+                  </a>
+                </dd>
+              </div>
+              <div className="site-footer-contact-row">
+                <dt>{t("addressLabel")}</dt>
+                <dd>
+                  <a
+                    href={contact.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid="footer-address"
+                  >
+                    {contact.address}
+                  </a>
+                </dd>
+              </div>
+            </dl>
           </section>
 
           <section aria-labelledby="footer-nav-heading">

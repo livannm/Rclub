@@ -50,12 +50,10 @@ export default async function EventDetailPage({ params }: Props) {
 
       <article className="event-detail">
         {event.cover_image_url ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={event.cover_image_url}
-            alt={localized.title}
-            className="event-detail-cover"
-          />
+          <figure className="event-detail-cover">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={event.cover_image_url} alt={localized.title} />
+          </figure>
         ) : null}
 
         <header className="event-detail-header">

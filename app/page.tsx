@@ -76,7 +76,7 @@ export default async function HomePage() {
         aria-label={t("nextEventTitle")}
         className="page-shell home-highlight"
       >
-        <div className="section-panel">
+        <div className="section-panel spotlight-band">
           <p className="page-kicker">{t("nextEventTitle")}</p>
           {!nextEvent || !localizedNextEvent ? (
             <p data-testid="home-next-event-empty">{t("nextEventEmpty")}</p>
