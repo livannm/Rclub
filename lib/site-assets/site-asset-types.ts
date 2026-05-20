@@ -8,4 +8,4 @@ export type SiteAsset = {
   updatedAt: string;
 };
 
-export const DEFAULT_LOGO_URL = "/media/logo.svg";
+export const DEFAULT_LOGO_URL = "/media/logo.png";

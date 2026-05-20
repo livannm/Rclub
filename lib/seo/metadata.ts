@@ -7,39 +7,47 @@ import { resolveLocale } from "@/i18n/locales";
 
 export const defaultSiteUrl = "https://rclub.fr";
 
-export type SeoPageKey = "home" | "agenda" | "gallery" | "reservations" | "privatization";
+export type SeoPageKey =
+  | "home"
+  | "agenda"
+  | "gallery"
+  | "reservations"
+  | "privatization";
 
-export const seoPages: Record<SeoPageKey, { path: string; title: string; description: string }> = {
+export const seoPages: Record<
+  SeoPageKey,
+  { path: string; title: string; description: string }
+> = {
   home: {
     path: "/",
     title: "Rclub Strasbourg - Club premium, soirées et événements",
     description:
-      "Découvrez Rclub Strasbourg, une expérience nightlife premium avec agenda des soirées, galerie photos, réservations VIP et privatisations."
+      "Découvrez Rclub Strasbourg, une expérience nightlife premium avec agenda des soirées, galerie photos, réservations VIP et privatisations.",
   },
   agenda: {
     path: "/agenda",
     title: "Agenda des événements - Rclub Strasbourg",
     description:
-      "Consultez les prochaines soirées et événements de Rclub Strasbourg, avec dates, informations pratiques et liens de billetterie."
+      "Consultez les prochaines soirées et événements de Rclub Strasbourg, avec dates, informations pratiques et liens de billetterie.",
   },
   gallery: {
     path: "/galerie",
     title: "Galerie photos - Rclub Strasbourg",
     description:
-      "Revivez les soirées Rclub Strasbourg avec les galeries photos des événements publiés."
+      "Revivez les soirées Rclub Strasbourg avec les galeries photos des événements publiés.",
   },
   reservations: {
     path: "/reservations",
     title: "Réservations VIP - Rclub Strasbourg",
     description:
-      "Envoyez votre demande de réservation pour une soirée Rclub Strasbourg ou un service VIP."
+      "Envoyez votre demande de réservation pour une soirée Rclub Strasbourg ou un service VIP.",
   },
   privatization: {
     path: "/privatisation",
     title: "Privatisation - Rclub Strasbourg",
     description:
-      "Privatisez Rclub Strasbourg pour un événement privé, professionnel ou une soirée sur mesure."
-  }
+      "Privatisez Rclub Strasbourg pour un événement privé, professionnel ou une soirée sur mesure.",
+  },
 };
 
 function trimTrailingSlash(value: string) {
@@ -59,7 +67,10 @@ export function absoluteUrl(path: string, baseUrl = getSiteUrl()) {
   return `${normalizedBase}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
-export function buildPageMetadata(page: SeoPageKey, baseUrl = getSiteUrl()): Metadata {
+export function buildPageMetadata(
+  page: SeoPageKey,
+  baseUrl = getSiteUrl(),
+): Metadata {
   const config = seoPages[page];
   const url = absoluteUrl(config.path, baseUrl);
 
@@ -67,7 +78,7 @@ export function buildPageMetadata(page: SeoPageKey, baseUrl = getSiteUrl()): Met
     title: config.title,
     description: config.description,
     alternates: {
-      canonical: url
+      canonical: url,
     },
     openGraph: {
       title: config.title,
@@ -75,19 +86,19 @@ export function buildPageMetadata(page: SeoPageKey, baseUrl = getSiteUrl()): Met
       url,
       siteName: "Rclub Strasbourg",
       locale: "fr_FR",
-      type: "website"
+      type: "website",
     },
     twitter: {
       card: "summary_large_image",
       title: config.title,
-      description: config.description
-    }
+      description: config.description,
+    },
   };
 }
 
 export async function buildLocalizedPageMetadata(
   page: SeoPageKey,
-  baseUrl = getSiteUrl()
+  baseUrl = getSiteUrl(),
 ): Promise<Metadata> {
   const locale = resolveLocale(await getLocale());
   const t = await getTranslations(`Seo.${page}`);
@@ -101,7 +112,7 @@ export async function buildLocalizedPageMetadata(
     title,
     description,
     alternates: {
-      canonical: url
+      canonical: url,
     },
     openGraph: {
       title,
@@ -109,20 +120,20 @@ export async function buildLocalizedPageMetadata(
       url,
       siteName: "Rclub Strasbourg",
       locale: openGraphLocale,
-      type: "website"
+      type: "website",
     },
     twitter: {
       card: "summary_large_image",
       title,
-      description
-    }
+      description,
+    },
   };
 }
 
 export function buildEventDetailMetadata(
   event: ClubEvent,
   locale: AppLocale,
-  baseUrl = getSiteUrl()
+  baseUrl = getSiteUrl(),
 ): Metadata {
   const localized = getLocalizedEventContent(event, locale);
   const url = absoluteUrl(`/agenda/${event.slug}`, baseUrl);
@@ -143,18 +154,22 @@ export function buildEventDetailMetadata(
       siteName: "Rclub Strasbourg",
       locale: locale === "en" ? "en_US" : "fr_FR",
       type: "article",
-      images: [{ url: coverUrl, alt: localized.title }]
+      images: [{ url: coverUrl, alt: localized.title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [coverUrl]
-    }
+      images: [coverUrl],
+    },
   };
 }
 
-export function buildEventGalleryMetadata(event: ClubEvent, locale: AppLocale, baseUrl = getSiteUrl()): Metadata {
+export function buildEventGalleryMetadata(
+  event: ClubEvent,
+  locale: AppLocale,
+  baseUrl = getSiteUrl(),
+): Metadata {
   const localized = getLocalizedEventContent(event, locale);
   const url = absoluteUrl(`/galerie/${event.slug}`, baseUrl);
   const title = `${localized.title} - Galerie photos Rclub Strasbourg`;
@@ -164,7 +179,7 @@ export function buildEventGalleryMetadata(event: ClubEvent, locale: AppLocale, b
     title,
     description,
     alternates: {
-      canonical: url
+      canonical: url,
     },
     openGraph: {
       title,
@@ -176,20 +191,23 @@ export function buildEventGalleryMetadata(event: ClubEvent, locale: AppLocale, b
       images: [
         {
           url: event.cover_image_url,
-          alt: localized.title
-        }
-      ]
+          alt: localized.title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [event.cover_image_url]
-    }
+      images: [event.cover_image_url],
+    },
   };
 }
 
-export function buildOrganizationJsonLd(baseUrl = getSiteUrl(), logoUrl = "/media/logo.svg") {
+export function buildOrganizationJsonLd(
+  baseUrl = getSiteUrl(),
+  logoUrl = "/media/logo.png",
+) {
   return {
     "@context": "https://schema.org",
     "@type": "NightClub",
@@ -199,12 +217,16 @@ export function buildOrganizationJsonLd(baseUrl = getSiteUrl(), logoUrl = "/medi
     address: {
       "@type": "PostalAddress",
       addressLocality: "Strasbourg",
-      addressCountry: "FR"
-    }
+      addressCountry: "FR",
+    },
   };
 }
 
-export function buildEventJsonLd(event: ClubEvent, locale: AppLocale, baseUrl = getSiteUrl()) {
+export function buildEventJsonLd(
+  event: ClubEvent,
+  locale: AppLocale,
+  baseUrl = getSiteUrl(),
+) {
   const localized = getLocalizedEventContent(event, locale);
 
   return {
@@ -224,15 +246,15 @@ export function buildEventJsonLd(event: ClubEvent, locale: AppLocale, baseUrl = 
       address: {
         "@type": "PostalAddress",
         addressLocality: "Strasbourg",
-        addressCountry: "FR"
-      }
+        addressCountry: "FR",
+      },
     },
     offers: event.ticket_url
       ? {
           "@type": "Offer",
           url: event.ticket_url,
-          availability: "https://schema.org/InStock"
+          availability: "https://schema.org/InStock",
         }
-      : undefined
+      : undefined,
   };
 }

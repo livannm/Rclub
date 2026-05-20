@@ -6,7 +6,7 @@ import {
   buildEventJsonLd,
   buildOrganizationJsonLd,
   buildPageMetadata,
-  seoPages
+  seoPages,
 } from "@/lib/seo/metadata";
 
 const event: ClubEvent = {
@@ -24,7 +24,7 @@ const event: ClubEvent = {
   ticket_url: "https://tickets.example.com/cash-out",
   is_published: true,
   created_at: "2026-05-17T00:00:00.000Z",
-  updated_at: "2026-05-17T00:00:00.000Z"
+  updated_at: "2026-05-17T00:00:00.000Z",
 };
 
 describe("SEO metadata", () => {
@@ -35,45 +35,61 @@ describe("SEO metadata", () => {
 
       expect(metadata.title).toBe(page.title);
       expect(metadata.description).toBe(page.description);
-      expect(metadata.alternates?.canonical).toBe(absoluteUrl(page.path, "https://club.example"));
-      expect(metadata.openGraph?.url).toBe(absoluteUrl(page.path, "https://club.example"));
+      expect(metadata.alternates?.canonical).toBe(
+        absoluteUrl(page.path, "https://club.example"),
+      );
+      expect(metadata.openGraph?.url).toBe(
+        absoluteUrl(page.path, "https://club.example"),
+      );
       expect(metadata.twitter).toMatchObject({ card: "summary_large_image" });
     }
   });
 
   it("builds localized gallery metadata with cover image previews", () => {
-    const metadata = buildEventGalleryMetadata(event, "en", "https://club.example/");
+    const metadata = buildEventGalleryMetadata(
+      event,
+      "en",
+      "https://club.example/",
+    );
 
-    expect(metadata.title).toBe("Cash Out EN - Galerie photos Rclub Strasbourg");
+    expect(metadata.title).toBe(
+      "Cash Out EN - Galerie photos Rclub Strasbourg",
+    );
     expect(metadata.description).toBe("Premium party in Strasbourg");
-    expect(metadata.alternates?.canonical).toBe("https://club.example/galerie/cash-out");
+    expect(metadata.alternates?.canonical).toBe(
+      "https://club.example/galerie/cash-out",
+    );
     expect(metadata.openGraph?.locale).toBe("en_US");
     expect(metadata.openGraph?.images).toEqual([
       {
         url: "https://example.com/cash-out.jpg",
-        alt: "Cash Out EN"
-      }
+        alt: "Cash Out EN",
+      },
     ]);
   });
 
   it("builds structured data for the club and upcoming events", () => {
-    expect(buildOrganizationJsonLd("https://club.example", "/media/logo.svg")).toMatchObject({
+    expect(
+      buildOrganizationJsonLd("https://club.example", "/media/logo.png"),
+    ).toMatchObject({
       "@type": "NightClub",
       name: "Rclub Strasbourg",
       url: "https://club.example",
-      logo: "https://club.example/media/logo.svg"
+      logo: "https://club.example/media/logo.png",
     });
 
-    expect(buildEventJsonLd(event, "fr", "https://club.example")).toMatchObject({
-      "@type": "Event",
-      name: "Cash Out",
-      startDate: "2099-08-01T22:00:00.000Z",
-      image: ["https://example.com/cash-out.jpg"],
-      url: "https://club.example/agenda/cash-out",
-      offers: {
-        "@type": "Offer",
-        url: "https://tickets.example.com/cash-out"
-      }
-    });
+    expect(buildEventJsonLd(event, "fr", "https://club.example")).toMatchObject(
+      {
+        "@type": "Event",
+        name: "Cash Out",
+        startDate: "2099-08-01T22:00:00.000Z",
+        image: ["https://example.com/cash-out.jpg"],
+        url: "https://club.example/agenda/cash-out",
+        offers: {
+          "@type": "Offer",
+          url: "https://tickets.example.com/cash-out",
+        },
+      },
+    );
   });
 });

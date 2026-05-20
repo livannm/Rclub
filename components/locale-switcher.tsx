@@ -15,7 +15,7 @@ function persistLocale(locale: AppLocale) {
   document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=${COOKIE_MAX_AGE_SECONDS}; samesite=lax`;
 }
 
-export function LocaleSwitcher() {
+export function LocaleSwitcher({ className }: { className?: string }) {
   const t = useTranslations("LocaleSwitcher");
   const locale = useLocale() as AppLocale;
   const pathname = usePathname();
@@ -32,7 +32,10 @@ export function LocaleSwitcher() {
   }
 
   return (
-    <nav aria-label={t("label")} className="locale-switcher">
+    <nav
+      aria-label={t("label")}
+      className={className ? `locale-switcher ${className}` : "locale-switcher"}
+    >
       <button
         data-testid="locale-switch-fr"
         type="button"

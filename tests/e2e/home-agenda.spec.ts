@@ -1,32 +1,20 @@
 import { expect, test } from "@playwright/test";
-import { createEvent, loginAsAdmin } from "./utils/admin";
+
+/** Ordre attendu des deux premiers evenements (lib/seed/demo-content). */
+const FIRST_UPCOMING_TITLE_FR = "Vendredi 8 Mai";
+const SECOND_UPCOMING_TITLE_FR = "Take Me Back";
 
 test("home highlights nearest event and agenda is sorted", async ({ page }) => {
-  const suffix = Date.now();
-  const earlyTitle = `Evenement proche ${suffix}`;
-  const lateTitle = `Evenement tardif ${suffix}`;
-
-  await loginAsAdmin(page);
-  await createEvent(page, {
-    slug: `early-${suffix}`,
-    title: earlyTitle,
-    startsAt: "2026-05-20T20:00",
-    endsAt: "2026-05-20T23:00"
-  });
-  await expect(page.locator("article").filter({ hasText: `early-${suffix}` })).toBeVisible();
-
-  await createEvent(page, {
-    slug: `late-${suffix}`,
-    title: lateTitle,
-    startsAt: "2026-05-22T20:00",
-    endsAt: "2026-05-22T23:00"
-  });
-  await expect(page.locator("article").filter({ hasText: `late-${suffix}` })).toBeVisible();
-
   await page.goto("/");
-  await expect(page.getByTestId("home-next-event-title")).toHaveText(earlyTitle);
+  await expect(page.getByTestId("home-next-event-title")).toHaveText(
+    FIRST_UPCOMING_TITLE_FR,
+  );
 
   await page.goto("/agenda");
-  await expect(page.getByTestId("agenda-event-title-0")).toHaveText(earlyTitle);
-  await expect(page.getByTestId("agenda-event-title-1")).toHaveText(lateTitle);
+  await expect(page.getByTestId("agenda-event-title-0")).toHaveText(
+    FIRST_UPCOMING_TITLE_FR,
+  );
+  await expect(page.getByTestId("agenda-event-title-1")).toHaveText(
+    SECOND_UPCOMING_TITLE_FR,
+  );
 });

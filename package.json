@@ -24,15 +24,19 @@
   },
   "packageManager": "pnpm@10.20.0+sha512.cf9998222162dd85864d0a8102e7892e7ba4ceadebbf5a31f9c2fce48dfce317a9c53b9f6464d1ef9042cba2e02ae02a9f7c143a2b438cd93c91840f0192b9dd",
   "dependencies": {
+    "@gsap/react": "^2.1.2",
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "@tailwindcss/postcss": "^4.3.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "gsap": "^3.15.0",
     "lucide-react": "^1.16.0",
+    "motion": "^12.39.0",
     "next": "^16.2.6",
     "next-auth": "5.0.0-beta.31",
     "next-intl": "^4.12.0",
+    "ogl": "^1.0.11",
     "pg": "^8.21.0",
     "prisma": "^7.8.0",
     "react": "^19.2.6",
@@ -56,6 +60,7 @@
     "eslint-config-next": "^16.2.6",
     "jsdom": "^29.1.1",
     "playwright": "^1.60.0",
+    "shadcn": "^4.7.0",
     "typescript": "^6.0.3",
     "vitest": "^4.1.6"
   }

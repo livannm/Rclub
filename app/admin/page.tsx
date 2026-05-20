@@ -40,20 +40,23 @@ export default async function AdminDashboardPage() {
           <p>Connecté en tant que : {session?.user?.email ?? "admin"}</p>
         </div>
         <div className="admin-actions">
-          <a className="button button-secondary" href="/admin/events">Gérer les événements</a>
+          <a className="button button-secondary" href="/admin/events">
+            Gérer les événements
+          </a>
         </div>
       </header>
 
-      <section
-        aria-labelledby="stats-heading"
-        className="admin-card"
-      >
+      <section aria-labelledby="stats-heading" className="admin-card">
         <h2 id="stats-heading">Statistiques rapides</h2>
         <div className="stats-grid">
           <article className="section-panel">
             <h3>Événements</h3>
-            <p data-testid="admin-stat-events-total">Total : {stats.events.total}</p>
-            <p data-testid="admin-stat-events-published">Publiés : {stats.events.published}</p>
+            <p data-testid="admin-stat-events-total">
+              Total : {stats.events.total}
+            </p>
+            <p data-testid="admin-stat-events-published">
+              Publiés : {stats.events.published}
+            </p>
             <p data-testid="admin-stat-events-upcoming">
               À venir publiés : {stats.events.upcomingPublished}
             </p>
@@ -75,7 +78,9 @@ export default async function AdminDashboardPage() {
           </article>
           <article className="section-panel">
             <h3>Galerie</h3>
-            <p data-testid="admin-stat-gallery-photos">Photos: {stats.gallery.photosTotal}</p>
+            <p data-testid="admin-stat-gallery-photos">
+              Photos: {stats.gallery.photosTotal}
+            </p>
             <p data-testid="admin-stat-gallery-events">
               Événements avec photos : {stats.gallery.eventsWithPhotos}
             </p>
@@ -98,24 +103,19 @@ export default async function AdminDashboardPage() {
             className="site-logo"
           />
         )}
-        <form
-          action={updateLogoAction}
-          className="admin-form"
-        >
+        <form action={updateLogoAction} className="admin-form">
           <label htmlFor="logo_url">
             Nouvelle URL du logo
             <input
               id="logo_url"
               name="logo_url"
               type="url"
-              placeholder="https://... ou /media/logo.svg"
+              placeholder="https://... ou /media/logo.png"
               defaultValue={currentLogo}
               required
             />
           </label>
-          <button type="submit">
-            Mettre à jour le logo
-          </button>
+          <button type="submit">Mettre à jour le logo</button>
         </form>
       </section>
 
@@ -125,10 +125,7 @@ export default async function AdminDashboardPage() {
           URL actuelle&nbsp;:{" "}
           <code data-testid="current-hero-video-url">{currentHeroVideo}</code>
         </p>
-        <form
-          action={updateHeroVideoAction}
-          className="admin-form"
-        >
+        <form action={updateHeroVideoAction} className="admin-form">
           <label htmlFor="hero_video_url">
             Nouvelle URL de la vidéo hero
             <input
@@ -140,9 +137,7 @@ export default async function AdminDashboardPage() {
               required
             />
           </label>
-          <button type="submit">
-            Mettre à jour la vidéo
-          </button>
+          <button type="submit">Mettre à jour la vidéo</button>
         </form>
       </section>
     </main>

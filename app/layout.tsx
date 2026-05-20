@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
-import { LocaleSwitcher } from "@/components/locale-switcher";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
 import { siteAssetService } from "@/lib/site-assets/site-asset-service-instance";
@@ -75,7 +74,6 @@ export default async function RootLayout({
               />
             </Link>
             <SiteNav links={navLinks} />
-            <LocaleSwitcher />
           </header>
           <div className="site-body">
             {children}

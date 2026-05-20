@@ -26,7 +26,9 @@ describe("SiteAssetService", () => {
   describe("updateHeroVideo()", () => {
     it("updates the hero video URL and returns it", async () => {
       const service = makeService();
-      const returned = await service.updateHeroVideo("https://cdn.example.com/new-hero.mp4");
+      const returned = await service.updateHeroVideo(
+        "https://cdn.example.com/new-hero.mp4",
+      );
       expect(returned).toBe("https://cdn.example.com/new-hero.mp4");
       const url = await service.getHeroVideo();
       expect(url).toBe("https://cdn.example.com/new-hero.mp4");
@@ -45,7 +47,7 @@ describe("SiteAssetService", () => {
     it("returns the default logo URL when no logo has been updated", async () => {
       const service = makeService();
       const url = await service.getLogo();
-      expect(url).toBe("/media/logo.svg");
+      expect(url).toBe("/media/logo.png");
     });
   });
 

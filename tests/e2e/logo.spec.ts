@@ -9,8 +9,28 @@ test("site logo is visible on every page", async ({ page }) => {
   expect(src).toBeTruthy();
 });
 
-test("admin can update logo URL and it reflects on the site", async ({ page }) => {
-  const newLogoUrl = "/media/custom-logo.svg";
+test("hero brand mark uses combined caligraphie logo on home", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const wordmark = page.getByTestId("hero-wordmark");
+  await expect(wordmark).toBeVisible();
+  await expect(wordmark).toHaveAttribute(
+    "src",
+    "/media/caligraphie_logo.png",
+  );
+});
+
+test("home upcoming events carousel is visible", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByTestId("home-upcoming-events")).toBeVisible();
+  await expect(page.getByTestId("home-next-event-heading")).toBeVisible();
+});
+
+test("admin can update logo URL and it reflects on the site", async ({
+  page,
+}) => {
+  const newLogoUrl = "/media/custom-logo.png";
 
   await loginAsAdmin(page);
 
@@ -22,5 +42,8 @@ test("admin can update logo URL and it reflects on the site", async ({ page }) =
   await expect(page.getByTestId("current-logo-url")).toHaveText(newLogoUrl);
 
   await page.goto("/");
-  await expect(page.getByTestId("site-logo")).toHaveAttribute("src", newLogoUrl);
+  await expect(page.getByTestId("site-logo")).toHaveAttribute(
+    "src",
+    newLogoUrl,
+  );
 });

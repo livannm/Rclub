@@ -11,7 +11,7 @@ fi
 
 mkdir -p "$TARGET_DIR/events"
 
-cp "$SOURCE_DIR/logo_rclub.svg" "$TARGET_DIR/logo.svg"
+cp "$SOURCE_DIR/logo.png" "$TARGET_DIR/logo.png"
 cp "$SOURCE_DIR/hero.mp4" "$TARGET_DIR/hero.mp4"
 cp "$SOURCE_DIR/bg.png" "$TARGET_DIR/hero-poster.png"
 cp "$SOURCE_DIR/mobile-bg.png" "$TARGET_DIR/hero-poster-mobile.png"

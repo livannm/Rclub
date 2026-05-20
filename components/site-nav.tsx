@@ -3,12 +3,31 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import { LocaleSwitcher } from "@/components/locale-switcher";
+import { CollapseMenuIcon } from "@/components/icons/collapse-menu-icon";
 
 type NavLink = { href: string; label: string };
 
+const MOBILE_NAV_MQ = "(max-width: 768px)";
+
+function subscribeMobileNav(onStoreChange: () => void) {
+  const mq = window.matchMedia(MOBILE_NAV_MQ);
+  mq.addEventListener("change", onStoreChange);
+  return () => mq.removeEventListener("change", onStoreChange);
+}
+
+function getMobileNavSnapshot() {
+  return window.matchMedia(MOBILE_NAV_MQ).matches;
+}
+
 export function SiteNav({ links }: { links: NavLink[] }) {
   const [open, setOpen] = useState(false);
+  const isMobileNav = useSyncExternalStore(
+    subscribeMobileNav,
+    getMobileNavSnapshot,
+    () => false
+  );
   const pathname = usePathname();
   const t = useTranslations("Layout");
 
@@ -32,7 +51,7 @@ export function SiteNav({ links }: { links: NavLink[] }) {
   }, [open]);
 
   return (
-    <>
+    <div className="site-nav-root">
       <nav className="site-nav-desktop">
         {links.map(({ href, label }) => {
           const isActive = pathname === href || pathname.startsWith(href + "/");
@@ -48,6 +67,8 @@ export function SiteNav({ links }: { links: NavLink[] }) {
         })}
       </nav>
 
+      {!isMobileNav ? <LocaleSwitcher className="locale-switcher-header" /> : null}
+
       <button
         className="site-nav-burger"
         aria-label={t("navOpenMenu")}
@@ -56,9 +77,7 @@ export function SiteNav({ links }: { links: NavLink[] }) {
         onClick={() => setOpen(true)}
         type="button"
       >
-        <span />
-        <span />
-        <span />
+        <CollapseMenuIcon />
       </button>
 
       {open && (
@@ -80,27 +99,28 @@ export function SiteNav({ links }: { links: NavLink[] }) {
           onClick={() => setOpen(false)}
           type="button"
         >
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-            <line x1="3" y1="3" x2="15" y2="15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            <line x1="15" y1="3" x2="3" y2="15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
+          <CollapseMenuIcon />
         </button>
         <nav className="site-nav-drawer-nav">
-          {links.map(({ href, label }, i) => {
+          {links.map(({ href, label }) => {
             const isActive = pathname === href || pathname.startsWith(href + "/");
             return (
               <Link
                 key={href}
                 href={href}
                 className={`site-nav-drawer-link${isActive ? " is-active" : ""}`}
-                style={{ transitionDelay: open ? `${i * 55 + 80}ms` : "0ms" }}
               >
                 {label}
               </Link>
             );
           })}
         </nav>
+        {isMobileNav ? (
+          <div className="site-nav-drawer-footer">
+            <LocaleSwitcher className="locale-switcher-drawer" />
+          </div>
+        ) : null}
       </div>
-    </>
+    </div>
   );
 }

@@ -2,14 +2,14 @@ import { describe, expect, it, vi, beforeEach } from "vitest";
 import { NextRequest } from "next/server";
 
 vi.mock("@/auth", () => ({
-  auth: vi.fn()
+  auth: vi.fn(),
 }));
 
 vi.mock("@/lib/site-assets/site-asset-service-instance", () => ({
   siteAssetService: {
-    getLogo: vi.fn().mockResolvedValue("/media/logo.svg"),
-    updateLogo: vi.fn().mockImplementation(async (url: string) => url)
-  }
+    getLogo: vi.fn().mockResolvedValue("/media/logo.png"),
+    updateLogo: vi.fn().mockImplementation(async (url: string) => url),
+  },
 }));
 
 import { auth } from "@/auth";
@@ -21,7 +21,7 @@ function makeRequest(body: unknown) {
   return new NextRequest("http://localhost/api/admin/site-assets/logo", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
   });
 }
 
@@ -40,7 +40,7 @@ describe("PUT /api/admin/site-assets/logo", () => {
   it("returns 200 with updated logo URL when session is valid", async () => {
     mockAuth.mockResolvedValue({
       user: { id: "admin", email: "admin@rclub.fr" },
-      expires: "2099-01-01"
+      expires: "2099-01-01",
     } as never);
 
     const res = await PUT(makeRequest({ url: "https://example.com/logo.png" }));
@@ -53,7 +53,7 @@ describe("PUT /api/admin/site-assets/logo", () => {
   it("returns 400 when url field is missing", async () => {
     mockAuth.mockResolvedValue({
       user: { id: "admin", email: "admin@rclub.fr" },
-      expires: "2099-01-01"
+      expires: "2099-01-01",
     } as never);
 
     const res = await PUT(makeRequest({}));
@@ -63,13 +63,13 @@ describe("PUT /api/admin/site-assets/logo", () => {
   it("returns 400 when body is not valid JSON", async () => {
     mockAuth.mockResolvedValue({
       user: { id: "admin", email: "admin@rclub.fr" },
-      expires: "2099-01-01"
+      expires: "2099-01-01",
     } as never);
 
     const req = new NextRequest("http://localhost/api/admin/site-assets/logo", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: "not-json"
+      body: "not-json",
     });
 
     const res = await PUT(req);

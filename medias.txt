@@ -6,7 +6,9 @@ Synchronisation:
 
 Fichiers servis par Next.js sous /media/* (dossier public/media):
 
-  logo.svg              <- logo_rclub.svg
+  logo.png              <- logo_rclub.png
+  caligraphie_logo.png  <- composition héro (monogramme + calligraphie + Strasbourg)
+  caligraphie.png       <- calligraphie seule (legacy)
   hero.mp4              <- hero.mp4
   hero-poster.png       <- bg.png (poster desktop + fallback)
   hero-poster-mobile.png <- mobile-bg.png (poster mobile)
@@ -18,8 +20,12 @@ Fichiers servis par Next.js sous /media/* (dossier public/media):
   events/adults-only-v5.png      <- events/ADULTS ONLY V5.png
   events/r-family.png            <- events/R FAMILY.png
 
-Donnees de demo (lib/seed/demo-content.ts):
-  - 5 evenements publies avec affiches en couverture
-  - Galerie "legend-r" avec 3 visuels
+Evenements (admin / base existante — pas de seed d'evenements):
+  - ven-8-mai, take-me-back-15-mai, legend-r, adults-only-v5, r-family
+  - IDs de reference: lib/seed/demo-content.ts (DEMO_EVENT_IDS)
+
+Seed (prisma/seed.ts):
+  - assets site + galerie Legend R + demandes demo
+  - supprime les slugs e2e early-* / late-* si presents
 
 Note: hero.mp4 fait ~93 Mo — a migrer vers Cloudinary en production (voir tech.md).
