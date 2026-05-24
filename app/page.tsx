@@ -11,6 +11,7 @@ import { getLocalizedEventContent } from "@/lib/events/event-localized";
 import { formatEventDateTime } from "@/lib/utils/format-date";
 import { HeroCinematic } from "@/components/home/hero-cinematic";
 import { UpcomingEventsCarousel } from "@/components/home/upcoming-events-carousel";
+import { HomeBelowCarousel } from "@/components/home/sections/HomeBelowCarousel";
 
 export const dynamic = "force-dynamic";
 
@@ -73,6 +74,8 @@ export default async function HomePage() {
           coverImageUrl: event.cover_image_url,
         }))}
       />
+
+      <HomeBelowCarousel />
     </main>
   );
 }
