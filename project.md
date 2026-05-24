@@ -10,19 +10,27 @@ Créer un site web premium pour une boîte de nuit réputée à Strasbourg, avec
 - Fournir un socle technique propre, maintenable et extensible
 
 ## Pages attendues (MVP)
-- Accueil
-- Agenda des événements
-- Galerie (`/galerie`) → liste des événements ayant des photos
-- Galerie d'un événement (`/galerie/[slug]`) → photos de cet événement
-- Réservations
-- Contact
+- Accueil ✅ (hero vidéo, carousel 3D événements, infos pratiques, expérience, inside, CTA final)
+- Agenda des événements ✅
+- Galerie (`/galerie`) ✅ → liste des événements ayant des photos
+- Galerie d'un événement (`/galerie/[slug]`) ✅ → photos de cet événement
+- Réservations ✅
+- Privatisation ✅
+- Contact (intégré footer)
 
 ## Exigences fonctionnelles clés
-- Le site est en français par défaut
-- Le site doit être basculable en anglais (FR/EN)
-- La page d'accueil doit mettre en avant le prochain événement à venir (calculé selon la date)
-- Le hero de la page d'accueil est une vidéo avec le logo du club superposé
-- Les demandes de réservation doivent pouvoir être envoyées depuis le site
+- Le site est en français par défaut ✅
+- Le site doit être basculable en anglais (FR/EN) ✅
+- La page d'accueil doit mettre en avant le prochain événement à venir (calculé selon la date) ✅
+- Le hero de la page d'accueil est une vidéo avec le logo du club superposé ✅
+- Les demandes de réservation doivent pouvoir être envoyées depuis le site ✅
+- La page d'accueil suit un parcours émotion→information→confiance→projection→conversion ✅
+
+## Lacunes connues (phase 1)
+- Images secondaires `HomeInsideClub` : placeholders events (`r-family.png`, `legend-r.png`) — à remplacer par photos club définitives
+- Textes des sections sous carousel (PracticalInfo, Experience, Inside, FinalCta) codés en dur dans `messages/*.json` — pas de CMS admin pour les modifier (F-09 ne couvre que les textes hero)
+- Upload binaire médias non implémenté — seules les URLs sont gérées (phase 2 : Cloudinary)
+- Rate-limit anti-spam in-process : se remet à zéro au redémarrage (pas Redis)
 
 ## Schémas de données minimaux (v1)
 

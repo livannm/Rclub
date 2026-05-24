@@ -1,4 +1,4 @@
-# Design System V1.3 - Rclub
+# Design System V1.4 - Rclub
 
 ## Objectif
 Donner un cadre visuel clair à l'agent pour produire une interface premium, cohérente et maintenable, sans dérive de style.
@@ -11,8 +11,8 @@ Donner un cadre visuel clair à l'agent pour produire une interface premium, coh
 
 ## Décisions validées
 - Hero: approche cinématographique avec overlay fort pour plonger le visiteur dans l'atmosphère du club
-- Typographie: style moderne (sans-serif partout)
-- Couleur accent or: conservée sur `#D4AF37`
+- Typographie: **Cormorant Garamond** (display/titres) + **DM Sans** (UI/body) — variables CSS `--font-display` et `--font-body`
+- Couleur accent or: palette métallique centrée sur `#D4AF37` (`--gold-mid`) avec dégradé `--gold-metallic-*`
 - Responsive: priorité absolue à la lisibilité mobile
 
 ## Décisions verrouillées V1.2
@@ -20,8 +20,17 @@ Donner un cadre visuel clair à l'agent pour produire une interface premium, coh
 - Grille galerie mobile: `2 colonnes compactes` avec gouttière réduite
 - Densité interface admin: `confortable` (espacements lisibles, actions bien séparées)
 
-## Décision design additionnelle
+## Décisions V1.3
 - Composants majoritairement à angles droits (style 90 deg), sans coins arrondis par défaut
+- Carousel 3D homepage (OGL/WebGL) avec cartes événements en perspective
+
+## Décisions V1.4 — Sections sous carousel (homepage)
+- **Parcours page d'accueil :** émotion (hero + carousel) → information (infos pratiques) → confiance (expérience) → projection (inside) → conversion (CTA final)
+- **Infos pratiques :** grille 4 colonnes desktop, empilées mobile. Valeurs en `font-display` (Cormorant) pour contraster avec les labels body. Accent : liseré doré en haut de section + crochets dorés + barre gauche animée par item.
+- **Expérience Rclub :** numéros éditoriaux grands (`clamp(4rem, 7vw, 6rem)`, opacity 0.28, débord gauche). Séparateur fin doré entre numéro et titre. Barre gauche animée bas→haut au survol.
+- **Inside the club :** composition 1 grande image + 2 secondaires. Desktop : grid 2fr/1fr. Mobile : empilées. Overlay `rgba(0,0,0,0.55)` sur image principale. Images secondaires : `blurDataURL` dark pour fallback gracieux.
+- **CTA final :** bloc centré, bordure `--border-gold`, radial gradient or subtil. Deux boutons : primaire (or métallique) + secondaire (surface sombre).
+- **Hiérarchie titres :** `h2.sr-only` dans chaque section sans titre visible — préserve `h1 → h2 → h3` pour les lecteurs d'écran.
 
 ## Principes UI non négociables
 - Lisibilité d'abord: contraste fort texte/fond

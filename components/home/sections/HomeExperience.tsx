@@ -26,6 +26,8 @@ export async function HomeExperience() {
       <div className="home-section">
         <div className="home-experience-header">
           <p className="page-kicker">{t("experienceEyebrow")}</p>
+          {/* Heading visually hidden — preserves h1→h2→h3 document outline */}
+          <h2 className="sr-only">{t("experienceTitle")}</h2>
         </div>
         <div className="home-experience-grid">
           {cards.map((card) => (

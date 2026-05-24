@@ -55,6 +55,7 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 | D-05    | Galerie Cash Out                          | Codex | done   | lint+typecheck+build OK | -   | Galerie par événement en grille responsive 2 colonnes mobile, media cards stables                                                |
 | D-06    | Interface admin                           | Codex | done   | lint+typecheck+build OK | -   | Dashboard, login et gestion événements harmonisés avec panneaux admin, stats, formulaires et listes photos                       |
 | D-07    | Responsive & accessibilité                | Codex | review | lint+typecheck+build OK | -   | Breakpoints CSS, focus visible, tailles cibles 44px, contrastes tokens; QA visuelle Playwright multi-viewports encore à exécuter |
+| D-08    | Sections sous carousel (accueil)          | Codex | done   | lint+typecheck+build+e2e OK | -   | HomePracticalInfo, HomeExperience, HomeInsideClub, HomeFinalCta + HomeBelowCarousel; i18n FR/EN; hiérarchie titres sr-only; sécurité mapsUrl; blurDataURL dark fallback |
 
 ## Journal des décisions
 
@@ -77,6 +78,9 @@ Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et pl
 | 2026-05-17 | X-02 livré avec métadonnées SEO avancées, sitemap/robots et JSON-LD homepage | Améliore l’indexation des pages publiques et protège admin/API de l’indexation | Codex |
 | 2026-05-17 | X-03 livré avec service de statistiques dashboard admin et bloc `Statistiques rapides` | Donne une synthèse admin des événements, demandes et photos | Codex |
 | 2026-05-17 | Passe P3 design livrée: tokens globaux, hero vidéo, cartes agenda/galerie, formulaires, admin et responsive CSS | Harmonise l'expérience publique et admin selon `design.md`; reste une QA visuelle multi-viewports à faire | Codex |
+| 2026-05-24 | D-08 livré: 4 sections sous carousel (PracticalInfo, Experience, InsideClub, FinalCta) + orchestrateur HomeBelowCarousel, i18n FR/EN, tests e2e | Complète le parcours homepage émotion→information→confiance→projection→conversion | Codex |
+| 2026-05-24 | Correction sécurité mapsUrl: validation `https://` avant usage dans `<a href>` (lib/site/contact.ts) | Empêche injection d'URL arbitraire via env var non contrôlée | Codex |
+| 2026-05-24 | Correction accessibilité: ajout `<h2 className="sr-only">` dans HomeExperience pour préserver h1→h2→h3 | Respecte WCAG 2.4.6 — hiérarchie de titres pour lecteurs d'écran | Codex |
 
 ## Blocages ouverts
 

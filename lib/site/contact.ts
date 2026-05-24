@@ -25,9 +25,10 @@ export function getClubContact(): ClubContact {
     `tel:${phoneDisplay.replace(/\s/g, "")}`;
   const address =
     process.env.NEXT_PUBLIC_CLUB_ADDRESS ?? "7 Quai des Pêcheurs, 67000 Strasbourg";
+  const rawMapsUrl = process.env.NEXT_PUBLIC_CLUB_MAPS_URL;
+  const safeMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
   const mapsUrl =
-    process.env.NEXT_PUBLIC_CLUB_MAPS_URL ??
-    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+    rawMapsUrl && /^https:\/\//i.test(rawMapsUrl) ? rawMapsUrl : safeMapsUrl;
   const mapsEmbedUrl =
     process.env.NEXT_PUBLIC_CLUB_MAPS_EMBED_URL ??
     `https://maps.google.com/maps?q=${encodeURIComponent(address)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
