@@ -1,6 +1,6 @@
 import type { SiteAssetKey } from "@prisma/client";
 import { loadProjectEnv } from "../lib/seed/load-env";
-import { DEMO_EVENT_IDS, DEMO_GALLERY_PHOTOS } from "../lib/seed/demo-content";
+import { DEMO_EVENT_IDS, DEMO_EVENTS, DEMO_GALLERY_PHOTOS } from "../lib/seed/demo-content";
 
 loadProjectEnv();
 
@@ -52,6 +52,39 @@ async function cleanupE2eTestEvents(prisma: Awaited<ReturnType<typeof getPrisma>
   });
   if (removed.count > 0) {
     console.log(`Seed Rclub — ${removed.count} evenement(s) e2e supprime(s).`);
+  }
+}
+
+async function seedEvents(prisma: Awaited<ReturnType<typeof getPrisma>>) {
+  for (const event of DEMO_EVENTS) {
+    await prisma.event.upsert({
+      where: { id: event.id },
+      update: {
+        slug: event.slug,
+        titleFr: event.title_fr,
+        titleEn: event.title_en,
+        descriptionFr: event.description_fr,
+        descriptionEn: event.description_en,
+        startsAt: new Date(event.starts_at),
+        endsAt: event.ends_at ? new Date(event.ends_at) : null,
+        location: event.location ?? "Rclub Strasbourg",
+        coverImageUrl: event.cover_image_url,
+        isPublished: event.is_published,
+      },
+      create: {
+        id: event.id,
+        slug: event.slug,
+        titleFr: event.title_fr,
+        titleEn: event.title_en,
+        descriptionFr: event.description_fr,
+        descriptionEn: event.description_en,
+        startsAt: new Date(event.starts_at),
+        endsAt: event.ends_at ? new Date(event.ends_at) : null,
+        location: event.location ?? "Rclub Strasbourg",
+        coverImageUrl: event.cover_image_url,
+        isPublished: event.is_published,
+      },
+    });
   }
 }
 
@@ -159,6 +192,9 @@ async function main() {
 
   console.log("Seed Rclub — nettoyage evenements e2e...");
   await cleanupE2eTestEvents(prisma);
+
+  console.log("Seed Rclub — evenements demo...");
+  await seedEvents(prisma);
 
   console.log("Seed Rclub — galerie Legend R...");
   await seedGallery(prisma);

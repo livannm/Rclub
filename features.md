@@ -20,6 +20,12 @@
 - `F-11` Gérer les photos d'un événement depuis l'admin (upload / suppression)
 - `F-12` Changer la vidéo du hero
 
+### P1 (suite — gestion avancée des réservations)
+- `F-13` Dashboard réservations : vue agrégée par soir (nb confirmées, en attente, refusées, guests)
+- `F-14` Accepter/refuser une demande avec email automatique au client
+- `F-15` Ajouter une réservation manuellement depuis l'admin
+- `F-16` Modifier une réservation confirmée (avec option notifier le client)
+
 ### P2 (optimisation / confort)
 - Durcissement anti-spam des formulaires (rate limit, honeypot/captcha)
 - Optimisations SEO avancées
@@ -181,6 +187,82 @@ Scenario: Mettre à jour la vidéo hero
   Given je suis connecté en admin
   When je remplace la vidéo du hero par une source valide
   Then la nouvelle vidéo est affichée sur la page d'accueil
+```
+
+### Feature `F-13`: Dashboard réservations par soir
+```gherkin
+Scenario: Voir le récap des réservations par événement/date
+  Given je suis connecté en admin
+  When j'accède à la section Réservations
+  Then je vois un tableau regroupant les réservations par soir
+  And chaque ligne affiche : date, nom de l'événement, nb confirmées, nb en attente, nb refusées, total guests confirmés
+  And les soirs à venir sont visuellement distincts des soirs passés
+
+Scenario: Accéder au détail d'un soir
+  Given je suis sur le dashboard réservations
+  When je clique sur une ligne (un soir)
+  Then je vois la liste complète des réservations pour ce soir
+```
+
+### Feature `F-14`: Accepter ou refuser une demande de réservation
+```gherkin
+Scenario: Accepter une demande
+  Given je suis connecté en admin
+  And une demande de réservation avec statut `new` ou `reviewed` existe
+  When je clique sur "Confirmer"
+  And j'enregistre
+  Then la demande passe au statut `confirmed`
+  And un email de confirmation est envoyé automatiquement au client
+  And la date de confirmation est enregistrée
+
+Scenario: Refuser une demande
+  Given je suis connecté en admin
+  And une demande de réservation existe
+  When je clique sur "Refuser"
+  And j'enregistre
+  Then la demande passe au statut `refused`
+  And un email de refus courtois est envoyé automatiquement au client
+  And la date de refus est enregistrée
+
+Scenario: Ajouter une note interne avant décision
+  Given je suis connecté en admin
+  When je saisis une note interne sur une fiche de réservation
+  Then la note est enregistrée et visible uniquement par l'admin
+  And elle n'apparaît pas dans les emails envoyés au client
+```
+
+### Feature `F-15`: Ajouter une réservation manuellement
+```gherkin
+Scenario: Créer une réservation depuis l'admin
+  Given je suis connecté en admin
+  When je clique sur "Nouvelle réservation"
+  And je remplis les champs (nom, email, téléphone, événement ou date, nb personnes)
+  And j'enregistre
+  Then la réservation est créée avec le statut `confirmed`
+  And elle apparaît dans le dashboard réservations pour le bon soir
+
+Scenario: Envoyer un email de confirmation lors de la création manuelle
+  Given je suis en train de créer une réservation manuellement
+  When je coche l'option "Notifier le client par email"
+  And j'enregistre
+  Then un email de confirmation est envoyé au client
+```
+
+### Feature `F-16`: Modifier une réservation confirmée
+```gherkin
+Scenario: Modifier les informations d'une réservation confirmée
+  Given je suis connecté en admin
+  And une réservation avec statut `confirmed` existe
+  When je modifie le nombre de personnes, le nom ou le téléphone
+  And j'enregistre sans cocher "Notifier le client"
+  Then les informations sont mises à jour
+  And aucun email n'est envoyé
+
+Scenario: Notifier le client après modification
+  Given je suis en train de modifier une réservation confirmée
+  When je coche "Notifier le client par email"
+  And j'enregistre
+  Then un email récapitulatif avec les nouvelles informations est envoyé au client
 ```
 
 ## Points à préciser (recommandé)

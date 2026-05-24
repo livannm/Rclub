@@ -10,6 +10,7 @@ import {
 } from "@/lib/admin/event-actions";
 import { eventService } from "@/lib/events/events-service-instance";
 import { galleryService } from "@/lib/gallery/gallery-service-instance";
+import { reservationService } from "@/lib/reservations/reservation-service-instance";
 
 type EditEventPageProps = {
   params: Promise<{ id: string }>;
@@ -32,7 +33,10 @@ export default async function EditEventPage({ searchParams, params }: EditEventP
     notFound();
   }
 
-  const photos = await galleryService.getPhotosForEvent(event.id);
+  const [photos, eventReservations] = await Promise.all([
+    galleryService.getPhotosForEvent(event.id),
+    reservationService.listAll().then((all) => all.filter((r) => r.event_id === id))
+  ]);
 
   return (
     <main className="admin-shell">
@@ -80,6 +84,49 @@ export default async function EditEventPage({ searchParams, params }: EditEventP
             Supprimer l&apos;événement
           </button>
         </form>
+      </section>
+
+      <section className="admin-card admin-section">
+        <div className="admin-section-head">
+          <h2>
+            Réservations{" "}
+            {eventReservations.length > 0 && (
+              <span className="res-pending-badge" style={{ marginLeft: "0.5rem" }}>
+                {eventReservations.length}
+              </span>
+            )}
+          </h2>
+          <Link
+            className="button button-secondary"
+            href={`/admin/reservations/groupe/event_${event.id}`}
+          >
+            Voir toutes →
+          </Link>
+        </div>
+        {eventReservations.length === 0 ? (
+          <p style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>
+            Aucune réservation pour cet événement.
+          </p>
+        ) : (
+          <div className="res-event-summary">
+            {(["confirmed", "new", "reviewed", "contacted", "refused"] as const).map((status) => {
+              const count = eventReservations.filter((r) => r.status === status).length;
+              if (count === 0) return null;
+              const labels: Record<string, string> = {
+                confirmed: "Confirmées",
+                new: "Nouvelles",
+                reviewed: "Examinées",
+                contacted: "Contactées",
+                refused: "Refusées"
+              };
+              return (
+                <span key={status} className={`res-event-stat res-status-${status}`}>
+                  <strong>{count}</strong> {labels[status]}
+                </span>
+              );
+            })}
+          </div>
+        )}
       </section>
 
       <section

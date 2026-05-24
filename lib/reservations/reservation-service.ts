@@ -1,5 +1,5 @@
 import { ZodError } from "zod";
-import { reservationSchema } from "@/lib/reservations/reservation-schema";
+import { adminReservationSchema, reservationSchema } from "@/lib/reservations/reservation-schema";
 import type { ReservationRepository } from "@/lib/reservations/reservation-repository";
 
 export class ReservationServiceError extends Error {
@@ -19,12 +19,45 @@ export class ReservationService {
       if (error instanceof ZodError) {
         throw new ReservationServiceError(error.issues[0]?.message ?? "Reservation invalide.");
       }
-
       throw error;
     }
   }
 
+  async createByAdmin(input: unknown) {
+    try {
+      const payload = adminReservationSchema.parse(input);
+      return this.repository.createByAdmin(payload);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        throw new ReservationServiceError(error.issues[0]?.message ?? "Données invalides.");
+      }
+      throw error;
+    }
+  }
+
+  async findById(id: string) {
+    return this.repository.findById(id);
+  }
+
   async listAll() {
     return this.repository.listAll();
+  }
+
+  async confirm(id: string, adminNotes?: string) {
+    return this.repository.updateStatus(id, "confirmed", {
+      adminNotes,
+      notifiedAt: new Date()
+    });
+  }
+
+  async refuse(id: string, adminNotes?: string) {
+    return this.repository.updateStatus(id, "refused", {
+      adminNotes,
+      notifiedAt: new Date()
+    });
+  }
+
+  async update(id: string, patch: Parameters<ReservationRepository["update"]>[1]) {
+    return this.repository.update(id, patch);
   }
 }

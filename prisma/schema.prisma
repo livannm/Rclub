@@ -47,18 +47,26 @@ model EventMedia {
 }
 
 model ReservationRequest {
-  id           String                    @id @default(uuid())
-  fullName     String
-  email        String
-  phone        String
-  eventId      String?
-  dateRequested DateTime?
-  guestCount   Int
-  message      String?
-  status       ReservationRequestStatus  @default(new)
-  sourceLocale String
-  consentRgpd  Boolean
-  createdAt    DateTime                  @default(now())
+  id             String                   @id @default(uuid())
+  fullName       String
+  email          String
+  phone          String
+  eventId        String?
+  dateRequested  DateTime?
+  guestCount     Int
+  message        String?
+  status         ReservationRequestStatus @default(new)
+  sourceLocale   String
+  consentRgpd    Boolean
+  adminNotes     String?
+  notifiedAt     DateTime?
+  confirmedAt    DateTime?
+  refusedAt      DateTime?
+  createdByAdmin Boolean                  @default(false)
+  arrivalTime    String?
+  tableType      String?
+  createdAt      DateTime                 @default(now())
+  updatedAt      DateTime                 @updatedAt
 }
 
 model PrivatizationRequest {
@@ -69,6 +77,7 @@ model PrivatizationRequest {
   eventDate    DateTime?
   guestCount   Int
   budgetRange  String?
+  eventType    String?
   message      String?
   status       ReservationRequestStatus @default(new)
   sourceLocale String
@@ -88,6 +97,8 @@ enum ReservationRequestStatus {
   new
   reviewed
   contacted
+  confirmed
+  refused
   closed
 }
 

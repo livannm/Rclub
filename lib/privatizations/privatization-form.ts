@@ -8,6 +8,7 @@ export function privatizationPayloadFromFormData(formData: FormData) {
     event_date: asOptionalString(formData.get("event_date")),
     guest_count: Number(formData.get("guest_count")),
     budget_range: asOptionalString(formData.get("budget_range")),
+    event_type: asOptionalString(formData.get("event_type")),
     message: asOptionalString(formData.get("message")),
     source_locale: (asString(formData.get("source_locale")) || "fr") as "fr" | "en",
     consent_rgpd: asCheckbox(formData.get("consent_rgpd"))

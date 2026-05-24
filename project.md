@@ -66,10 +66,18 @@ Créer un site web premium pour une boîte de nuit réputée à Strasbourg, avec
 - `date_requested`: date (optionnel)
 - `guest_count`: integer (obligatoire)
 - `message`: text (optionnel)
-- `status`: enum (`new`, `reviewed`, `contacted`, `closed`) - défaut `new`
+- `status`: enum (`new`, `reviewed`, `confirmed`, `refused`, `closed`) - défaut `new`
 - `source_locale`: enum (`fr`, `en`) - obligatoire
 - `consent_rgpd`: boolean (obligatoire)
+- `admin_notes`: text (optionnel — notes internes, non visibles du client)
+- `notified_at`: datetime (optionnel — date du dernier email envoyé au client)
+- `confirmed_at`: datetime (optionnel — renseigné lors de la confirmation)
+- `refused_at`: datetime (optionnel — renseigné lors du refus)
+- `created_by_admin`: boolean (défaut `false` — `true` si créée manuellement par l'admin)
 - `created_at`: datetime
+- `updated_at`: datetime
+
+> Les statuts `confirmed` et `refused` déclenchent automatiquement un email de notification au client via Resend. Le statut `created_by_admin` distingue les réservations saisies manuellement des demandes entrantes.
 
 ### Entité: PrivatizationRequest
 - `id`: UUID
@@ -107,7 +115,34 @@ Créer un site web premium pour une boîte de nuit réputée à Strasbourg, avec
   - logo
   - médias
   - événements
+  - réservations (voir ci-dessous)
 - L'expérience d'édition doit rester simple et cohérente avec le style global
+
+### Gestion des réservations (admin)
+
+#### Vue dashboard réservations
+- L'admin voit un tableau de bord avec le **nombre de réservations par soir** : événements passés et à venir
+- Chaque ligne affiche : date / nom de l'événement, nb confirmées, nb en attente, nb refusées, total guests confirmés
+- Les soirs à venir sont mis en avant visuellement par rapport aux passés
+
+#### Traitement des demandes entrantes
+- L'admin peut **accepter** ou **refuser** une demande de réservation depuis l'interface
+- À chaque décision, un email est automatiquement envoyé au client (via Resend) :
+  - Confirmation : email chaleureux avec récap (nom, date, nb personnes)
+  - Refus : email courtois indiquant que la demande n'a pas pu être retenue
+- L'admin peut ajouter une **note interne** (non visible du client) avant de valider
+- L'historique du statut est visible sur la fiche de la demande
+
+#### Ajout manuel d'une réservation
+- L'admin peut créer une réservation directement (sans passer par le formulaire visiteur)
+- Champs : nom, email, téléphone, événement ou date, nb personnes, note interne
+- La réservation est créée avec le statut `confirmed` par défaut
+- Un email de confirmation est envoyé au client (paramétrable)
+
+#### Modification d'une réservation confirmée
+- L'admin peut modifier une réservation déjà confirmée (manuelle ou issue d'une demande)
+- Champs modifiables : nom, téléphone, email, nb personnes, note interne, événement/date
+- Si l'email ou le nb de personnes change, un email de mise à jour peut être envoyé au client (à la discrétion de l'admin, via une case "notifier le client")
 
 ## Médias et migration
 - Phase 1: médias stockés localement dans `public/media` avec des noms explicites
@@ -133,3 +168,7 @@ Créer un site web premium pour une boîte de nuit réputée à Strasbourg, avec
 - Consentement RGPD requis pour tout envoi de formulaire
 - Limiter les rôles admin à `super_admin` et `editor` pour la v1
 - Conserver les demandes (réservation/privatisation) 12 mois avant archivage ou purge
+- Les emails de confirmation/refus sont envoyés immédiatement lors du changement de statut (pas de file d'attente)
+- L'admin peut choisir d'envoyer ou non un email lors d'une modification d'une réservation confirmée
+- Une réservation créée manuellement par l'admin est `confirmed` par défaut ; l'envoi de l'email de confirmation est optionnel
+- Un refus est définitif depuis l'UI (pas de retour en arrière automatique — l'admin devra re-confirmer manuellement si besoin)

@@ -2,9 +2,8 @@
 
 import dynamic from "next/dynamic";
 import ShinyText from "@/components/react-bits/ShinyText";
-import { ThreeDCarousel } from "@/components/lightswind/three-d-carousel";
+import { EventCarousel } from "@/components/carousel/EventCarousel";
 import {
-  EventHighlightCard,
   type EventHighlightCardEvent,
 } from "@/components/home/event-highlight-card";
 import { EventsComingSoonPlaceholder } from "@/components/home/events-coming-soon-placeholder";
@@ -81,26 +80,16 @@ export function UpcomingEventsCarousel({
             hint={comingSoonHint}
           />
         ) : (
-          <ThreeDCarousel
-            className="home-events-carousel"
-            items={events}
-            navLabel={sectionAriaLabel}
-            autoRotate={events.length > 1}
-            rotateInterval={5500}
-            renderItem={(event, index, activeIndex) => (
-              <EventHighlightCard
-                event={event}
-                startsAtLabel={startsAtLabel}
-                viewDetailsLabel={viewDetailsLabel}
-                isActive={index === activeIndex}
-                testId={
-                  index === 0
-                    ? "home-next-event-title"
-                    : `home-carousel-event-${index}`
-                }
-              />
-            )}
-          />
+          <div className="home-carousel-frame">
+            <EventCarousel
+              events={events}
+              navLabel={sectionAriaLabel}
+              startsAtLabel={startsAtLabel}
+              viewDetailsLabel={viewDetailsLabel}
+              autoRotate={events.length > 1}
+              rotateInterval={5500}
+            />
+          </div>
         )}
       </div>
     </div>

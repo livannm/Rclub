@@ -43,6 +43,9 @@ export default async function AdminDashboardPage() {
           <a className="button button-secondary" href="/admin/events">
             Gérer les événements
           </a>
+          <a className="button button-secondary" href="/admin/reservations">
+            Réservations
+          </a>
         </div>
       </header>
 

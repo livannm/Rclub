@@ -1,26 +1,11 @@
-import type { PrismaClient } from "@prisma/client";
+import type { PrismaClient, PrivatizationRequest as PrismaPrivRow } from "@prisma/client";
 import type {
   PrivatizationPayload,
   PrivatizationRequest
 } from "@/lib/privatizations/privatization-schema";
 import type { PrivatizationRepository } from "@/lib/privatizations/privatization-repository";
 
-function toPrivatizationRequest(
-  row: {
-    id: string;
-    fullName: string;
-    email: string;
-    phone: string;
-    eventDate: Date | null;
-    guestCount: number;
-    budgetRange: string | null;
-    message: string | null;
-    status: "new" | "reviewed" | "contacted" | "closed";
-    sourceLocale: string;
-    consentRgpd: boolean;
-    createdAt: Date;
-  }
-): PrivatizationRequest {
+function toPrivatizationRequest(row: PrismaPrivRow): PrivatizationRequest {
   return {
     id: row.id,
     full_name: row.fullName,
