@@ -18,11 +18,24 @@ export class InMemoryEventRepository implements EventRepository {
     return sortByDateAsc(this.events);
   }
 
+  async listPublished() {
+    return sortByDateAsc(this.events.filter((e) => e.is_published));
+  }
+
   async listPublishedUpcoming(nowIso: string) {
     const now = new Date(nowIso).getTime();
     return sortByDateAsc(
       this.events.filter(
         (event) => event.is_published && new Date(event.starts_at).getTime() >= now
+      )
+    );
+  }
+
+  async findPublishedByDate(dateIso: string) {
+    const day = dateIso.slice(0, 10);
+    return sortByDateAsc(
+      this.events.filter(
+        (event) => event.is_published && event.starts_at.slice(0, 10) === day
       )
     );
   }

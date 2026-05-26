@@ -6,17 +6,29 @@ type EventCarouselCardProps = {
   event: EventHighlightCardEvent;
   startsAtLabel: string;
   viewDetailsLabel: string;
+  reserveLabel: string;
   isActive?: boolean;
+  onNavigate?: () => void;
 };
 
-export function EventCarouselCard({ event, startsAtLabel, viewDetailsLabel, isActive = false }: EventCarouselCardProps) {
+export function EventCarouselCard({ event, startsAtLabel, viewDetailsLabel, reserveLabel, isActive = false, onNavigate }: EventCarouselCardProps) {
   const href = `/agenda/${event.slug}`;
+  const reserveHref = `/reservations?date=${event.startsAtIso.slice(0, 10)}`;
   return (
     <article
       aria-roledescription="slide"
       aria-label={`${event.title}, ${event.startsAtFormatted}`}
       className="ev-carousel__card"
     >
+      {!isActive && onNavigate && (
+        <button
+          type="button"
+          className="ev-carousel__card-overlay"
+          onClick={onNavigate}
+          aria-label={event.title}
+          tabIndex={-1}
+        />
+      )}
       {event.coverImageUrl ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img src={event.coverImageUrl} alt="" className="ev-carousel__card-img" loading={isActive ? "eager" : "lazy"} />
@@ -38,6 +50,14 @@ export function EventCarouselCard({ event, startsAtLabel, viewDetailsLabel, isAc
             className="ev-carousel__card-cta"
           >
             {viewDetailsLabel}
+          </Link>
+          <Link
+            href={reserveHref}
+            tabIndex={isActive ? 0 : -1}
+            aria-hidden={!isActive}
+            className="ev-carousel__card-reserve"
+          >
+            {reserveLabel}
           </Link>
         </div>
       </div>

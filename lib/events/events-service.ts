@@ -20,8 +20,16 @@ export class EventService {
     return this.repository.listAll();
   }
 
+  async listPublished() {
+    return this.repository.listPublished();
+  }
+
   async listPublishedUpcoming() {
     return this.repository.listPublishedUpcoming(new Date().toISOString());
+  }
+
+  async findPublishedByDate(dateIso: string) {
+    return this.repository.findPublishedByDate(dateIso);
   }
 
   async findById(id: string) {

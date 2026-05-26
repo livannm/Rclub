@@ -1,11 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import Link from "next/link";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
-import { getLocale, getMessages, getTranslations } from "next-intl/server";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteNav } from "@/components/site-nav";
-import { siteAssetService } from "@/lib/site-assets/site-asset-service-instance";
+import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -48,37 +44,12 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const locale = await getLocale();
   const messages = await getMessages();
-  const t = await getTranslations("Layout");
-  const logoUrl = await siteAssetService.getLogo();
-  const navLinks = [
-    { href: "/", label: t("navAccueil") },
-    { href: "/agenda", label: t("navAgenda") },
-    { href: "/galerie", label: t("navGalerie") },
-    { href: "/reservations", label: t("navReservations") },
-    { href: "/privatisation", label: t("navPrivatisation") },
-    { href: "/contact", label: t("navContact") },
-  ];
 
   return (
     <html lang={locale} className={`${cormorant.variable} ${dmSans.variable}`}>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <header className="site-header">
-            <Link href="/" aria-label={t("logoAlt")}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={logoUrl}
-                alt=""
-                data-testid="site-logo"
-                className="site-logo"
-              />
-            </Link>
-            <SiteNav links={navLinks} />
-          </header>
-          <div className="site-body">
-            {children}
-            <SiteFooter />
-          </div>
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>

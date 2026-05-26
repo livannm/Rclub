@@ -1,5 +1,6 @@
 "use client";
 
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -23,6 +24,7 @@ function getMobileNavSnapshot() {
 
 export function SiteNav({ links }: { links: NavLink[] }) {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const isMobileNav = useSyncExternalStore(
     subscribeMobileNav,
     getMobileNavSnapshot,
@@ -30,6 +32,10 @@ export function SiteNav({ links }: { links: NavLink[] }) {
   );
   const pathname = usePathname();
   const t = useTranslations("Layout");
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     setOpen(false);
@@ -80,47 +86,52 @@ export function SiteNav({ links }: { links: NavLink[] }) {
         <CollapseMenuIcon />
       </button>
 
-      {open && (
-        <div
-          className="site-nav-overlay"
-          aria-hidden="true"
-          onClick={() => setOpen(false)}
-        />
-      )}
+      {mounted && createPortal(
+        <>
+          {open && (
+            <div
+              className="site-nav-overlay"
+              aria-hidden="true"
+              onClick={() => setOpen(false)}
+            />
+          )}
 
-      <div
-        id="site-nav-drawer"
-        className={`site-nav-drawer${open ? " is-open" : ""}`}
-        aria-hidden={!open}
-      >
-        <button
-          className="site-nav-close"
-          aria-label={t("navCloseMenu")}
-          onClick={() => setOpen(false)}
-          type="button"
-        >
-          <CollapseMenuIcon />
-        </button>
-        <nav className="site-nav-drawer-nav">
-          {links.map(({ href, label }) => {
-            const isActive = pathname === href || pathname.startsWith(href + "/");
-            return (
-              <Link
-                key={href}
-                href={href}
-                className={`site-nav-drawer-link${isActive ? " is-active" : ""}`}
-              >
-                {label}
-              </Link>
-            );
-          })}
-        </nav>
-        {isMobileNav ? (
-          <div className="site-nav-drawer-footer">
-            <LocaleSwitcher className="locale-switcher-drawer" />
+          <div
+            id="site-nav-drawer"
+            className={`site-nav-drawer${open ? " is-open" : ""}`}
+            aria-hidden={!open}
+          >
+            <button
+              className="site-nav-close"
+              aria-label={t("navCloseMenu")}
+              onClick={() => setOpen(false)}
+              type="button"
+            >
+              <CollapseMenuIcon />
+            </button>
+            <nav className="site-nav-drawer-nav">
+              {links.map(({ href, label }) => {
+                const isActive = pathname === href || pathname.startsWith(href + "/");
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    className={`site-nav-drawer-link${isActive ? " is-active" : ""}`}
+                  >
+                    {label}
+                  </Link>
+                );
+              })}
+            </nav>
+            {isMobileNav ? (
+              <div className="site-nav-drawer-footer">
+                <LocaleSwitcher className="locale-switcher-drawer" />
+              </div>
+            ) : null}
           </div>
-        ) : null}
-      </div>
+        </>,
+        document.body
+      )}
     </div>
   );
 }

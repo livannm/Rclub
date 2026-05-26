@@ -8,7 +8,8 @@ export const reservationSchema = z.object({
   date_requested: z.string().date().optional(),
   arrival_time: z.string().optional(),
   guest_count: z.coerce.number().int().min(1),
-  table_type: z.enum(["standard", "vip", "lounge"]).optional(),
+  table_type: z.enum(["classique", "prestige", "vip"]).optional(),
+  occasion_type: z.enum(["evg", "evjf", "anniversaire", "autre"]).optional(),
   message: z.string().max(2000).optional(),
   source_locale: z.enum(["fr", "en"]),
   consent_rgpd: z.literal(true)
@@ -28,7 +29,7 @@ export const adminReservationSchema = z.object({
 export type ReservationPayload = z.infer<typeof reservationSchema>;
 export type AdminReservationPayload = z.infer<typeof adminReservationSchema>;
 
-export type ReservationStatus = "new" | "reviewed" | "contacted" | "confirmed" | "refused" | "closed";
+export type ReservationStatus = "new" | "confirmed" | "refused" | "cancelled";
 
 export type ReservationRequest = ReservationPayload & {
   id: string;
@@ -37,13 +38,21 @@ export type ReservationRequest = ReservationPayload & {
   notified_at?: string;
   confirmed_at?: string;
   refused_at?: string;
+  cancelled_at?: string;
   created_by_admin: boolean;
   created_at: string;
   updated_at: string;
 };
 
 export const TABLE_TYPES = [
-  { value: "standard", labelFr: "Table standard", labelEn: "Standard table" },
-  { value: "vip", labelFr: "Carré VIP", labelEn: "VIP booth" },
-  { value: "lounge", labelFr: "Lounge / Banquette", labelEn: "Lounge / Banquette" }
+  { value: "classique", labelFr: "Table Classique", labelEn: "Classic Table" },
+  { value: "prestige", labelFr: "Table Prestige", labelEn: "Prestige Table" },
+  { value: "vip", labelFr: "Carré VIP", labelEn: "VIP Booth" }
+] as const;
+
+export const OCCASION_TYPES = [
+  { value: "evg", labelFr: "EVG", labelEn: "Bachelor party" },
+  { value: "evjf", labelFr: "EVJF", labelEn: "Bachelorette party" },
+  { value: "anniversaire", labelFr: "Anniversaire", labelEn: "Birthday" },
+  { value: "autre", labelFr: "Autre occasion", labelEn: "Other occasion" }
 ] as const;

@@ -2,9 +2,9 @@ import { getTranslations } from "next-intl/server";
 import { HomeExperienceClient } from "./HomeExperienceClient";
 
 const EXPERIENCE_IMAGES = [
-  "/media/hero-poster.png",
-  "/media/events/r-family.png",
-  "/media/events/legend-r.png",
+  "/media/club/ambiance-dj.jpg",
+  "/media/club/ambiance.jpg",
+  "/media/club/ambiance3.jpg",
 ];
 
 export async function HomeExperience() {

@@ -12,6 +12,7 @@ type EventCarouselDesktop3DProps = {
   navLabel: string;
   startsAtLabel: string;
   viewDetailsLabel: string;
+  reserveLabel: string;
   autoRotate?: boolean;
   rotateInterval?: number;
 };
@@ -34,7 +35,7 @@ function getSlideAnim(rel: number): SlideAnimState {
   return { x: "0%", scale: 0.4, rotateY: 0, opacity: 0, zIndex: 0 };
 }
 
-export function EventCarouselDesktop3D({ events, navLabel, startsAtLabel, viewDetailsLabel, autoRotate = true, rotateInterval = 5500 }: EventCarouselDesktop3DProps) {
+export function EventCarouselDesktop3D({ events, navLabel, startsAtLabel, viewDetailsLabel, reserveLabel, autoRotate = true, rotateInterval = 5500 }: EventCarouselDesktop3DProps) {
   const reducedMotion = usePrefersReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
@@ -89,12 +90,22 @@ export function EventCarouselDesktop3D({ events, navLabel, startsAtLabel, viewDe
               <motion.div
                 key={event.id}
                 className="ev-carousel__slide"
-                style={{ pointerEvents: isHidden ? "none" : "auto", willChange: "transform, opacity" }}
+                style={{
+                  pointerEvents: isHidden ? "none" : "auto",
+                  willChange: "transform, opacity",
+                }}
                 animate={anim}
                 transition={transition}
                 aria-hidden={!isActive}
               >
-                <EventCarouselCard event={event} startsAtLabel={startsAtLabel} viewDetailsLabel={viewDetailsLabel} isActive={isActive} />
+                <EventCarouselCard
+                  event={event}
+                  startsAtLabel={startsAtLabel}
+                  viewDetailsLabel={viewDetailsLabel}
+                  reserveLabel={reserveLabel}
+                  isActive={isActive}
+                  onNavigate={isActive ? undefined : () => setActiveIndex(index)}
+                />
               </motion.div>
             );
           })}

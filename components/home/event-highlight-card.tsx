@@ -8,6 +8,7 @@ export type EventHighlightCardEvent = {
   slug: string;
   title: string;
   startsAtFormatted: string;
+  startsAtIso: string;
   coverImageUrl: string | null;
 };
 
@@ -15,6 +16,7 @@ export type EventHighlightCardProps = {
   event: EventHighlightCardEvent;
   startsAtLabel: string;
   viewDetailsLabel: string;
+  reserveLabel: string;
   isActive?: boolean;
   testId?: string;
 };
@@ -23,9 +25,11 @@ export function EventHighlightCard({
   event,
   startsAtLabel,
   viewDetailsLabel,
+  reserveLabel,
   isActive = false,
   testId,
 }: EventHighlightCardProps) {
+  const dateParam = event.startsAtIso.slice(0, 10);
   return (
     <SpotlightCard
       className={`home-event-card${isActive ? " is-active" : ""}`}
@@ -63,6 +67,14 @@ export function EventHighlightCard({
             </h3>
             <span className="home-event-card__cta">{viewDetailsLabel} →</span>
           </div>
+        </Link>
+        <Link
+          href={`/reservations?date=${dateParam}`}
+          className="home-event-card__reserve"
+          tabIndex={isActive ? 0 : -1}
+          aria-hidden={!isActive}
+        >
+          {reserveLabel}
         </Link>
       </article>
     </SpotlightCard>

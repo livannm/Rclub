@@ -57,6 +57,13 @@ export class ReservationService {
     });
   }
 
+  async cancel(id: string, adminNotes?: string) {
+    return this.repository.updateStatus(id, "cancelled", {
+      adminNotes,
+      notifiedAt: new Date()
+    });
+  }
+
   async update(id: string, patch: Parameters<ReservationRepository["update"]>[1]) {
     return this.repository.update(id, patch);
   }

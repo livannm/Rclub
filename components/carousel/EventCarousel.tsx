@@ -10,6 +10,7 @@ export type EventCarouselProps = {
   navLabel: string;
   startsAtLabel: string;
   viewDetailsLabel: string;
+  reserveLabel: string;
   autoRotate?: boolean;
   rotateInterval?: number;
 };
@@ -33,6 +34,7 @@ export function EventCarousel({
   navLabel,
   startsAtLabel,
   viewDetailsLabel,
+  reserveLabel,
   autoRotate,
   rotateInterval,
 }: EventCarouselProps) {
@@ -45,6 +47,7 @@ export function EventCarousel({
         navLabel={navLabel}
         startsAtLabel={startsAtLabel}
         viewDetailsLabel={viewDetailsLabel}
+        reserveLabel={reserveLabel}
         autoRotate={autoRotate}
         rotateInterval={rotateInterval}
       />
@@ -57,6 +60,7 @@ export function EventCarousel({
       navLabel={navLabel}
       startsAtLabel={startsAtLabel}
       viewDetailsLabel={viewDetailsLabel}
+      reserveLabel={reserveLabel}
     />
   );
 }

@@ -20,6 +20,7 @@ export type UpcomingEventsCarouselProps = {
   comingSoonHint?: string;
   startsAtLabel: string;
   viewDetailsLabel: string;
+  reserveLabel: string;
   events: EventHighlightCardEvent[];
 };
 
@@ -30,6 +31,7 @@ export function UpcomingEventsCarousel({
   comingSoonHint,
   startsAtLabel,
   viewDetailsLabel,
+  reserveLabel,
   events,
 }: UpcomingEventsCarouselProps) {
   const reducedMotion = usePrefersReducedMotion();
@@ -86,6 +88,7 @@ export function UpcomingEventsCarousel({
               navLabel={sectionAriaLabel}
               startsAtLabel={startsAtLabel}
               viewDetailsLabel={viewDetailsLabel}
+              reserveLabel={reserveLabel}
               autoRotate={events.length > 1}
               rotateInterval={5500}
             />

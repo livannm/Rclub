@@ -71,12 +71,31 @@ export class PrismaEventRepository implements EventRepository {
     return sortByDateAsc(events.map(toClubEvent));
   }
 
+  async listPublished() {
+    const events = await this.db.event.findMany({ where: { isPublished: true } });
+    return sortByDateAsc(events.map(toClubEvent));
+  }
+
   async listPublishedUpcoming(nowIso: string) {
     const now = new Date(nowIso);
     const events = await this.db.event.findMany({
       where: {
         isPublished: true,
         startsAt: { gte: now }
+      }
+    });
+    return sortByDateAsc(events.map(toClubEvent));
+  }
+
+  async findPublishedByDate(dateIso: string) {
+    const dayStart = new Date(dateIso);
+    dayStart.setUTCHours(0, 0, 0, 0);
+    const dayEnd = new Date(dateIso);
+    dayEnd.setUTCHours(23, 59, 59, 999);
+    const events = await this.db.event.findMany({
+      where: {
+        isPublished: true,
+        startsAt: { gte: dayStart, lte: dayEnd }
       }
     });
     return sortByDateAsc(events.map(toClubEvent));

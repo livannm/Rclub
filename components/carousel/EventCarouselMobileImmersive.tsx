@@ -9,9 +9,10 @@ type EventCarouselMobileImmersiveProps = {
   navLabel: string;
   startsAtLabel: string;
   viewDetailsLabel: string;
+  reserveLabel: string;
 };
 
-export function EventCarouselMobileImmersive({ events, navLabel, startsAtLabel, viewDetailsLabel }: EventCarouselMobileImmersiveProps) {
+export function EventCarouselMobileImmersive({ events, navLabel, startsAtLabel, viewDetailsLabel, reserveLabel }: EventCarouselMobileImmersiveProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const total = events.length;
@@ -61,6 +62,7 @@ export function EventCarouselMobileImmersive({ events, navLabel, startsAtLabel, 
         {events.map((event, index) => {
           const isActive = index === activeIndex;
           const href = `/agenda/${event.slug}`;
+          const reserveHref = `/reservations?date=${event.startsAtIso.slice(0, 10)}`;
           return (
             <article
               key={event.id}
@@ -85,6 +87,9 @@ export function EventCarouselMobileImmersive({ events, navLabel, startsAtLabel, 
                   <p className="ev-carousel-mobile__date">{event.startsAtFormatted}</p>
                   <Link href={href} tabIndex={isActive ? 0 : -1} className="ev-carousel-mobile__cta">
                     {viewDetailsLabel}
+                  </Link>
+                  <Link href={reserveHref} tabIndex={isActive ? 0 : -1} className="ev-carousel-mobile__reserve">
+                    {reserveLabel}
                   </Link>
                   <p className="ev-carousel-mobile__counter">
                     <span className="ev-carousel-mobile__counter-index">{String(activeIndex + 1).padStart(2, "0")}</span>

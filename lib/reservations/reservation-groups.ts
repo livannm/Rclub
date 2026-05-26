@@ -10,6 +10,7 @@ export type EveningGroup = {
   confirmed: number;
   pending: number;
   refused: number;
+  cancelled: number;
   totalGuestsConfirmed: number;
   reservations: ReservationRequest[];
 };
@@ -61,6 +62,7 @@ export function groupReservationsByEvening(
         confirmed: 0,
         pending: 0,
         refused: 0,
+        cancelled: 0,
         totalGuestsConfirmed: 0,
         reservations: []
       });
@@ -72,8 +74,10 @@ export function groupReservationsByEvening(
     if (r.status === "confirmed") {
       group.confirmed++;
       group.totalGuestsConfirmed += r.guest_count;
-    } else if (r.status === "refused" || r.status === "closed") {
+    } else if (r.status === "refused") {
       group.refused++;
+    } else if (r.status === "cancelled") {
+      group.cancelled++;
     } else {
       group.pending++;
     }

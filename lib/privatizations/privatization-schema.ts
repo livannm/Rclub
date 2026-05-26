@@ -25,6 +25,6 @@ export type PrivatizationPayload = z.infer<typeof privatizationSchema>;
 
 export type PrivatizationRequest = PrivatizationPayload & {
   id: string;
-  status: "new" | "reviewed" | "contacted" | "confirmed" | "refused" | "closed";
+  status: "new" | "confirmed" | "refused" | "cancelled";
   created_at: string;
 };

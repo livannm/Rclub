@@ -24,7 +24,7 @@ export function getClubContact(): ClubContact {
     process.env.NEXT_PUBLIC_CLUB_PHONE_HREF ??
     `tel:${phoneDisplay.replace(/\s/g, "")}`;
   const address =
-    process.env.NEXT_PUBLIC_CLUB_ADDRESS ?? "7 Quai des Pêcheurs, 67000 Strasbourg";
+    process.env.NEXT_PUBLIC_CLUB_ADDRESS ?? "24 Place des Halles, 67000 Strasbourg";
   const rawMapsUrl = process.env.NEXT_PUBLIC_CLUB_MAPS_URL;
   const safeMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
   const mapsUrl =

@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { reservationService } from "@/lib/reservations/reservation-service-instance";
-import { sendConfirmationEmail, sendRefusalEmail, sendUpdateEmail } from "@/lib/email/reservation-emails";
+import { sendCancellationEmail, sendConfirmationEmail, sendRefusalEmail, sendUpdateEmail } from "@/lib/email/reservation-emails";
 import { adminReservationSchema } from "@/lib/reservations/reservation-schema";
 import { ZodError } from "zod";
 
@@ -55,6 +55,30 @@ export async function refuseReservationAction(formData: FormData) {
 
   revalidateReservationViews();
   redirect(`/admin/reservations/${id}?refused=1`);
+}
+
+export async function cancelReservationAction(formData: FormData) {
+  const id = formData.get("reservation_id");
+  const adminNotes = formData.get("admin_notes");
+  const notify = formData.get("notify_client") === "on";
+
+  if (typeof id !== "string") return;
+
+  const updated = await reservationService.cancel(
+    id,
+    typeof adminNotes === "string" ? adminNotes : undefined
+  );
+
+  if (notify) {
+    try {
+      await sendCancellationEmail(updated);
+    } catch {
+      // Email failure is non-blocking — reservation is still cancelled
+    }
+  }
+
+  revalidateReservationViews();
+  redirect(`/admin/reservations/${id}?cancelled=1`);
 }
 
 export async function createManualReservationAction(formData: FormData) {

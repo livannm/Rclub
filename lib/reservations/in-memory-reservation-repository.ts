@@ -61,6 +61,7 @@ export class InMemoryReservationRepository implements ReservationRepository {
     req.updated_at = new Date().toISOString();
     if (status === "confirmed") req.confirmed_at = new Date().toISOString();
     if (status === "refused") req.refused_at = new Date().toISOString();
+    if (status === "cancelled") req.cancelled_at = new Date().toISOString();
     if (extra?.adminNotes !== undefined) req.admin_notes = extra.adminNotes;
     if (extra?.notifiedAt) req.notified_at = extra.notifiedAt.toISOString();
 

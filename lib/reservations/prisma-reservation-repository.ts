@@ -10,7 +10,10 @@ function toReservationRequest(row: PrismaRow): ReservationRequest {
     phone: row.phone,
     event_id: row.eventId ?? undefined,
     date_requested: row.dateRequested?.toISOString().slice(0, 10),
+    arrival_time: row.arrivalTime ?? undefined,
     guest_count: row.guestCount,
+    table_type: row.tableType as "classique" | "prestige" | "vip" | undefined,
+    occasion_type: row.occasionType as "evg" | "evjf" | "anniversaire" | "autre" | undefined,
     message: row.message ?? undefined,
     status: row.status as ReservationStatus,
     source_locale: row.sourceLocale as "fr" | "en",
@@ -19,6 +22,7 @@ function toReservationRequest(row: PrismaRow): ReservationRequest {
     notified_at: row.notifiedAt?.toISOString(),
     confirmed_at: row.confirmedAt?.toISOString(),
     refused_at: row.refusedAt?.toISOString(),
+    cancelled_at: row.cancelledAt?.toISOString(),
     created_by_admin: row.createdByAdmin,
     created_at: row.createdAt.toISOString(),
     updated_at: row.updatedAt.toISOString()
@@ -40,6 +44,7 @@ export class PrismaReservationRepository implements ReservationRepository {
         message: payload.message ?? null,
         arrivalTime: payload.arrival_time ?? null,
         tableType: payload.table_type ?? null,
+        occasionType: payload.occasion_type ?? null,
         sourceLocale: payload.source_locale,
         consentRgpd: payload.consent_rgpd
       }
@@ -87,6 +92,7 @@ export class PrismaReservationRepository implements ReservationRepository {
     const data: Record<string, unknown> = { status };
     if (status === "confirmed") data.confirmedAt = new Date();
     if (status === "refused") data.refusedAt = new Date();
+    if (status === "cancelled") data.cancelledAt = new Date();
     if (extra?.adminNotes !== undefined) data.adminNotes = extra.adminNotes;
     if (extra?.notifiedAt) data.notifiedAt = extra.notifiedAt;
 
