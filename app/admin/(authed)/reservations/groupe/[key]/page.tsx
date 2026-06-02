@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { reservationService } from "@/lib/reservations/reservation-service-instance";
 import { eventService } from "@/lib/events/events-service-instance";
-import { groupReservationsByEvening } from "@/lib/reservations/reservation-groups";
+import { groupReservationsByEvening, isExpiredReservation } from "@/lib/reservations/reservation-groups";
 import type { ReservationRequest } from "@/lib/reservations/reservation-schema";
 
 type GroupePageProps = {
@@ -58,10 +58,14 @@ export default async function AdminReservationsGroupePage({ params }: GroupePage
     ? "/admin/reservations"
     : "/admin/reservations/historique";
 
-  const sorted = [...group.reservations].sort((a: ReservationRequest, b: ReservationRequest) => {
-    const order = ["new", "confirmed", "refused", "cancelled"];
-    return order.indexOf(a.status) - order.indexOf(b.status);
-  });
+  const effectiveOrder = (r: ReservationRequest) => {
+    if (!group.upcoming && r.status === "new") return 2; // expired → with refused
+    return ["new", "confirmed", "refused", "cancelled"].indexOf(r.status);
+  };
+
+  const sorted = [...group.reservations].sort(
+    (a, b) => effectiveOrder(a) - effectiveOrder(b),
+  );
 
   return (
     <main className="admin-shell">
@@ -120,8 +124,8 @@ export default async function AdminReservationsGroupePage({ params }: GroupePage
                   </span>
                   <span className="res-row-date">{formatDate(r.date_requested)}</span>
                   <span className="res-row-guests">{r.guest_count} pers.</span>
-                  <span className={`res-row-status res-status-${r.status}`}>
-                    {statusLabel(r.status)}
+                  <span className={`res-row-status res-status-${isExpiredReservation(r.status, group.date) ? "refused" : r.status}`}>
+                    {isExpiredReservation(r.status, group.date) ? "Expiré" : statusLabel(r.status)}
                   </span>
                 </a>
               </li>

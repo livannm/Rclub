@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { reservationService } from "@/lib/reservations/reservation-service-instance";
 import { eventService } from "@/lib/events/events-service-instance";
+import { isExpiredReservation } from "@/lib/reservations/reservation-groups";
 import {
   cancelReservationAction,
   confirmReservationAction,
@@ -21,8 +22,16 @@ export default async function ReservationDetailPage({ params, searchParams }: Pr
 
   if (!reservation) notFound();
 
-  const isEditable = reservation.status === "new" || reservation.status === "confirmed";
-  const canDecide = reservation.status === "new";
+  const eventDate = reservation.event_id
+    ? allEvents.find((e) => e.id === reservation.event_id)?.starts_at
+    : reservation.date_requested;
+  const expired = isExpiredReservation(
+    reservation.status,
+    eventDate ? new Date(eventDate) : null,
+  );
+
+  const isEditable = !expired && (reservation.status === "new" || reservation.status === "confirmed");
+  const canDecide = !expired && reservation.status === "new";
   const canCancel = reservation.status === "confirmed";
 
   return (
@@ -30,8 +39,8 @@ export default async function ReservationDetailPage({ params, searchParams }: Pr
       <header className="admin-header">
         <div>
           <h1>{reservation.full_name}</h1>
-          <span className={`res-row-status res-status-${reservation.status}`}>
-            {statusLabel(reservation.status)}
+          <span className={`res-row-status res-status-${expired ? "refused" : reservation.status}`}>
+            {expired ? "Expirée (non traitée)" : statusLabel(reservation.status)}
           </span>
         </div>
         <div className="admin-actions">
@@ -78,7 +87,7 @@ export default async function ReservationDetailPage({ params, searchParams }: Pr
           {reservation.message && (
             <><dt>Message</dt><dd style={{ whiteSpace: "pre-wrap" }}>{reservation.message}</dd></>
           )}
-          <dt>Statut</dt><dd>{statusLabel(reservation.status)}</dd>
+          <dt>Statut</dt><dd>{expired ? "Expirée (non traitée)" : statusLabel(reservation.status)}</dd>
           <dt>Créé le</dt><dd>{new Date(reservation.created_at).toLocaleString("fr-FR")}</dd>
           {reservation.confirmed_at && (
             <><dt>Confirmé le</dt><dd>{new Date(reservation.confirmed_at).toLocaleString("fr-FR")}</dd></>

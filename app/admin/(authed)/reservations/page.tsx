@@ -15,7 +15,7 @@ export default async function AdminReservationsPage() {
   const groups = groupReservationsByEvening(allReservations, eventLookup);
   const upcomingGroups = groups.filter((g) => g.upcoming);
 
-  const totalPending = allReservations.filter((r) => r.status === "new").length;
+  const totalPending = upcomingGroups.reduce((sum, g) => sum + g.pending, 0);
 
   return (
     <main className="admin-shell">

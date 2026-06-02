@@ -15,6 +15,15 @@ export type EveningGroup = {
   reservations: ReservationRequest[];
 };
 
+/** A "new" reservation whose event date has passed is effectively refused. */
+export function isExpiredReservation(
+  status: string,
+  eventDate: Date | null | undefined,
+): boolean {
+  if (status !== "new" || !eventDate) return false;
+  return new Date(eventDate) < new Date();
+}
+
 type EventLookup = Record<string, { titleFr: string; startsAt: Date }>;
 
 export function groupReservationsByEvening(
@@ -71,12 +80,15 @@ export function groupReservationsByEvening(
     const group = map.get(key)!;
     group.reservations.push(r);
 
-    if (r.status === "confirmed") {
+    const effective =
+      !group.upcoming && r.status === "new" ? "refused" : r.status;
+
+    if (effective === "confirmed") {
       group.confirmed++;
       group.totalGuestsConfirmed += r.guest_count;
-    } else if (r.status === "refused") {
+    } else if (effective === "refused") {
       group.refused++;
-    } else if (r.status === "cancelled") {
+    } else if (effective === "cancelled") {
       group.cancelled++;
     } else {
       group.pending++;
