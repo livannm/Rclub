@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { EventFormFields } from "@/components/admin/event-form-fields";
+import { MediaUploadField } from "@/components/admin/media-upload-field";
 import {
   addPhotoAction,
   deleteEventAction,
@@ -179,16 +180,15 @@ export default async function EditEventPage({ searchParams, params }: EditEventP
         >
           <input type="hidden" name="event_id" value={event.id} />
           <input type="hidden" name="event_slug" value={event.slug} />
-          <label>
-            URL de la photo
-            <input
-              name="image_url"
-              type="text"
-              placeholder="/media/events/photo.png"
-              aria-label={`URL photo ${event.slug}`}
-              required
-            />
-          </label>
+          <MediaUploadField
+            id={`image_url-${event.slug}`}
+            name="image_url"
+            label="URL de la photo"
+            kind="image"
+            placeholder="/media/events/photo.png"
+            ariaLabel={`URL photo ${event.slug}`}
+            required
+          />
           <label>
             Légende FR
             <input name="alt_fr" aria-label={`Légende FR ${event.slug}`} />

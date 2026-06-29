@@ -1,5 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
+import { MediaUploadField } from "@/components/admin/media-upload-field";
 import { adminDashboardStatsService } from "@/lib/admin-stats/admin-dashboard-stats-instance";
 import { siteAssetService } from "@/lib/site-assets/site-asset-service-instance";
 import type {
@@ -208,17 +209,15 @@ export default async function AdminDashboardPage() {
               />
             )}
             <form action={updateLogoAction} className="admin-form">
-              <label htmlFor="logo_url">
-                Nouvelle URL
-                <input
-                  id="logo_url"
-                  name="logo_url"
-                  type="url"
-                  placeholder="https://... ou /media/logo.png"
-                  defaultValue={currentLogo}
-                  required
-                />
-              </label>
+              <MediaUploadField
+                id="logo_url"
+                name="logo_url"
+                label="Nouvelle URL"
+                kind="image"
+                placeholder="https://... ou /media/logo.png"
+                defaultValue={currentLogo}
+                required
+              />
               <button type="submit">Mettre à jour</button>
             </form>
           </div>
@@ -229,17 +228,15 @@ export default async function AdminDashboardPage() {
               <code data-testid="current-hero-video-url">{currentHeroVideo}</code>
             </p>
             <form action={updateHeroVideoAction} className="admin-form">
-              <label htmlFor="hero_video_url">
-                Nouvelle URL
-                <input
-                  id="hero_video_url"
-                  name="hero_video_url"
-                  type="url"
-                  placeholder="https://... ou /media/hero.mp4"
-                  defaultValue={currentHeroVideo}
-                  required
-                />
-              </label>
+              <MediaUploadField
+                id="hero_video_url"
+                name="hero_video_url"
+                label="Nouvelle URL"
+                kind="video"
+                placeholder="https://... ou /media/hero.mp4"
+                defaultValue={currentHeroVideo}
+                required
+              />
               <button type="submit">Mettre à jour</button>
             </form>
           </div>
