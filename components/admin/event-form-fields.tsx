@@ -1,4 +1,5 @@
 import type { ClubEvent } from "@/lib/events/event-schema";
+import { MediaUploadField } from "@/components/admin/media-upload-field";
 
 type EventFormFieldsProps = {
   event?: ClubEvent;
@@ -75,27 +76,24 @@ export function EventFormFields({ event, defaultStartsAt, defaultEndsAt }: Event
         Fin
         <input id="ends_at" name="ends_at" type="datetime-local" defaultValue={endsAtValue} />
       </label>
-      <label htmlFor="cover_image_url" className="full-span">
-        Image de couverture
-        <input
-          id="cover_image_url"
-          name="cover_image_url"
-          type="text"
-          placeholder="/media/events/mon-event.png"
-          defaultValue={event?.cover_image_url}
-          required
-        />
-      </label>
-      <label htmlFor="hero_video_url">
-        Vidéo hero (optionnel)
-        <input
-          id="hero_video_url"
-          name="hero_video_url"
-          type="text"
-          placeholder="/media/hero.mp4"
-          defaultValue={event?.hero_video_url ?? ""}
-        />
-      </label>
+      <MediaUploadField
+        id="cover_image_url"
+        name="cover_image_url"
+        label="Image de couverture"
+        kind="image"
+        className="full-span"
+        placeholder="/media/events/mon-event.png"
+        defaultValue={event?.cover_image_url}
+        required
+      />
+      <MediaUploadField
+        id="hero_video_url"
+        name="hero_video_url"
+        label="Vidéo hero (optionnel)"
+        kind="video"
+        placeholder="/media/hero.mp4"
+        defaultValue={event?.hero_video_url ?? ""}
+      />
       <label htmlFor="ticket_url">
         Billetterie (optionnel)
         <input

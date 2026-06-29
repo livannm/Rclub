@@ -53,6 +53,9 @@ dist
 # Media videos (copier en local via pnpm media:sync)
 *.mp4
 
+# Local dev media uploads (LocalMediaStorage fallback when Cloudinary is off)
+/public/media/uploads/
+
 # Prisma — fichiers locaux (migrations générées, base SQLite de dev)
 prisma/migrations/
 prisma/*.db
