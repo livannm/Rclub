@@ -35,3 +35,10 @@ Available scripts live in `package.json` (`dev`, `build`, `lint`, `typecheck`, `
   these failures are not caused by environment setup. `pnpm typecheck` and `pnpm test` pass.
 - **Playwright E2E** (`pnpm test:e2e`) auto-starts the dev server but needs browsers installed
   first: `pnpm exec playwright install chromium`.
+- **Media uploads** (`POST /api/admin/media/upload`, used by the admin forms via
+  `components/admin/media-upload-field.tsx`) auto-select a backend like the DB layer does:
+  Cloudinary when `CLOUDINARY_*` are set to real (non-placeholder) values, otherwise a local
+  dev fallback (`lib/media/local-storage.ts`) that writes to `public/media/uploads/`
+  (gitignored). So uploads work with no Cloudinary credentials in dev; production should set the
+  `CLOUDINARY_*` secrets. The local fallback writes to disk and is not suitable for
+  serverless/production filesystems.
