@@ -42,3 +42,7 @@ Available scripts live in `package.json` (`dev`, `build`, `lint`, `typecheck`, `
   (gitignored). So uploads work with no Cloudinary credentials in dev; production should set the
   `CLOUDINARY_*` secrets. The local fallback writes to disk and is not suitable for
   serverless/production filesystems.
+- **Cloudinary target folder is `Rclub`** (capital R). Set `CLOUDINARY_FOLDER=Rclub` when using
+  real Cloudinary credentials so uploads land in the correct folder. The code default in
+  `lib/media/cloudinary-config.ts` is the lowercase `"rclub"`, so this env var must be set
+  explicitly to match the actual Cloudinary folder.
