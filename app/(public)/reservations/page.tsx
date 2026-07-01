@@ -8,6 +8,7 @@ import { resolveLocale } from "@/i18n/locales";
 import { reservationPayloadFromFormData } from "@/lib/reservations/reservation-form";
 import { ReservationServiceError } from "@/lib/reservations/reservation-service";
 import { reservationService } from "@/lib/reservations/reservation-service-instance";
+import { reservationNotifyService } from "@/lib/reservation-notify/reservation-notify-service-instance";
 import { sendNewReservationAdminEmail } from "@/lib/email/reservation-emails";
 import { DatePickerWithEventHint } from "@/components/reservations/DatePickerWithEventHint";
 
@@ -40,7 +41,8 @@ export default async function ReservationsPage({ searchParams }: ReservationsPag
       const created = await reservationService.create(payload);
 
       try {
-        await sendNewReservationAdminEmail(created);
+        const recipients = await reservationNotifyService.resolveNotificationRecipients();
+        await sendNewReservationAdminEmail(created, recipients);
       } catch (emailError) {
         // Non-blocking: the reservation is saved even if the recap email fails.
         console.error("[reservations] échec de l'email de récap admin:", emailError);

@@ -44,6 +44,8 @@ function buildBreadcrumbs(pathname: string): { href: string; label: string }[] {
       crumbs.push({ href: "/admin/reservations/new", label: "Nouvelle réservation" });
     } else if (segments[1] === "historique") {
       crumbs.push({ href: "/admin/reservations/historique", label: "Historique" });
+    } else if (segments[1] === "notifications") {
+      crumbs.push({ href: "/admin/reservations/notifications", label: "Notifications" });
     } else if (segments[1] === "groupe" && segments[2]) {
       crumbs.push({ href: pathname, label: "Soirée" });
     } else if (segments[1]) {

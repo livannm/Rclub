@@ -1,4 +1,8 @@
-export type SiteAssetKey = "logo" | "home_hero_video" | "home_hero_poster";
+export type SiteAssetKey =
+  | "logo"
+  | "home_hero_video"
+  | "home_hero_poster"
+  | "reservation_notify_emails";
 
 export type SiteAsset = {
   id: string;

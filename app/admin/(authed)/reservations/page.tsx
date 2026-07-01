@@ -28,6 +28,9 @@ export default async function AdminReservationsPage() {
           <p className="admin-page-subtitle">Aucune demande en attente.</p>
         )}
         <div className="admin-actions">
+          <a className="button button-secondary" href="/admin/reservations/notifications">
+            Notifications
+          </a>
           <a className="button" href="/admin/reservations/new">
             + Nouvelle réservation
           </a>

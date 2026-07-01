@@ -1,6 +1,6 @@
 import { OCCASION_TYPES, TABLE_TYPES } from "@/lib/reservations/reservation-schema";
 import type { ReservationRequest } from "@/lib/reservations/reservation-schema";
-import { getContactEmail, getFromEmail, sendEmail } from "./resend-client";
+import { getFromEmail, sendEmail } from "./resend-client";
 
 function formatDate(iso?: string): string {
   if (!iso) return "—";
@@ -282,25 +282,33 @@ export async function sendUpdateEmail(reservation: ReservationRequest): Promise<
 }
 
 /**
- * Notifies the club (RESEND_CONTACT_TO) of a new reservation request submitted
- * from the public site. No-op (logs a warning) when no contact address is set.
+ * Notifies configured club recipients of a new reservation request submitted
+ * from the public site. Uses the admin email list when set, otherwise
+ * `RESEND_CONTACT_TO`. No-op (logs a warning) when no recipient is configured.
  */
 export async function sendNewReservationAdminEmail(
-  reservation: ReservationRequest
+  reservation: ReservationRequest,
+  recipients: string[]
 ): Promise<void> {
-  const to = getContactEmail();
-  if (!to) {
+  if (recipients.length === 0) {
     console.warn(
-      "[email] RESEND_CONTACT_TO non configurée — email de récap admin non envoyé."
+      "[email] Aucun destinataire configuré — email de récap admin non envoyé."
     );
     return;
   }
 
-  await sendEmail({
-    from: getFromEmail(),
-    to,
-    replyTo: reservation.email,
-    subject: `Nouvelle réservation — ${reservation.full_name} (${reservation.guest_count} p.)`,
-    html: adminRecapHtml(reservation)
-  });
+  const subject = `Nouvelle réservation — ${reservation.full_name} (${reservation.guest_count} p.)`;
+  const html = adminRecapHtml(reservation);
+
+  await Promise.all(
+    recipients.map((to) =>
+      sendEmail({
+        from: getFromEmail(),
+        to,
+        replyTo: reservation.email,
+        subject,
+        html
+      })
+    )
+  );
 }

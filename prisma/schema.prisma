@@ -116,4 +116,5 @@ enum SiteAssetKey {
   logo
   home_hero_video
   home_hero_poster
+  reservation_notify_emails
 }
