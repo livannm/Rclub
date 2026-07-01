@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { appendMediaDestination, type MediaDestination } from "@/lib/media/media-destination";
+import type { MediaDestination } from "@/lib/media/media-destination";
+import { uploadMediaFromClient } from "@/lib/media/upload-from-client";
 
 type MediaKind = "image" | "video";
 
@@ -52,23 +53,7 @@ export function MediaUploadField({
   const accept = kind === "video" ? "video/*" : "image/*";
 
   async function uploadFile(file: File) {
-    const formData = new FormData();
-    formData.append("file", file);
-    if (destination) {
-      appendMediaDestination(formData, destination);
-    }
-
-    const response = await fetch("/api/admin/media/upload", {
-      method: "POST",
-      body: formData
-    });
-    const json = (await response.json()) as UploadResponse & { error?: string };
-
-    if (!response.ok) {
-      throw new Error(json.error ?? "Échec de l'upload.");
-    }
-
-    return json;
+    return uploadMediaFromClient(file, destination);
   }
 
   async function handleFile(event: React.ChangeEvent<HTMLInputElement>) {

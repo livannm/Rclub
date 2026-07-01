@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { appendMediaDestination } from "@/lib/media/media-destination";
+import { uploadMediaFromClient } from "@/lib/media/upload-from-client";
 import { addPhotosAction } from "@/lib/admin/event-actions";
 
 type EventPhotosBulkUploadProps = {
@@ -25,21 +25,8 @@ export function EventPhotosBulkUpload({
   const [altEn, setAltEn] = useState("");
 
   async function uploadFile(file: File): Promise<string> {
-    const formData = new FormData();
-    formData.append("file", file);
-    appendMediaDestination(formData, { kind: "events", eventSlug });
-
-    const response = await fetch("/api/admin/media/upload", {
-      method: "POST",
-      body: formData
-    });
-    const json = (await response.json()) as { url?: string; error?: string };
-
-    if (!response.ok || !json.url) {
-      throw new Error(json.error ?? `Échec de l'upload pour ${file.name}.`);
-    }
-
-    return json.url;
+    const result = await uploadMediaFromClient(file, { kind: "events", eventSlug });
+    return result.url;
   }
 
   async function handleFiles(event: React.ChangeEvent<HTMLInputElement>) {

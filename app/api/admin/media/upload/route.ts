@@ -10,6 +10,7 @@ import {
 import { validateUpload } from "@/lib/media/upload-validation";
 import { formatMediaUploadError } from "@/lib/media/upload-error";
 
+/** Local dev fallback when Firebase is not configured (subject to Vercel 4.5 MB limit). */
 export async function POST(request: NextRequest) {
   const session = await auth();
   if (!session?.user) {

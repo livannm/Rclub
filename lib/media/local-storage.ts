@@ -1,6 +1,6 @@
-import { randomBytes } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { buildMediaObjectPath } from "./media-object-path";
 import { validateUpload } from "./upload-validation";
 import type { MediaStorage, MediaUploadInput, UploadedMedia } from "./media-storage";
 
@@ -11,17 +11,10 @@ export interface LocalMediaStorageOptions {
   publicBase?: string;
 }
 
-function sanitizeFilename(filename: string): string {
-  const base = path.basename(filename).toLowerCase();
-  const cleaned = base.replace(/[^a-z0-9._-]+/g, "-").replace(/^-+|-+$/g, "");
-  return cleaned || "fichier";
-}
-
 /**
- * Development fallback used when Google Drive is not configured. Persists uploads
+ * Development fallback used when Firebase is not configured. Persists uploads
  * to the local `public/` folder so the upload flow works end-to-end without any
- * external credentials. Not suitable for serverless/production filesystems —
- * that is exactly why production should configure Google Drive.
+ * external credentials. Not suitable for serverless/production filesystems.
  */
 export class LocalMediaStorage implements MediaStorage {
   readonly provider = "local" as const;
@@ -47,11 +40,11 @@ export class LocalMediaStorage implements MediaStorage {
 
     await mkdir(targetDir, { recursive: true });
 
-    const safeName = sanitizeFilename(input.filename);
-    const unique = `${Date.now()}-${randomBytes(4).toString("hex")}-${safeName}`;
+    const objectPath = buildMediaObjectPath(folderPath, input.filename);
+    const unique = objectPath.split("/").pop()!;
     await writeFile(path.join(targetDir, unique), input.data);
 
-    const urlPath = [...folderPath, unique].join("/");
+    const urlPath = objectPath;
 
     return {
       url: `${this.publicBase}/${urlPath}`,
