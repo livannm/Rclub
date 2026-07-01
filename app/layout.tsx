@@ -20,7 +20,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://rclub.fr"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://r-club.fr"),
   title: {
     default: "Rclub Strasbourg - Club premium, soirées et événements",
     template: "%s"

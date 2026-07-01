@@ -5,7 +5,7 @@ import { getLocalizedEventContent } from "@/lib/events/event-localized";
 import type { AppLocale } from "@/i18n/locales";
 import { resolveLocale } from "@/i18n/locales";
 
-export const defaultSiteUrl = "https://rclub.fr";
+export const defaultSiteUrl = "https://r-club.fr";
 
 export type SeoPageKey =
   | "home"

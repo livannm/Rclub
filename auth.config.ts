@@ -7,12 +7,27 @@ function readString(value: unknown): string | undefined {
 }
 
 export default {
+  trustHost: true,
   pages: {
     signIn: "/admin/login"
   },
   session: {
     strategy: "jwt",
     maxAge: 60 * 60 * 8
+  },
+  callbacks: {
+    jwt({ token, user }) {
+      if (user?.email) {
+        token.email = user.email;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      if (token.email && session.user) {
+        session.user.email = token.email as string;
+      }
+      return session;
+    }
   },
   providers: [
     Credentials({
