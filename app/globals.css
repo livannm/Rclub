@@ -3394,6 +3394,28 @@ main.page-shell {
   object-fit: contain;
 }
 
+.event-photos-bulk {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-default, #2a2218);
+}
+
+.event-photos-url {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border-default, #2a2218);
+}
+
+.event-photos-bulk__hint {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.event-photos-bulk__hint code {
+  font-size: 0.75rem;
+}
+
 .admin-danger-form {
   margin-top: 1rem;
   padding-top: 1rem;

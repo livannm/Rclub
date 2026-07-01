@@ -37,12 +37,14 @@ Available scripts live in `package.json` (`dev`, `build`, `lint`, `typecheck`, `
   first: `pnpm exec playwright install chromium`.
 - **Media uploads** (`POST /api/admin/media/upload`, used by the admin forms via
   `components/admin/media-upload-field.tsx`) auto-select a backend like the DB layer does:
-  Cloudinary when `CLOUDINARY_*` are set to real (non-placeholder) values, otherwise a local
-  dev fallback (`lib/media/local-storage.ts`) that writes to `public/media/uploads/`
-  (gitignored). So uploads work with no Cloudinary credentials in dev; production should set the
-  `CLOUDINARY_*` secrets. The local fallback writes to disk and is not suitable for
-  serverless/production filesystems.
-- **Cloudinary target folder is `Rclub`** (capital R). Set `CLOUDINARY_FOLDER=Rclub` when using
-  real Cloudinary credentials so uploads land in the correct folder. The code default in
-  `lib/media/cloudinary-config.ts` is the lowercase `"rclub"`, so this env var must be set
-  explicitly to match the actual Cloudinary folder.
+  Firebase Cloud Storage (via the **client `firebase` SDK**) when `FIREBASE_API_KEY` /
+  `FIREBASE_PROJECT_ID` / `FIREBASE_STORAGE_BUCKET` / `FIREBASE_APP_ID` are set to real
+  (non-placeholder) values, otherwise a local dev fallback (`lib/media/local-storage.ts`) that
+  writes to `public/media/uploads/` (gitignored). So uploads work with no Firebase config in dev;
+  production should set the Firebase web config. The local fallback writes to disk and is not
+  suitable for serverless/production filesystems.
+- **Firebase Storage layout:** uploaded objects are keyed by path prefix in the bucket:
+  `images/` (covers, logos), `videos/` (hero clips), `events/{slug}/` (gallery photos per event).
+  Uploads use `uploadBytes` and the returned tokenized `getDownloadURL()` is stored. Because the
+  upload runs server-side with the client SDK (no Firebase Auth), the bucket's Storage Rules must
+  allow writes.

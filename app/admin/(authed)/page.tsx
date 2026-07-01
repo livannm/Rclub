@@ -216,6 +216,7 @@ export default async function AdminDashboardPage() {
                 kind="image"
                 placeholder="https://... ou /media/logo.png"
                 defaultValue={currentLogo}
+                destination={{ kind: "images" }}
                 required
               />
               <button type="submit">Mettre à jour</button>
@@ -235,6 +236,7 @@ export default async function AdminDashboardPage() {
                 kind="video"
                 placeholder="https://... ou /media/hero.mp4"
                 defaultValue={currentHeroVideo}
+                destination={{ kind: "videos" }}
                 required
               />
               <button type="submit">Mettre à jour</button>

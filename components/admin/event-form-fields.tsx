@@ -84,6 +84,7 @@ export function EventFormFields({ event, defaultStartsAt, defaultEndsAt }: Event
         className="full-span"
         placeholder="/media/events/mon-event.png"
         defaultValue={event?.cover_image_url}
+        destination={{ kind: "images" }}
         required
       />
       <MediaUploadField
@@ -93,6 +94,7 @@ export function EventFormFields({ event, defaultStartsAt, defaultEndsAt }: Event
         kind="video"
         placeholder="/media/hero.mp4"
         defaultValue={event?.hero_video_url ?? ""}
+        destination={{ kind: "videos" }}
       />
       <label htmlFor="ticket_url">
         Billetterie (optionnel)

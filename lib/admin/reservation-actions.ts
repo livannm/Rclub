@@ -28,8 +28,9 @@ export async function confirmReservationAction(formData: FormData) {
 
   try {
     await sendConfirmationEmail(updated);
-  } catch {
+  } catch (error) {
     // Email failure is non-blocking — reservation is still confirmed
+    console.error("[reservations] échec de l'email de confirmation:", error);
   }
 
   revalidateReservationViews();
@@ -49,8 +50,9 @@ export async function refuseReservationAction(formData: FormData) {
 
   try {
     await sendRefusalEmail(updated);
-  } catch {
+  } catch (error) {
     // Email failure is non-blocking
+    console.error("[reservations] échec de l'email de refus:", error);
   }
 
   revalidateReservationViews();
@@ -72,8 +74,9 @@ export async function cancelReservationAction(formData: FormData) {
   if (notify) {
     try {
       await sendCancellationEmail(updated);
-    } catch {
+    } catch (error) {
       // Email failure is non-blocking — reservation is still cancelled
+      console.error("[reservations] échec de l'email d'annulation:", error);
     }
   }
 
@@ -100,8 +103,9 @@ export async function createManualReservationAction(formData: FormData) {
     if (notify) {
       try {
         await sendConfirmationEmail(created);
-      } catch {
+      } catch (error) {
         // non-blocking
+        console.error("[reservations] échec de l'email de confirmation (création):", error);
       }
     }
 
@@ -137,8 +141,9 @@ export async function updateReservationAction(formData: FormData) {
     if (notify) {
       try {
         await sendUpdateEmail(updated);
-      } catch {
+      } catch (error) {
         // non-blocking
+        console.error("[reservations] échec de l'email de mise à jour:", error);
       }
     }
 

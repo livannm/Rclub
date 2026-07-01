@@ -18,10 +18,10 @@ function sanitizeFilename(filename: string): string {
 }
 
 /**
- * Development fallback used when Cloudinary is not configured. Persists uploads
+ * Development fallback used when Google Drive is not configured. Persists uploads
  * to the local `public/` folder so the upload flow works end-to-end without any
  * external credentials. Not suitable for serverless/production filesystems —
- * that is exactly why production should configure Cloudinary.
+ * that is exactly why production should configure Google Drive.
  */
 export class LocalMediaStorage implements MediaStorage {
   readonly provider = "local" as const;
@@ -41,14 +41,20 @@ export class LocalMediaStorage implements MediaStorage {
     });
     const resourceType = validation.ok ? validation.resourceType : "image";
 
-    await mkdir(this.uploadDir, { recursive: true });
+    const folderPath = input.folderPath ?? [];
+    const targetDir =
+      folderPath.length > 0 ? path.join(this.uploadDir, ...folderPath) : this.uploadDir;
+
+    await mkdir(targetDir, { recursive: true });
 
     const safeName = sanitizeFilename(input.filename);
     const unique = `${Date.now()}-${randomBytes(4).toString("hex")}-${safeName}`;
-    await writeFile(path.join(this.uploadDir, unique), input.data);
+    await writeFile(path.join(targetDir, unique), input.data);
+
+    const urlPath = [...folderPath, unique].join("/");
 
     return {
-      url: `${this.publicBase}/${unique}`,
+      url: `${this.publicBase}/${urlPath}`,
       provider: this.provider,
       resourceType,
       bytes: input.data.byteLength

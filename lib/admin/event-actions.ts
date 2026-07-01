@@ -77,6 +77,45 @@ export async function deleteEventAction(formData: FormData) {
   }
 }
 
+export async function addPhotosAction(formData: FormData) {
+  const eventId = formData.get("event_id");
+  const eventSlug = formData.get("event_slug");
+  const imageUrls = formData.getAll("image_url");
+  const altFr = formData.get("alt_fr");
+  const altEn = formData.get("alt_en");
+  const startSortOrderRaw = formData.get("start_sort_order");
+
+  if (typeof eventId !== "string" || typeof eventSlug !== "string") {
+    return;
+  }
+
+  const urls = imageUrls.filter((url): url is string => typeof url === "string" && url.trim().length > 0);
+  if (urls.length === 0) {
+    redirect(
+      `/admin/events/${eventId}/edit?message=${encodeURIComponent("Aucune photo à ajouter.")}`
+    );
+  }
+
+  const startSortOrder = startSortOrderRaw ? parseInt(String(startSortOrderRaw), 10) : 1;
+  const baseOrder = Number.isNaN(startSortOrder) ? 1 : startSortOrder;
+
+  await galleryService.addPhotos(
+    urls.map((image_url, index) => ({
+      event_id: eventId,
+      event_slug: eventSlug,
+      image_url,
+      alt_fr: typeof altFr === "string" ? altFr : "",
+      alt_en: typeof altEn === "string" ? altEn : "",
+      order: baseOrder + index
+    }))
+  );
+
+  revalidateGalleryViews(eventSlug);
+  redirect(
+    `/admin/events/${eventId}/edit?photosAdded=${urls.length}`
+  );
+}
+
 export async function addPhotoAction(formData: FormData) {
   const eventId = formData.get("event_id");
   const eventSlug = formData.get("event_slug");

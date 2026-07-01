@@ -20,6 +20,14 @@ export class GalleryService {
     return this.repository.create(payload);
   }
 
+  async addPhotos(payloads: CreatePhotoPayload[]) {
+    const created = [];
+    for (const payload of payloads) {
+      created.push(await this.repository.create(payload));
+    }
+    return created;
+  }
+
   async deletePhoto(photoId: string): Promise<boolean> {
     return this.repository.deleteById(photoId);
   }

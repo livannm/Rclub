@@ -1,12 +1,13 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { appendMediaDestination, type MediaDestination } from "@/lib/media/media-destination";
 
 type MediaKind = "image" | "video";
 
 type UploadResponse = {
   url: string;
-  provider: "cloudinary" | "local";
+  provider: "firebase" | "local";
   resourceType: MediaKind;
 };
 
@@ -21,10 +22,12 @@ type MediaUploadFieldProps = {
   /** Extra class applied to the wrapping label (e.g. `full-span`). */
   className?: string;
   ariaLabel?: string;
+  /** Target folder in Firebase Storage / local uploads (images, videos, events/…). */
+  destination?: MediaDestination;
 };
 
 const PROVIDER_LABEL: Record<UploadResponse["provider"], string> = {
-  cloudinary: "Cloudinary",
+  firebase: "Firebase Storage",
   local: "stockage local (dev)"
 };
 
@@ -37,7 +40,8 @@ export function MediaUploadField({
   required = false,
   placeholder,
   className,
-  ariaLabel
+  ariaLabel,
+  destination
 }: MediaUploadFieldProps) {
   const [value, setValue] = useState(defaultValue);
   const [status, setStatus] = useState<"idle" | "uploading" | "done" | "error">("idle");
@@ -47,6 +51,26 @@ export function MediaUploadField({
 
   const accept = kind === "video" ? "video/*" : "image/*";
 
+  async function uploadFile(file: File) {
+    const formData = new FormData();
+    formData.append("file", file);
+    if (destination) {
+      appendMediaDestination(formData, destination);
+    }
+
+    const response = await fetch("/api/admin/media/upload", {
+      method: "POST",
+      body: formData
+    });
+    const json = (await response.json()) as UploadResponse & { error?: string };
+
+    if (!response.ok) {
+      throw new Error(json.error ?? "Échec de l'upload.");
+    }
+
+    return json;
+  }
+
   async function handleFile(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -54,20 +78,8 @@ export function MediaUploadField({
     setStatus("uploading");
     setMessage(null);
 
-    const formData = new FormData();
-    formData.append("file", file);
-
     try {
-      const response = await fetch("/api/admin/media/upload", {
-        method: "POST",
-        body: formData
-      });
-      const json = (await response.json()) as UploadResponse & { error?: string };
-
-      if (!response.ok) {
-        throw new Error(json.error ?? "Échec de l'upload.");
-      }
-
+      const json = await uploadFile(file);
       setValue(json.url);
       setProvider(json.provider);
       setStatus("done");
@@ -76,7 +88,6 @@ export function MediaUploadField({
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "Échec de l'upload.");
     } finally {
-      // Allow re-uploading the same file.
       if (fileInputRef.current) fileInputRef.current.value = "";
     }
   }

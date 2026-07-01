@@ -2,7 +2,13 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { auth } from "@/auth";
 import { getMediaStorage } from "@/lib/media/media-storage-instance";
+import {
+  defaultDestinationForResourceType,
+  mediaDestinationToPath,
+  parseMediaDestinationFromForm
+} from "@/lib/media/media-destination";
 import { validateUpload } from "@/lib/media/upload-validation";
+import { formatMediaUploadError } from "@/lib/media/upload-error";
 
 export async function POST(request: NextRequest) {
   const session = await auth();
@@ -27,18 +33,26 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: validation.error }, { status: 400 });
   }
 
+  const destination =
+    parseMediaDestinationFromForm(formData) ??
+    defaultDestinationForResourceType(validation.resourceType);
+  const folderPath = mediaDestinationToPath(destination);
+
   try {
     const buffer = Buffer.from(await file.arrayBuffer());
     const storage = getMediaStorage();
     const result = await storage.upload({
       data: buffer,
       filename: file.name || "upload",
-      contentType: file.type
+      contentType: file.type,
+      folderPath
     });
 
     return NextResponse.json(result, { status: 201 });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Échec de l'upload.";
-    return NextResponse.json({ error: message }, { status: 502 });
+    if (process.env.NODE_ENV === "development") {
+      console.error("[media/upload]", error);
+    }
+    return NextResponse.json({ error: formatMediaUploadError(error) }, { status: 502 });
   }
 }

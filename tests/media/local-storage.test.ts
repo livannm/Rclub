@@ -15,6 +15,25 @@ afterEach(async () => {
 });
 
 describe("LocalMediaStorage", () => {
+  it("writes nested folders when a folder path is provided", async () => {
+    const storage = new LocalMediaStorage({ uploadDir: dir, publicBase: "/media/uploads" });
+    const data = Buffer.from("event-shot");
+
+    const result = await storage.upload({
+      data,
+      filename: "gallery.png",
+      contentType: "image/png",
+      folderPath: ["events", "legend-r"]
+    });
+
+    expect(result.url.startsWith("/media/uploads/events/legend-r/")).toBe(true);
+    expect(result.url).toMatch(/gallery\.png$/);
+
+    const relativePath = result.url.replace("/media/uploads/", "");
+    const written = await readFile(path.join(dir, relativePath));
+    expect(written.equals(data)).toBe(true);
+  });
+
   it("writes the file and returns a public URL under the configured base", async () => {
     const storage = new LocalMediaStorage({ uploadDir: dir, publicBase: "/media/uploads" });
     const data = Buffer.from("hello-image");

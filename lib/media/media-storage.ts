@@ -1,4 +1,4 @@
-export type MediaProvider = "cloudinary" | "local";
+export type MediaProvider = "firebase" | "local";
 
 export type MediaResourceType = "image" | "video";
 
@@ -6,6 +6,8 @@ export interface MediaUploadInput {
   data: Buffer;
   filename: string;
   contentType: string;
+  /** Relative path segments under the media root, e.g. `["events", "legend-r"]`. */
+  folderPath?: string[];
 }
 
 export interface UploadedMedia {

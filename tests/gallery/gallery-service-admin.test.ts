@@ -72,6 +72,20 @@ describe("GalleryService – admin CRUD", () => {
     });
   });
 
+  describe("addPhotos", () => {
+    it("adds multiple photos in one call", async () => {
+      const service = makeService();
+      const created = await service.addPhotos([
+        photoPayload({ image_url: "https://example.com/a.jpg", order: 1 }),
+        photoPayload({ image_url: "https://example.com/b.jpg", order: 2 })
+      ]);
+
+      expect(created).toHaveLength(2);
+      const photos = await service.getPhotosForEvent(TEST_EVENT_ID);
+      expect(photos).toHaveLength(2);
+    });
+  });
+
   describe("deletePhoto", () => {
     it("deletes an existing photo and returns true", async () => {
       const service = makeService();

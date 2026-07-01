@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { EventFormFields } from "@/components/admin/event-form-fields";
+import { EventPhotosBulkUpload } from "@/components/admin/event-photos-bulk-upload";
 import { MediaUploadField } from "@/components/admin/media-upload-field";
 import {
   addPhotoAction,
@@ -20,6 +21,7 @@ type EditEventPageProps = {
     created?: string;
     saved?: string;
     photoAdded?: string;
+    photosAdded?: string;
     photoDeleted?: string;
     photoReordered?: string;
   }>;
@@ -61,6 +63,12 @@ export default async function EditEventPage({ searchParams, params }: EditEventP
       ) : null}
       {query.saved === "1" ? <p className="status status-success">Modifications enregistrées.</p> : null}
       {query.photoAdded === "1" ? <p className="status status-success">Photo ajoutée.</p> : null}
+      {query.photosAdded ? (
+        <p className="status status-success">
+          {query.photosAdded} photo{Number(query.photosAdded) > 1 ? "s" : ""} ajoutée
+          {Number(query.photosAdded) > 1 ? "s" : ""}.
+        </p>
+      ) : null}
       {query.photoDeleted === "1" ? <p className="status status-success">Photo supprimée.</p> : null}
       {query.photoReordered === "1" ? (
         <p className="status status-success">Ordre des photos mis à jour.</p>
@@ -173,11 +181,18 @@ export default async function EditEventPage({ searchParams, params }: EditEventP
           <p data-testid={`photos-empty-${event.slug}`}>Aucune photo pour cet événement.</p>
         )}
 
+        <EventPhotosBulkUpload
+          eventId={event.id}
+          eventSlug={event.slug}
+          nextSortOrder={photos.length + 1}
+        />
+
         <form
           action={addPhotoAction}
           data-testid={`add-photo-form-${event.slug}`}
-          className="admin-form admin-form-compact"
+          className="admin-form admin-form-compact event-photos-url"
         >
+          <p className="event-photos-bulk__hint">Ou ajoutez une photo via son URL :</p>
           <input type="hidden" name="event_id" value={event.id} />
           <input type="hidden" name="event_slug" value={event.slug} />
           <MediaUploadField
@@ -187,6 +202,7 @@ export default async function EditEventPage({ searchParams, params }: EditEventP
             kind="image"
             placeholder="/media/events/photo.png"
             ariaLabel={`URL photo ${event.slug}`}
+            destination={{ kind: "events", eventSlug: event.slug }}
             required
           />
           <label>

@@ -1,4 +1,4 @@
-export const MAX_UPLOAD_BYTES = 25 * 1024 * 1024; // 25 MB
+export const MAX_UPLOAD_BYTES = 100 * 1024 * 1024; // 100 MB
 
 export const ALLOWED_IMAGE_TYPES = [
   "image/jpeg",

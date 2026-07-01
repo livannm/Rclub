@@ -8,6 +8,7 @@ import { resolveLocale } from "@/i18n/locales";
 import { reservationPayloadFromFormData } from "@/lib/reservations/reservation-form";
 import { ReservationServiceError } from "@/lib/reservations/reservation-service";
 import { reservationService } from "@/lib/reservations/reservation-service-instance";
+import { sendNewReservationAdminEmail } from "@/lib/email/reservation-emails";
 import { DatePickerWithEventHint } from "@/components/reservations/DatePickerWithEventHint";
 
 type ReservationsPageProps = {
@@ -36,7 +37,14 @@ export default async function ReservationsPage({ searchParams }: ReservationsPag
       const lastName = formData.get("last_name")?.toString() ?? "";
       formData.set("full_name", [firstName, lastName].filter(Boolean).join(" "));
       const payload = reservationPayloadFromFormData(formData);
-      await reservationService.create(payload);
+      const created = await reservationService.create(payload);
+
+      try {
+        await sendNewReservationAdminEmail(created);
+      } catch (emailError) {
+        // Non-blocking: the reservation is saved even if the recap email fails.
+        console.error("[reservations] échec de l'email de récap admin:", emailError);
+      }
     } catch (error) {
       if (error instanceof ReservationServiceError || error instanceof FormProtectionError) {
         redirect(`/reservations?status=error&message=${encodeURIComponent(error.message)}`);
