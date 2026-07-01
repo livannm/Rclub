@@ -482,7 +482,8 @@ button:active,
 .site-logo {
   display: block;
   width: auto;
-  height: 2.25rem;
+  height: 2.5rem;
+  object-fit: contain;
   transition: opacity var(--transition-base);
 }
 
