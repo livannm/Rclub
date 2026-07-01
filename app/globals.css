@@ -3193,6 +3193,35 @@ main.page-shell {
   text-transform: uppercase;
 }
 
+.admin-user-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.admin-user-list-item {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--hairline-gold);
+}
+
+.admin-user-list-item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.admin-user-meta {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.admin-empty {
+  margin: 0;
+  color: var(--text-muted);
+}
+
 .event-admin-card {
   display: grid;
   gap: 1.25rem;

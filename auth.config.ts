@@ -17,14 +17,20 @@ export default {
   },
   callbacks: {
     jwt({ token, user }) {
-      if (user?.email) {
+      if (user) {
+        token.id = user.id;
         token.email = user.email;
+        token.role = user.role;
       }
       return token;
     },
     session({ session, token }) {
-      if (token.email && session.user) {
-        session.user.email = token.email as string;
+      if (session.user && typeof token.id === "string" && typeof token.email === "string") {
+        session.user.id = token.id;
+        session.user.email = token.email;
+        if (token.role === "super_admin" || token.role === "editor") {
+          session.user.role = token.role;
+        }
       }
       return session;
     }
@@ -37,16 +43,10 @@ export default {
         password: { label: "Password", type: "password" }
       },
       authorize: async (credentials) => {
-        return authenticateAdminUser(
-          {
-            email: readString(credentials?.email),
-            password: readString(credentials?.password)
-          },
-          {
-            adminEmail: process.env.ADMIN_EMAIL,
-            adminPassword: process.env.ADMIN_PASSWORD
-          }
-        );
+        return authenticateAdminUser({
+          email: readString(credentials?.email),
+          password: readString(credentials?.password),
+        });
       }
     })
   ]

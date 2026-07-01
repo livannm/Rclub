@@ -472,6 +472,26 @@ async function seedSampleRequests(
   });
 }
 
+async function seedAdminUser(prisma: Awaited<ReturnType<typeof getPrisma>>) {
+  const email = process.env.ADMIN_EMAIL?.trim();
+  const password = process.env.ADMIN_PASSWORD?.trim();
+  if (!email || !password) {
+    console.log("Seed admin — ADMIN_EMAIL/PASSWORD absents, compte bootstrap ignore.");
+    return;
+  }
+
+  const { hashPassword } = await import("../lib/auth/password");
+  const passwordHash = await hashPassword(password);
+
+  await prisma.adminUser.upsert({
+    where: { email },
+    create: { email, passwordHash, role: "super_admin" },
+    update: { passwordHash, role: "super_admin" },
+  });
+
+  console.log(`Seed admin — compte super_admin "${email}" pret.`);
+}
+
 async function main() {
   if (!process.env.DATABASE_URL?.trim()) {
     throw new Error(
@@ -485,6 +505,9 @@ async function main() {
   for (const asset of SITE_ASSETS) {
     await upsertSiteAsset(prisma, asset.key, asset.value);
   }
+
+  console.log("Seed Rclub — compte admin...");
+  await seedAdminUser(prisma);
 
   console.log("Seed Rclub — nettoyage evenements e2e...");
   await cleanupE2eTestEvents(prisma);

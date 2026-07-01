@@ -49,6 +49,8 @@ function buildBreadcrumbs(pathname: string): { href: string; label: string }[] {
     } else if (segments[1]) {
       crumbs.push({ href: pathname, label: "Détail" });
     }
+  } else if (segments[0] === "users") {
+    crumbs.push({ href: "/admin/users", label: "Comptes admin" });
   }
 
   return crumbs;
@@ -57,10 +59,12 @@ function buildBreadcrumbs(pathname: string): { href: string; label: string }[] {
 export function AdminShellNav({
   pendingReservations,
   adminEmail,
+  canManageUsers,
   signOutAction
 }: {
   pendingReservations: number;
   adminEmail: string | null;
+  canManageUsers: boolean;
   signOutAction: () => Promise<void>;
 }) {
   const pathname = usePathname() ?? "/admin";
@@ -74,7 +78,10 @@ export function AdminShellNav({
       match: "/admin/reservations",
       badge: pendingReservations
     },
-    { href: "/admin/reservations/historique", label: "Historique", match: "/admin/reservations/historique" }
+    { href: "/admin/reservations/historique", label: "Historique", match: "/admin/reservations/historique" },
+    ...(canManageUsers
+      ? [{ href: "/admin/users", label: "Comptes", match: "/admin/users" } satisfies Tab]
+      : []),
   ];
 
   // Resolve active tab: prefer the most specific match (longest match wins,
