@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { isPrismaSchemaMissingError } from "@/lib/db/is-prisma-schema-error";
 import { eventService } from "@/lib/events/events-service-instance";
 import { galleryService } from "@/lib/gallery/gallery-service-instance";
 import { absoluteUrl, getSiteUrl, seoPages } from "@/lib/seo/metadata";
@@ -32,9 +33,16 @@ async function getDynamicEntries(siteUrl: string): Promise<MetadataRoute.Sitemap
 
     return [...eventEntries, ...galleryEntries];
   } catch (error) {
-    // Never fail the build/export because event data is unavailable (e.g. the
-    // database is not reachable at build time). Fall back to static pages only.
-    console.error("[sitemap] impossible de charger les événements:", error);
+    // Never fail the sitemap because event data is unavailable (e.g. DB down or
+    // schema not pushed yet). Fall back to static pages only.
+    if (isPrismaSchemaMissingError(error)) {
+      console.warn(
+        "[sitemap] schéma DB absent (tables Event manquantes) — pages statiques uniquement. " +
+          "Exécutez pnpm db:setup sur la base de prod ou redéployez après build avec prebuild-db.",
+      );
+    } else {
+      console.error("[sitemap] impossible de charger les événements:", error);
+    }
     return [];
   }
 }
