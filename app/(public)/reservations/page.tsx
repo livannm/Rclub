@@ -9,7 +9,7 @@ import { reservationPayloadFromFormData } from "@/lib/reservations/reservation-f
 import { ReservationServiceError } from "@/lib/reservations/reservation-service";
 import { reservationService } from "@/lib/reservations/reservation-service-instance";
 import { reservationNotifyService } from "@/lib/reservation-notify/reservation-notify-service-instance";
-import { sendNewReservationAdminEmail } from "@/lib/email/reservation-emails";
+import { sendNewReservationAdminEmail, sendRequestReceivedEmail } from "@/lib/email/reservation-emails";
 import { DatePickerWithEventHint } from "@/components/reservations/DatePickerWithEventHint";
 
 type ReservationsPageProps = {
@@ -39,6 +39,12 @@ export default async function ReservationsPage({ searchParams }: ReservationsPag
       formData.set("full_name", [firstName, lastName].filter(Boolean).join(" "));
       const payload = reservationPayloadFromFormData(formData);
       const created = await reservationService.create(payload);
+
+      try {
+        await sendRequestReceivedEmail(created);
+      } catch (emailError) {
+        console.error("[reservations] échec de l'email d'accusé de réception:", emailError);
+      }
 
       try {
         const recipients = await reservationNotifyService.resolveNotificationRecipients();
