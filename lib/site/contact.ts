@@ -20,8 +20,6 @@ export type ClubContact = {
 
 const DEFAULT_INSTAGRAM_URL =
   "https://www.instagram.com/rclub.strasbourg?igsh=MTB4amRydjI2Nmxqbg==";
-const DEFAULT_MAPS_PLACE_ID = "ChIJQQeIt07IlkcRS1RMUGXpyuA";
-const DEFAULT_MAPS_COORDS = "48.585772,7.742566";
 const DEFAULT_PHONES: ClubPhone[] = [
   { display: "+33 7 68 38 16 36", href: "tel:+33768381636" },
   { display: "+33 6 95 86 89 36", href: "tel:+33695868936" },
@@ -61,18 +59,13 @@ export function getClubContact(): ClubContact {
   const phoneHref = phones[0]!.href;
   const address =
     process.env.NEXT_PUBLIC_CLUB_ADDRESS ?? "24 Place des Halles, 67000 Strasbourg";
-  const mapsPlaceId = process.env.NEXT_PUBLIC_CLUB_MAPS_PLACE_ID ?? DEFAULT_MAPS_PLACE_ID;
-  const mapsCoords = process.env.NEXT_PUBLIC_CLUB_MAPS_COORDS ?? DEFAULT_MAPS_COORDS;
   const rawMapsUrl = process.env.NEXT_PUBLIC_CLUB_MAPS_URL;
-  const defaultMapsUrl = mapsPlaceId
-    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("R Club")}&query_place_id=${mapsPlaceId}`
-    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+  const defaultMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
   const mapsUrl =
     rawMapsUrl && /^https:\/\//i.test(rawMapsUrl) ? rawMapsUrl : defaultMapsUrl;
-  const defaultMapsEmbedUrl = mapsPlaceId
-    ? `https://maps.google.com/maps?q=place_id:${mapsPlaceId}&hl=fr&z=18&ie=UTF8&iwloc=&output=embed`
-    : `https://maps.google.com/maps?q=${mapsCoords}&hl=fr&z=18&ie=UTF8&iwloc=&output=embed`;
-  const mapsEmbedUrl = process.env.NEXT_PUBLIC_CLUB_MAPS_EMBED_URL ?? defaultMapsEmbedUrl;
+  const mapsEmbedUrl =
+    process.env.NEXT_PUBLIC_CLUB_MAPS_EMBED_URL ??
+    `https://maps.google.com/maps?q=${encodeURIComponent(address)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
 
   const handleMatch = instagramUrl.match(/instagram\.com\/([^/?#]+)/i);
   const instagramHandle = handleMatch?.[1] ? `@${handleMatch[1]}` : "@rclub.strasbourg";
