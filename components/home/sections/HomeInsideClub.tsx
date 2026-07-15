@@ -27,6 +27,7 @@ export async function HomeInsideClub() {
           closeLabel={t("lightboxClose")}
           prevLabel={t("lightboxPrev")}
           nextLabel={t("lightboxNext")}
+          zoomHint={t("lightboxZoomHint")}
         />
       </div>
     </section>

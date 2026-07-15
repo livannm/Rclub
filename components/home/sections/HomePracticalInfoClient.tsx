@@ -65,10 +65,9 @@ export function HomePracticalInfoClient({
           href={mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="home-practical-link-secondary"
+          className="button button-secondary home-practical-directions"
         >
           {ctaDirections}
-          <span aria-hidden="true">→</span>
         </a>
       </motion.div>
     </>

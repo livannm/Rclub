@@ -15,7 +15,7 @@ export type EventCarouselProps = {
   rotateInterval?: number;
 };
 
-function useIsDesktop(breakpoint = 1024) {
+function useIsDesktop(breakpoint = 768) {
   const [isDesktop, setIsDesktop] = useState(true);
 
   useEffect(() => {

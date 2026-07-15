@@ -31,9 +31,7 @@ export function HomeExperienceClient({ eyebrow, introTitle, blocks }: HomeExperi
         transition={{ duration: 0.9, ease }}
       >
         <p className="page-kicker">{eyebrow}</p>
-        <h2 className="home-exp-intro-title">
-          <strong>Rclub</strong> experience
-        </h2>
+        <h2 className="home-exp-intro-title">{introTitle}</h2>
       </motion.div>
 
       <div className="home-exp-sequence">

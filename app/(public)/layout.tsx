@@ -21,7 +21,7 @@ export default async function PublicLayout({
   return (
     <>
       <header className="site-header">
-        <Link href="/" aria-label={t("logoAlt")}>
+        <Link href="/" className="site-logo-link" aria-label={t("logoAlt")}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={logoUrl}

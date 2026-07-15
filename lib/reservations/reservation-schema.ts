@@ -1,4 +1,8 @@
 import { z } from "zod";
+import { ALL_ARRIVAL_SLOTS, PUBLIC_ARRIVAL_SLOTS } from "./arrival-slots";
+
+const publicSlots = PUBLIC_ARRIVAL_SLOTS as unknown as [string, ...string[]];
+const adminSlots = ALL_ARRIVAL_SLOTS as unknown as [string, ...string[]];
 
 export const reservationSchema = z.object({
   full_name: z.string().min(2),
@@ -6,7 +10,7 @@ export const reservationSchema = z.object({
   phone: z.string().min(6),
   event_id: z.string().uuid().optional(),
   date_requested: z.string().date().optional(),
-  arrival_time: z.string().optional(),
+  arrival_time: z.enum(publicSlots),
   guest_count: z.coerce.number().int().min(1),
   table_type: z.enum(["classique", "prestige", "vip"]).optional(),
   occasion_type: z.enum(["evg", "evjf", "anniversaire", "autre"]).optional(),
@@ -21,6 +25,7 @@ export const adminReservationSchema = z.object({
   phone: z.string().min(6),
   event_id: z.string().uuid().optional(),
   date_requested: z.string().date().optional(),
+  arrival_time: z.enum(adminSlots).optional(),
   guest_count: z.coerce.number().int().min(1),
   admin_notes: z.string().max(2000).optional(),
   notify_client: z.boolean().optional()
@@ -31,7 +36,7 @@ export type AdminReservationPayload = z.infer<typeof adminReservationSchema>;
 
 export type ReservationStatus = "new" | "confirmed" | "refused" | "cancelled";
 
-export type ReservationRequest = ReservationPayload & {
+export type ReservationRequest = Omit<ReservationPayload, "consent_rgpd" | "arrival_time"> & {
   id: string;
   status: ReservationStatus;
   admin_notes?: string;
@@ -42,6 +47,8 @@ export type ReservationRequest = ReservationPayload & {
   created_by_admin: boolean;
   created_at: string;
   updated_at: string;
+  consent_rgpd?: true;
+  arrival_time?: string;
 };
 
 export const TABLE_TYPES = [

@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { reservationService } from "@/lib/reservations/reservation-service-instance";
 import { eventService } from "@/lib/events/events-service-instance";
+import { ArrivalTimeSelect } from "@/components/reservations/ArrivalTimeSelect";
+import { formatArrivalDisplay } from "@/lib/reservations/arrival-datetime";
 import { isExpiredReservation } from "@/lib/reservations/reservation-groups";
 import {
   cancelReservationAction,
@@ -28,6 +30,8 @@ export default async function ReservationDetailPage({ params, searchParams }: Pr
   const expired = isExpiredReservation(
     reservation.status,
     eventDate ? new Date(eventDate) : null,
+    reservation.date_requested,
+    reservation.arrival_time,
   );
 
   const isEditable = !expired && (reservation.status === "new" || reservation.status === "confirmed");
@@ -76,7 +80,18 @@ export default async function ReservationDetailPage({ params, searchParams }: Pr
           <dt>Personnes</dt><dd>{reservation.guest_count}</dd>
           <dt>Date demandée</dt><dd>{reservation.date_requested ?? "—"}</dd>
           {reservation.arrival_time && (
-            <><dt>Heure d&apos;arrivée</dt><dd>{reservation.arrival_time}</dd></>
+            <>
+              <dt>Heure d&apos;arrivée</dt>
+              <dd>
+                {reservation.date_requested
+                  ? formatArrivalDisplay(
+                      reservation.date_requested,
+                      reservation.arrival_time,
+                      reservation.source_locale
+                    )
+                  : reservation.arrival_time}
+              </dd>
+            </>
           )}
           {reservation.table_type && (
             <><dt>Type de table</dt><dd>{tableTypeLabel(reservation.table_type)}</dd></>
@@ -176,6 +191,16 @@ export default async function ReservationDetailPage({ params, searchParams }: Pr
                   name="date_requested"
                   type="date"
                   defaultValue={reservation.date_requested ?? ""}
+                />
+              </label>
+              <label>
+                Heure d&apos;arrivée
+                <ArrivalTimeSelect
+                  variant="admin"
+                  placeholder="— Choisir —"
+                  locale={reservation.source_locale}
+                  defaultValue={reservation.arrival_time}
+                  dateValue={reservation.date_requested}
                 />
               </label>
               <label>

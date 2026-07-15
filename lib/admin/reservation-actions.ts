@@ -91,6 +91,7 @@ export async function createManualReservationAction(formData: FormData) {
     phone: formData.get("phone"),
     event_id: formData.get("event_id") || undefined,
     date_requested: formData.get("date_requested") || undefined,
+    arrival_time: formData.get("arrival_time") || undefined,
     guest_count: formData.get("guest_count"),
     admin_notes: formData.get("admin_notes") || undefined
   };
@@ -129,6 +130,7 @@ export async function updateReservationAction(formData: FormData) {
     phone: formData.get("phone"),
     event_id: formData.get("event_id") || undefined,
     date_requested: formData.get("date_requested") || undefined,
+    arrival_time: formData.get("arrival_time") || undefined,
     guest_count: formData.get("guest_count"),
     admin_notes: formData.get("admin_notes") || undefined
   };

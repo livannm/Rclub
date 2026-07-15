@@ -48,6 +48,7 @@
   },
   "Agenda": {
     "title": "Agenda des événements",
+    "kicker": "Rclub",
     "empty": "Aucun événement à venir.",
     "emptyFiltered": "Aucun événement pour cette période.",
     "startsAt": "Début",
@@ -68,13 +69,19 @@
   },
   "GalleryIndex": {
     "title": "Galerie",
+    "kicker": "Rclub",
     "empty": "Aucune galerie disponible pour le moment.",
     "sectionLabel": "Événements en galerie"
   },
   "Gallery": {
     "backToGallery": "Retour à la galerie",
+    "kicker": "Soirée Rclub",
     "empty": "Aucune photo disponible pour le moment.",
-    "sectionLabel": "Photos"
+    "sectionLabel": "Photos",
+    "lightboxClose": "Fermer",
+    "lightboxPrev": "Photo précédente",
+    "lightboxNext": "Photo suivante",
+    "lightboxZoomHint": "Pincez pour zoomer"
   },
   "Reservations": {
     "title": "Réservations",
@@ -92,6 +99,7 @@
     "dateRequested": "Date souhaitée",
     "arrivalTime": "Heure d'arrivée",
     "arrivalTimePlaceholder": "Choisir une heure",
+    "arrivalTimeHint": "Les horaires après minuit correspondent au lendemain de la soirée choisie.",
     "tableType": "Type de table",
     "tableClassique": "Classique",
     "tableClassiqueSub": "Table en salle",
@@ -180,6 +188,7 @@
     "lightboxClose": "Fermer",
     "lightboxPrev": "Photo précédente",
     "lightboxNext": "Photo suivante",
+    "lightboxZoomHint": "Pincez pour zoomer",
     "ctaTitle": "Prêt pour la prochaine soirée ?",
     "ctaDescription": "Réservez votre table ou contactez-nous pour organiser une expérience privée.",
     "ctaReserve": "Réserver",

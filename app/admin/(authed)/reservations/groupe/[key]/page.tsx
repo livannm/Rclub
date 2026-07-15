@@ -124,8 +124,8 @@ export default async function AdminReservationsGroupePage({ params }: GroupePage
                   </span>
                   <span className="res-row-date">{formatDate(r.date_requested)}</span>
                   <span className="res-row-guests">{r.guest_count} pers.</span>
-                  <span className={`res-row-status res-status-${isExpiredReservation(r.status, group.date) ? "refused" : r.status}`}>
-                    {isExpiredReservation(r.status, group.date) ? "Expiré" : statusLabel(r.status)}
+                  <span className={`res-row-status res-status-${isExpiredReservation(r.status, group.date, r.date_requested, r.arrival_time) ? "refused" : r.status}`}>
+                    {isExpiredReservation(r.status, group.date, r.date_requested, r.arrival_time) ? "Expiré" : statusLabel(r.status)}
                   </span>
                 </a>
               </li>

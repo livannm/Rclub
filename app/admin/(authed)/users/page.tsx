@@ -19,10 +19,12 @@ export default async function AdminUsersPage({ searchParams }: AdminUsersPagePro
   return (
     <main className="admin-shell">
       <div className="admin-page-bar">
-        <h1 className="admin-page-title">Comptes admin</h1>
-        <p className="admin-page-subtitle">
-          Créez des accès pour votre équipe. Seuls les super admins peuvent gérer les comptes.
-        </p>
+        <div>
+          <h1 className="admin-page-title">Comptes admin</h1>
+          <p className="admin-page-subtitle">
+            Créez des accès pour votre équipe. Seuls les super admins peuvent gérer les comptes.
+          </p>
+        </div>
       </div>
 
       {params.created === "1" ? (

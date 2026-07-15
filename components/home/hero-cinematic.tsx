@@ -65,16 +65,18 @@ export function HeroCinematic({
       ) : null}
       <div className="hero-content hero-content--centered">
         <h1 className="hero-wordmark">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={HERO_BRAND_URL}
-            alt={title}
-            className="hero-wordmark-img"
-            width={319}
-            height={344}
-            fetchPriority="high"
-            data-testid="hero-wordmark"
-          />
+          <Link href="/" aria-label={title} className="hero-wordmark-link">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={HERO_BRAND_URL}
+              alt=""
+              className="hero-wordmark-img"
+              width={319}
+              height={344}
+              fetchPriority="high"
+              data-testid="hero-wordmark"
+            />
+          </Link>
         </h1>
 
         <div className="hero-actions hero-actions--centered">

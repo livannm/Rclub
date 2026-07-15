@@ -6,11 +6,12 @@ import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { LocaleSwitcher } from "@/components/locale-switcher";
+import { CloseMenuIcon } from "@/components/icons/close-menu-icon";
 import { CollapseMenuIcon } from "@/components/icons/collapse-menu-icon";
 
 type NavLink = { href: string; label: string };
 
-const MOBILE_NAV_MQ = "(max-width: 768px)";
+const MOBILE_NAV_MQ = "(max-width: 767px)";
 
 function subscribeMobileNav(onStoreChange: () => void) {
   const mq = window.matchMedia(MOBILE_NAV_MQ);
@@ -107,7 +108,7 @@ export function SiteNav({ links }: { links: NavLink[] }) {
               onClick={() => setOpen(false)}
               type="button"
             >
-              <CollapseMenuIcon />
+              <CloseMenuIcon />
             </button>
             <nav className="site-nav-drawer-nav">
               {links.map(({ href, label }) => {

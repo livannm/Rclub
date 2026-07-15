@@ -18,10 +18,12 @@ export default async function GaleriePage() {
 
   return (
     <main className="page-shell site-grid">
-      <p className="page-kicker">Rclub</p>
+      <p className="page-kicker">{t("kicker")}</p>
       <h1 className="page-title">{t("title")}</h1>
 
-      {slugs.length === 0 ? <p data-testid="gallery-index-empty">{t("empty")}</p> : null}
+      {slugs.length === 0 ? (
+        <p className="agenda-empty" data-testid="gallery-index-empty">{t("empty")}</p>
+      ) : null}
 
       <section
         aria-label={t("sectionLabel")}

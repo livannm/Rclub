@@ -26,6 +26,7 @@ export class InMemoryReservationRepository implements ReservationRepository {
       phone: payload.phone,
       event_id: payload.event_id,
       date_requested: payload.date_requested,
+      arrival_time: payload.arrival_time,
       guest_count: payload.guest_count,
       admin_notes: payload.admin_notes,
       source_locale: "fr",

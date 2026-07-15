@@ -472,11 +472,20 @@ button:active,
   justify-content: space-between;
   gap: 1rem;
   padding: 0.75rem clamp(1rem, 4vw, 2rem);
+  padding-top: max(0.75rem, env(safe-area-inset-top));
   background: rgba(10, 10, 10, 0.72);
   border-bottom: 1px solid var(--hairline-gold);
   backdrop-filter: blur(16px) saturate(120%);
   -webkit-backdrop-filter: blur(16px) saturate(120%);
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+}
+
+.site-logo-link {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  display: block;
+  line-height: 0;
 }
 
 .site-logo {
@@ -514,8 +523,8 @@ button:active,
   flex-shrink: 0;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  min-height: 40px;
+  width: 44px;
+  min-height: 44px;
   padding: 0.5rem;
   color: var(--text-primary);
   background: transparent;
@@ -578,6 +587,7 @@ button:active,
   box-shadow: var(--shadow-deep);
   transform: translateX(100%);
   visibility: hidden;
+  pointer-events: none;
   transition:
     transform var(--transition-slow),
     visibility 0s var(--transition-slow);
@@ -586,6 +596,7 @@ button:active,
 .site-nav-drawer.is-open {
   transform: translateX(0);
   visibility: visible;
+  pointer-events: auto;
   transition:
     transform var(--transition-slow),
     visibility 0s 0s;
@@ -593,8 +604,8 @@ button:active,
 
 .site-nav-close {
   align-self: flex-end;
-  width: 40px;
-  min-height: 40px;
+  width: 44px;
+  min-height: 44px;
   margin: 0 1.25rem 1.75rem;
   padding: 0.5rem;
   color: var(--text-muted);
@@ -659,7 +670,7 @@ button:active,
   margin-top: auto;
   display: flex;
   justify-content: flex-end;
-  padding: 1.25rem 1.75rem 1.75rem;
+  padding: 1.25rem 1.75rem max(1.25rem, env(safe-area-inset-bottom));
   border-top: 1px solid var(--border-default);
 }
 
@@ -1103,6 +1114,17 @@ figure.media-card:hover {
   max-width: min(100%, clamp(11rem, 36vw, 14rem));
 }
 
+.hero-wordmark-link {
+  display: block;
+  line-height: 0;
+  transition: opacity var(--transition-base);
+}
+
+.hero-wordmark-link:hover {
+  opacity: 0.85;
+  text-decoration: none;
+}
+
 .hero-wordmark-img {
   display: block;
   width: min(100%, clamp(11rem, 36vw, 14rem));
@@ -1329,6 +1351,18 @@ figure.media-card:hover {
 
 .hero-action-item--agenda {
   animation-delay: var(--hero-delay-agenda);
+}
+
+@media (max-width: 767px) {
+  .hero-action-item {
+    opacity: 1;
+    animation: none;
+  }
+
+  .hero-btn-glow {
+    display: block;
+    width: 100%;
+  }
 }
 
 /* ================================================================
@@ -5654,11 +5688,13 @@ main.page-shell {
 
 @media (max-width: 720px) {
   .site-header {
-    align-items: flex-start;
+    align-items: center;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
   }
 
   .hero {
-    min-height: 680px;
+    min-height: min(680px, 85dvh);
     background-image: url("/media/hero-poster-mobile.png");
   }
 
@@ -6621,6 +6657,13 @@ main.page-shell {
 }
 
 /* ---- Mobile Immersive ---- */
+.home-highlight-panel .ev-carousel-mobile,
+.home-highlight-panel .ev-carousel-mobile__scroll,
+.home-highlight-panel .ev-carousel-mobile__slide,
+.home-highlight-panel .ev-carousel-mobile__body {
+  min-height: min(70svh, 520px);
+}
+
 .ev-carousel-mobile {
   position: relative;
   width: 100%;
@@ -6641,7 +6684,8 @@ main.page-shell {
 .ev-carousel-mobile__progress-tick {
   position: relative;
   flex: 1;
-  height: 1.25rem;
+  min-height: 44px;
+  height: 44px;
   padding: 0;
   background: transparent;
   border: none;
@@ -6775,6 +6819,13 @@ main.page-shell {
   max-width: 12ch;
 }
 
+@media (max-width: 767px) {
+  .ev-carousel-mobile__title {
+    max-width: none;
+    line-height: 1.15;
+  }
+}
+
 .ev-carousel-mobile__date {
   margin: 0 0 1.75rem;
   font-size: 0.8rem;
@@ -6843,6 +6894,343 @@ main.page-shell {
   z-index: 20;
   display: flex;
   gap: 0.5rem;
+}
+
+/* ================================================================
+   MOBILE UX POLISH — public + admin
+   ================================================================ */
+
+@media (max-width: 767px) {
+  .button,
+  a.button,
+  .home-final-cta-actions .button,
+  .hero-actions .button,
+  .ev-carousel-mobile__cta,
+  .ev-carousel-mobile__reserve {
+    width: 100%;
+    min-height: 44px;
+    justify-content: center;
+  }
+
+  .ev-carousel-mobile__cta,
+  .ev-carousel-mobile__reserve {
+    display: flex;
+    align-items: center;
+    height: auto;
+  }
+
+  .locale-switcher button {
+    min-height: 44px;
+    padding: 0.4rem 0.75rem;
+  }
+
+  .agenda-filter-pill {
+    min-height: 44px;
+    padding: 0.55rem 1rem;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .agenda-filters-top-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.25rem;
+  }
+
+  .agenda-filters-top-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .agenda-filter-pill {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .gallery-grid--event .gallery-photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .gallery-photo-button {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .contact-hero {
+    height: clamp(280px, 42vh, 400px);
+  }
+
+  .contact-item-value {
+    overflow-wrap: anywhere;
+  }
+
+  .contact-map-wrap {
+    aspect-ratio: 16 / 9;
+    min-height: 200px;
+  }
+
+  .contact-map {
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+  }
+
+  .rclub-input,
+  .rclub-select,
+  select.rclub-input {
+    min-height: 44px;
+    padding: 0.65rem 0;
+  }
+
+  .rclub-consent {
+    min-height: 44px;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .rclub-consent input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .rclub-table-tiles,
+  .rclub-event-tiles {
+    grid-template-columns: 1fr;
+  }
+
+  .rclub-field-hint {
+    margin: 0.35rem 0 0;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  .site-footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer-social-link {
+    width: 44px;
+    height: 44px;
+  }
+
+  .inside-lightbox-nav {
+    width: 44px;
+    height: 44px;
+  }
+
+  .home-inside-zoom-hint--visible {
+    opacity: 1;
+  }
+
+  .home-inside-dot {
+    width: 44px;
+    height: 8px;
+    padding: 18px 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    box-sizing: content-box;
+  }
+
+  .home-inside-dot::before {
+    content: "";
+    display: block;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--border-default);
+    transition: background var(--transition-fast);
+  }
+
+  .home-inside-dot--active::before {
+    background: var(--accent-gold);
+  }
+
+  .event-detail-sticky-cta {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 15;
+    padding: 0.75rem 1rem max(0.75rem, env(safe-area-inset-bottom));
+    background: rgba(10, 10, 10, 0.92);
+    border-top: 1px solid var(--border-gold);
+    backdrop-filter: blur(12px);
+  }
+
+  .event-detail-sticky-cta-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: min(100%, 1320px);
+    margin: 0 auto;
+  }
+
+  .event-detail-sticky-cta .button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .event-detail-sticky-cta-gallery {
+    display: none;
+  }
+
+  main.page-shell:has(.event-detail) {
+    padding-bottom: calc(8rem + env(safe-area-inset-bottom));
+  }
+
+  .admin-app {
+    overflow-x: clip;
+  }
+
+  .admin-page-title {
+    margin: 0 0 0.25rem;
+    font-size: clamp(1.25rem, 5vw, 1.75rem);
+    letter-spacing: -0.02em;
+  }
+
+  .admin-photo-item {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .admin-user-list-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .res-form-grid select {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .agenda-filters {
+    position: sticky;
+    top: calc(3.5rem + env(safe-area-inset-top, 0px));
+    z-index: 10;
+    padding-bottom: 0.75rem;
+    background: linear-gradient(
+      to bottom,
+      var(--bg-primary) 75%,
+      transparent
+    );
+  }
+
+  .event-detail-cover img {
+    max-height: min(16rem, 50vw);
+  }
+
+  .media-card-body {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .home-exp-intro-title {
+    font-size: clamp(2.25rem, 7vw, 4rem);
+  }
+
+  .rclub-event-hint {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .rclub-event-hint__img-wrap {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+
+  .rclub-form-page .rclub-submit {
+    position: sticky;
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+    z-index: 5;
+  }
+}
+
+@media (min-width: 768px) {
+  .event-detail-sticky-cta {
+    display: none;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .gallery-grid:not(.gallery-grid--event) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 1023px) {
+  .admin-events-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .res-groups-header,
+  .res-group-stats {
+    display: none;
+  }
+
+  .res-group-card .res-row-full {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .res-row-date,
+  .res-group-label {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+.inside-lightbox-img-wrap--zoom {
+  touch-action: none;
+  overflow: hidden;
+}
+
+.inside-lightbox-zoom-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.inside-lightbox-zoom-content {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.inside-lightbox-zoom-hint {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+figure.media-card.gallery-photo-card {
+  cursor: default;
 }
 
 /* END RCLUB FORM REDESIGN */

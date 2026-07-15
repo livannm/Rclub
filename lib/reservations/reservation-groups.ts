@@ -1,4 +1,5 @@
 import type { ReservationRequest } from "@/lib/reservations/reservation-schema";
+import { isArrivalInPast } from "@/lib/reservations/arrival-datetime";
 
 export type EveningGroup = {
   key: string;
@@ -19,8 +20,16 @@ export type EveningGroup = {
 export function isExpiredReservation(
   status: string,
   eventDate: Date | null | undefined,
+  dateRequested?: string,
+  arrivalTime?: string,
 ): boolean {
-  if (status !== "new" || !eventDate) return false;
+  if (status !== "new") return false;
+
+  if (dateRequested) {
+    return isArrivalInPast(dateRequested, arrivalTime);
+  }
+
+  if (!eventDate) return false;
   return new Date(eventDate) < new Date();
 }
 

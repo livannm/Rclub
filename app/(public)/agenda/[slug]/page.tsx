@@ -7,6 +7,7 @@ import { getLocalizedEventContent } from "@/lib/events/event-localized";
 import { eventService } from "@/lib/events/events-service-instance";
 import { galleryService } from "@/lib/gallery/gallery-service-instance";
 import { buildEventDetailMetadata, buildEventJsonLd } from "@/lib/seo/metadata";
+import { EventDetailStickyActions } from "@/components/events/EventDetailStickyActions";
 import { formatEventDateTime } from "@/lib/utils/format-date";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -95,6 +96,15 @@ export default async function EventDetailPage({ params }: Props) {
           </div>
         </div>
       </article>
+
+      <EventDetailStickyActions
+        ticketUrl={event.ticket_url}
+        ticketLabel={t("ticket")}
+        reserveHref={`/reservations?date=${event.starts_at.slice(0, 10)}`}
+        reserveLabel={t("reserve")}
+        galleryHref={photos.length > 0 ? `/galerie/${slug}` : null}
+        galleryLabel={photos.length > 0 ? t("gallery") : undefined}
+      />
     </main>
   );
 }

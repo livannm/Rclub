@@ -48,6 +48,7 @@
   },
   "Agenda": {
     "title": "Events schedule",
+    "kicker": "Rclub",
     "empty": "No upcoming events.",
     "emptyFiltered": "No events for this period.",
     "startsAt": "Starts",
@@ -68,13 +69,19 @@
   },
   "GalleryIndex": {
     "title": "Gallery",
+    "kicker": "Rclub",
     "empty": "No gallery available yet.",
     "sectionLabel": "Events in gallery"
   },
   "Gallery": {
     "backToGallery": "Back to gallery",
+    "kicker": "Rclub night",
     "empty": "No photos available yet.",
-    "sectionLabel": "Photos"
+    "sectionLabel": "Photos",
+    "lightboxClose": "Close",
+    "lightboxPrev": "Previous photo",
+    "lightboxNext": "Next photo",
+    "lightboxZoomHint": "Pinch to zoom"
   },
   "Reservations": {
     "title": "Reservations",
@@ -92,6 +99,7 @@
     "dateRequested": "Preferred date",
     "arrivalTime": "Arrival time",
     "arrivalTimePlaceholder": "Select a time",
+    "arrivalTimeHint": "Times after midnight are the morning after your chosen evening.",
     "tableType": "Table type",
     "tableClassique": "Classic",
     "tableClassiqueSub": "Standard in-room table",
@@ -180,6 +188,7 @@
     "lightboxClose": "Close",
     "lightboxPrev": "Previous photo",
     "lightboxNext": "Next photo",
+    "lightboxZoomHint": "Pinch to zoom",
     "ctaTitle": "Ready for the next night?",
     "ctaDescription": "Book your table or contact us to arrange a private experience.",
     "ctaReserve": "Book",

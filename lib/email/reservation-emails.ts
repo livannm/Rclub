@@ -1,5 +1,7 @@
 import { OCCASION_TYPES, TABLE_TYPES } from "@/lib/reservations/reservation-schema";
 import type { ReservationRequest } from "@/lib/reservations/reservation-schema";
+import { formatArrivalDisplay } from "@/lib/reservations/arrival-datetime";
+import { formatArrivalTimeLabel } from "@/lib/reservations/arrival-slots";
 import { getFromEmail, sendEmail } from "./resend-client";
 
 function formatDate(iso?: string): string {
@@ -14,6 +16,14 @@ function formatDate(iso?: string): string {
 
 function tableTypeLabel(value?: string): string {
   return TABLE_TYPES.find((t) => t.value === value)?.labelFr ?? "—";
+}
+
+function arrivalLabel(reservation: ReservationRequest): string {
+  if (!reservation.arrival_time) return "—";
+  if (reservation.date_requested) {
+    return formatArrivalDisplay(reservation.date_requested, reservation.arrival_time, reservation.source_locale);
+  }
+  return formatArrivalTimeLabel(reservation.arrival_time);
 }
 
 function occasionTypeLabel(value?: string): string {
@@ -244,7 +254,7 @@ function adminRecapHtml(reservation: ReservationRequest): string {
     ["Email", reservation.email],
     ["Téléphone", reservation.phone],
     ["Date souhaitée", date],
-    ["Arrivée", reservation.arrival_time || "—"],
+    ["Arrivée", arrivalLabel(reservation)],
     ["Personnes", String(reservation.guest_count)],
     ["Type de table", tableTypeLabel(reservation.table_type)],
     ["Occasion", occasionTypeLabel(reservation.occasion_type)],

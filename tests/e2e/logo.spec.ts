@@ -1,6 +1,34 @@
 import { expect, test } from "@playwright/test";
 import { loginAsAdmin } from "./utils/admin";
 
+test("site logo navigates home on mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto("/agenda");
+  await page.getByTestId("site-logo").click();
+  await expect(page).toHaveURL("/");
+});
+
+test("hero wordmark navigates home", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto("/");
+  await page.getByTestId("hero-wordmark").click();
+  await expect(page).toHaveURL("/");
+});
+
+test("mobile nav drawer opens and closes", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto("/agenda");
+
+  await page.getByRole("button", { name: "Ouvrir le menu" }).click();
+  await expect(page.locator("#site-nav-drawer.is-open")).toBeVisible();
+
+  await page.locator(".site-nav-overlay").click();
+  await expect(page.locator("#site-nav-drawer.is-open")).toHaveCount(0);
+
+  await page.getByTestId("site-logo").click();
+  await expect(page).toHaveURL("/");
+});
+
 test("site logo is visible on every page", async ({ page }) => {
   await page.goto("/");
   const logo = page.getByTestId("site-logo");

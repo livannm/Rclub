@@ -11,6 +11,7 @@ describe("ReservationService", () => {
       email: "marie@example.com",
       phone: "0604050607",
       guest_count: 6,
+      arrival_time: "23:00",
       source_locale: "fr",
       consent_rgpd: true
     });

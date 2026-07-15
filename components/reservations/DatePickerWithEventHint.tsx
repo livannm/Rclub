@@ -95,6 +95,7 @@ export function DatePickerWithEventHint({ labelText, locale, defaultValue }: Pro
 
       {hasEvent && event && (
         <div className="rclub-event-hint" role="status" aria-live="polite">
+          <input type="hidden" name="event_id" value={event.id} />
           {event.cover_image_url && (
             <div className="rclub-event-hint__img-wrap" aria-hidden="true">
               <img

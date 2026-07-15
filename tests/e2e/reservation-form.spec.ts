@@ -1,16 +1,22 @@
 import { expect, test } from "@playwright/test";
 
+async function fillReservationBasics(page: import("@playwright/test").Page) {
+  await page.getByLabel("Prénom").fill("Alice");
+  await page.getByLabel("Nom", { exact: true }).fill("Martin");
+  await page.getByLabel("Email").fill("alice@example.com");
+  await page.getByLabel("Téléphone").fill("0601020304");
+  await page.getByLabel("Nombre de personnes").fill("5");
+  await page.getByLabel("Date souhaitée").fill("2099-08-02");
+  await page.getByLabel("Heure d'arrivée").selectOption("23:00");
+}
+
 test("submits reservation request successfully", async ({ page }) => {
   await page.goto("/reservations");
 
-  await page.getByLabel("Nom complet").fill("Alice Martin");
-  await page.getByLabel("Email").fill("alice@example.com");
-  await page.getByLabel("Telephone").fill("0601020304");
-  await page.getByLabel("Nombre de personnes").fill("5");
-  await page.getByLabel("Date souhaitee").fill("2099-08-02");
-  await page.getByLabel("Message").fill("Merci de me confirmer la disponibilite.");
+  await fillReservationBasics(page);
+  await page.getByLabel("Message").fill("Merci de me confirmer la disponibilité.");
   await page
-    .getByLabel("J'accepte le traitement de mes donnees (RGPD)")
+    .getByLabel("J'accepte le traitement de mes données (RGPD)")
     .check();
 
   await page.getByRole("button", { name: "Envoyer ma demande" }).click();
@@ -22,26 +28,25 @@ test("submits reservation request successfully", async ({ page }) => {
 test("shows validation error when consent is missing", async ({ page }) => {
   await page.goto("/reservations");
 
-  await page.getByLabel("Nom complet").fill("Alice Martin");
-  await page.getByLabel("Email").fill("alice@example.com");
-  await page.getByLabel("Telephone").fill("0601020304");
-  await page.getByLabel("Nombre de personnes").fill("5");
+  await fillReservationBasics(page);
   await page.getByRole("button", { name: "Envoyer ma demande" }).click();
 
   await expect(page).toHaveURL(/\/reservations$/);
   await expect(page.getByTestId("reservation-success")).toHaveCount(0);
 });
 
-
 test("rejects reservation spam when honeypot is filled", async ({ page }) => {
   await page.goto("/reservations");
 
   await page.locator('input[name="website"]').fill("https://spam.example");
-  await page.getByLabel("Nom complet").fill("Spam Bot");
+  await page.getByLabel("Prénom").fill("Spam");
+  await page.getByLabel("Nom", { exact: true }).fill("Bot");
   await page.getByLabel("Email").fill("spam@example.com");
-  await page.getByLabel("Telephone").fill("0601020304");
+  await page.getByLabel("Téléphone").fill("0601020304");
   await page.getByLabel("Nombre de personnes").fill("5");
-  await page.getByLabel("J'accepte le traitement de mes donnees (RGPD)").check();
+  await page.getByLabel("Date souhaitée").fill("2099-08-02");
+  await page.getByLabel("Heure d'arrivée").selectOption("23:00");
+  await page.getByLabel("J'accepte le traitement de mes données (RGPD)").check();
 
   await page.getByRole("button", { name: "Envoyer ma demande" }).click();
 

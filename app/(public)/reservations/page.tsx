@@ -10,6 +10,7 @@ import { ReservationServiceError } from "@/lib/reservations/reservation-service"
 import { reservationService } from "@/lib/reservations/reservation-service-instance";
 import { reservationNotifyService } from "@/lib/reservation-notify/reservation-notify-service-instance";
 import { sendNewReservationAdminEmail, sendRequestReceivedEmail } from "@/lib/email/reservation-emails";
+import { ArrivalTimeSelect } from "@/components/reservations/ArrivalTimeSelect";
 import { DatePickerWithEventHint } from "@/components/reservations/DatePickerWithEventHint";
 
 type ReservationsPageProps = {
@@ -164,21 +165,13 @@ export default async function ReservationsPage({ searchParams }: ReservationsPag
             />
             <label className="rclub-field" htmlFor="arrival_time">
               <span className="rclub-label">{t("arrivalTime")}</span>
-              <select
-                id="arrival_time"
-                name="arrival_time"
+              <ArrivalTimeSelect
+                placeholder={t("arrivalTimePlaceholder")}
+                hint={t("arrivalTimeHint")}
+                locale={locale}
+                dateValue={params.date}
                 required
-                className="rclub-input rclub-select"
-              >
-                <option value="">{t("arrivalTimePlaceholder")}</option>
-                <option value="22:00">22h00</option>
-                <option value="22:30">22h30</option>
-                <option value="23:00">23h00</option>
-                <option value="23:30">23h30</option>
-                <option value="00:00">00h00</option>
-                <option value="00:30">00h30</option>
-                <option value="01:00">01h00</option>
-              </select>
+              />
             </label>
             <label className="rclub-field" htmlFor="guest_count">
               <span className="rclub-label">{t("guestCount")}</span>

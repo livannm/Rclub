@@ -66,7 +66,7 @@ export default async function AgendaPage({ searchParams }: PageProps) {
 
   return (
     <main className="page-shell site-grid">
-      <p className="page-kicker">Rclub</p>
+      <p className="page-kicker">{t("kicker")}</p>
       <h1 className="page-title">{t("title")}</h1>
 
       {years.length > 0 && (

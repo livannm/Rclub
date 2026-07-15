@@ -7,6 +7,7 @@ import { galleryService } from "@/lib/gallery/gallery-service-instance";
 import { eventService } from "@/lib/events/events-service-instance";
 import { localizeGalleryPhotos } from "@/lib/gallery/gallery-localized";
 import { getLocalizedEventContent } from "@/lib/events/event-localized";
+import { GalerieEventGallery } from "@/components/gallery/GalerieEventGallery";
 import { buildEventGalleryMetadata, buildPageMetadata } from "@/lib/seo/metadata";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -44,30 +45,24 @@ export default async function GalerieEventPage({ params }: Props) {
   return (
     <main className="page-shell site-grid">
       <Link href="/galerie" className="back-link">{t("backToGallery")}</Link>
+      <p className="page-kicker">{t("kicker")}</p>
       <h1 className="page-title">{title}</h1>
 
       {localizedPhotos.length === 0 ? (
         <p data-testid="gallery-empty">{t("empty")}</p>
-      ) : null}
-
-      <section
-        aria-label={t("sectionLabel")}
-        className="gallery-grid"
-      >
-        {localizedPhotos.map((photo, index) => (
-          <figure key={photo.id} className="media-card">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              data-testid={`gallery-photo-${index}`}
-              src={photo.image_url}
-              alt={photo.alt}
-              loading="lazy"
-              className="gallery-photo"
-            />
-            <figcaption className="media-card-body">{photo.alt}</figcaption>
-          </figure>
-        ))}
-      </section>
+      ) : (
+        <GalerieEventGallery
+          photos={localizedPhotos.map((photo) => ({
+            id: photo.id,
+            src: photo.image_url,
+            alt: photo.alt,
+          }))}
+          closeLabel={t("lightboxClose")}
+          prevLabel={t("lightboxPrev")}
+          nextLabel={t("lightboxNext")}
+          zoomHint={t("lightboxZoomHint")}
+        />
+      )}
     </main>
   );
 }

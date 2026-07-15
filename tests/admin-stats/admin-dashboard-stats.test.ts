@@ -98,6 +98,7 @@ describe("AdminDashboardStatsService", () => {
       email: "marie@example.com",
       phone: "0604050607",
       guest_count: 4,
+      arrival_time: "23:00",
       source_locale: "fr",
       consent_rgpd: true
     });
@@ -164,6 +165,7 @@ describe("AdminDashboardStatsService", () => {
       event_id: event.id,
       table_type: "vip",
       occasion_type: "evjf",
+      arrival_time: "23:00",
       source_locale: "fr",
       consent_rgpd: true
     });
@@ -175,6 +177,7 @@ describe("AdminDashboardStatsService", () => {
       event_id: event.id,
       table_type: "prestige",
       occasion_type: "anniversaire",
+      arrival_time: "00:30",
       source_locale: "fr",
       consent_rgpd: true
     });
@@ -188,6 +191,7 @@ describe("AdminDashboardStatsService", () => {
       phone: "0601020306",
       guest_count: 2,
       event_id: event.id,
+      arrival_time: "23:00",
       source_locale: "fr",
       consent_rgpd: true
     });

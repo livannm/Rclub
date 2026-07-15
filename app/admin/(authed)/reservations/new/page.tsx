@@ -1,3 +1,4 @@
+import { ArrivalTimeSelect } from "@/components/reservations/ArrivalTimeSelect";
 import { eventService } from "@/lib/events/events-service-instance";
 import { createManualReservationAction } from "@/lib/admin/reservation-actions";
 
@@ -46,6 +47,14 @@ export default async function NewReservationPage({ searchParams }: Props) {
             <label>
               Date souhaitée
               <input name="date_requested" type="date" />
+            </label>
+            <label>
+              Heure d&apos;arrivée
+              <ArrivalTimeSelect
+                variant="admin"
+                placeholder="— Choisir —"
+                locale="fr"
+              />
             </label>
             <label>
               Événement associé
