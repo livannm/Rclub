@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
+import { TransformComponent, TransformWrapper, type ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 
 export type GalleryImage = {
   src: string;
@@ -56,8 +56,13 @@ export function GalleryLightbox({
   const [index, setIndex] = useState(initialIndex);
   const [scale, setScale] = useState(1);
   const touchStartX = useRef<number | null>(null);
+  const transformRef = useRef<ReactZoomPanPinchRef | null>(null);
 
   const activeImage = images[index];
+
+  const centerImage = useCallback(() => {
+    requestAnimationFrame(() => transformRef.current?.centerView(1, 0));
+  }, []);
 
   const prev = useCallback(
     () => setIndex((i) => (i - 1 + images.length) % images.length),
@@ -148,12 +153,14 @@ export function GalleryLightbox({
         <div className="inside-lightbox-img-wrap inside-lightbox-img-wrap--zoom">
           <TransformWrapper
             key={activeImage.src}
+            ref={transformRef}
             initialScale={1}
             minScale={1}
             maxScale={4}
             centerOnInit
             centerZoomedOut
             limitToBounds
+            onInit={centerImage}
             onTransform={(_ref, state) => setScale(state.scale)}
             panning={{ disabled: scale <= 1 }}
             doubleClick={{ mode: "toggle", step: 0.7 }}
@@ -169,6 +176,7 @@ export function GalleryLightbox({
                 alt={activeImage.alt}
                 className="inside-lightbox-img"
                 draggable={false}
+                onLoad={centerImage}
               />
             </TransformComponent>
           </TransformWrapper>

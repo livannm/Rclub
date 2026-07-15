@@ -5,7 +5,8 @@ import Link from 'next/link'
 
 interface PracticalItem {
   label: string
-  value: string
+  value?: string
+  lines?: string[]
 }
 
 interface HomePracticalInfoClientProps {
@@ -33,7 +34,7 @@ export function HomePracticalInfoClient({
       </div>
 
       <dl className="home-practical-reveal-list">
-        {items.map(({ label, value }, i) => (
+        {items.map(({ label, value, lines }, i) => (
           <motion.div
             key={label}
             className="home-practical-reveal-item"
@@ -46,7 +47,17 @@ export function HomePracticalInfoClient({
               {String(i + 1).padStart(2, '0')}
             </span>
             <dt className="home-practical-reveal-label">{label}</dt>
-            <dd className="home-practical-reveal-value">{value}</dd>
+            {lines ? (
+              <dd className="home-practical-reveal-value">
+                <ul className="home-practical-reveal-lines">
+                  {lines.map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ul>
+              </dd>
+            ) : (
+              <dd className="home-practical-reveal-value">{value}</dd>
+            )}
           </motion.div>
         ))}
       </dl>

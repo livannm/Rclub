@@ -86,12 +86,14 @@ export function EventCarouselMobileImmersive({ events, navLabel, startsAtLabel, 
                   <p className="ev-carousel-mobile__label">{startsAtLabel}</p>
                   <h2 className="ev-carousel-mobile__title">{event.title}</h2>
                   <p className="ev-carousel-mobile__date">{event.startsAtFormatted}</p>
-                  <Link href={href} tabIndex={isActive ? 0 : -1} className="button ev-carousel-mobile__cta">
-                    {viewDetailsLabel}
-                  </Link>
-                  <Link href={reserveHref} tabIndex={isActive ? 0 : -1} className="button button-secondary ev-carousel-mobile__reserve">
-                    {reserveLabel}
-                  </Link>
+                  <div className="ev-carousel-mobile__actions">
+                    <Link href={href} tabIndex={isActive ? 0 : -1} className="ev-carousel-mobile__cta">
+                      {viewDetailsLabel}
+                    </Link>
+                    <Link href={reserveHref} tabIndex={isActive ? 0 : -1} className="ev-carousel-mobile__reserve">
+                      {reserveLabel}
+                    </Link>
+                  </div>
                   <p className="ev-carousel-mobile__counter">
                     <span className="ev-carousel-mobile__counter-index">{String(activeIndex + 1).padStart(2, "0")}</span>
                     {" / "}

@@ -10,6 +10,11 @@ export async function HomePracticalInfo() {
     { label: t("practicalAddressLabel"), value: contact.address },
     { label: t("practicalParkingLabel"), value: t("practicalParkingValue") },
     { label: t("practicalHoursLabel"), value: t("practicalHoursValue") },
+    {
+      label: t("practicalEntryLabel"),
+      lines: [t("practicalEntryWithoutDrink"), t("practicalEntryWithDrink")],
+    },
+    { label: t("practicalWardrobeLabel"), value: t("practicalWardrobeValue") },
     { label: t("practicalDressCodeLabel"), value: t("practicalDressCodeValue") },
     { label: t("practicalReservationLabel"), value: t("practicalReservationValue") },
   ];
