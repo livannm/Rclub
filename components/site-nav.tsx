@@ -57,6 +57,39 @@ export function SiteNav({ links }: { links: NavLink[] }) {
     };
   }, [open]);
 
+  useEffect(() => {
+    const header = document.querySelector<HTMLElement>(".site-header");
+    if (!header) return;
+
+    if (!isMobileNav || open) {
+      header.classList.remove("is-nav-hidden");
+      return;
+    }
+
+    let lastY = window.scrollY;
+    const deltaThreshold = 8;
+    const showAtTop = 48;
+
+    function onScroll() {
+      const y = window.scrollY;
+      const delta = y - lastY;
+      if (Math.abs(delta) < deltaThreshold) return;
+
+      if (y <= showAtTop || delta < 0) {
+        header!.classList.remove("is-nav-hidden");
+      } else {
+        header!.classList.add("is-nav-hidden");
+      }
+      lastY = y;
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      header.classList.remove("is-nav-hidden");
+    };
+  }, [isMobileNav, open]);
+
   return (
     <div className="site-nav-root">
       <nav className="site-nav-desktop">

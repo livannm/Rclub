@@ -478,6 +478,19 @@ button:active,
   backdrop-filter: blur(16px) saturate(120%);
   -webkit-backdrop-filter: blur(16px) saturate(120%);
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+  transition: transform var(--transition-base);
+  will-change: transform;
+}
+
+.site-header.is-nav-hidden {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header {
+    transition: none;
+  }
 }
 
 .site-logo-link {
