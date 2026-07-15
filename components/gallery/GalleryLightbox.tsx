@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
@@ -75,8 +74,11 @@ export function GalleryLightbox({
 
   useEffect(() => {
     setIndex(initialIndex);
-    setScale(1);
   }, [initialIndex]);
+
+  useEffect(() => {
+    setScale(1);
+  }, [index]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -150,6 +152,8 @@ export function GalleryLightbox({
             minScale={1}
             maxScale={4}
             centerOnInit
+            centerZoomedOut
+            limitToBounds
             onTransform={(_ref, state) => setScale(state.scale)}
             panning={{ disabled: scale <= 1 }}
             doubleClick={{ mode: "toggle", step: 0.7 }}
@@ -157,15 +161,14 @@ export function GalleryLightbox({
             <TransformComponent
               wrapperClass="inside-lightbox-zoom-wrapper"
               contentClass="inside-lightbox-zoom-content"
+              wrapperStyle={{ width: "100%", height: "100%" }}
             >
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={activeImage.src}
                 alt={activeImage.alt}
-                width={1600}
-                height={1000}
                 className="inside-lightbox-img"
-                sizes="(max-width: 767px) 96vw, 92vw"
-                priority
+                draggable={false}
               />
             </TransformComponent>
           </TransformWrapper>

@@ -2,13 +2,15 @@
 
 import { useState, useCallback, useRef, useEffect } from "react";
 import type { ClubEvent } from "@/lib/events/event-schema";
-import { formatEventDate, formatEventTime } from "@/lib/utils/format-date";
+import { formatEventTime } from "@/lib/utils/format-date";
+import { formatRequestedDate } from "@/lib/utils/club-date";
 import type { AppLocale } from "@/i18n/locales";
 
 type Props = {
   labelText: string;
   locale: AppLocale;
   defaultValue?: string;
+  minDate: string;
 };
 
 type FetchState =
@@ -24,8 +26,9 @@ async function fetchEventsByDate(date: string, signal?: AbortSignal) {
   return (data.events ?? []) as ClubEvent[];
 }
 
-export function DatePickerWithEventHint({ labelText, locale, defaultValue }: Props) {
+export function DatePickerWithEventHint({ labelText, locale, defaultValue, minDate }: Props) {
   const [fetchState, setFetchState] = useState<FetchState>({ status: "idle" });
+  const [selectedDate, setSelectedDate] = useState(defaultValue ?? "");
   const abortRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
@@ -44,6 +47,7 @@ export function DatePickerWithEventHint({ labelText, locale, defaultValue }: Pro
   const handleChange = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       const date = e.target.value;
+      setSelectedDate(date);
 
       if (!date) {
         setFetchState({ status: "idle" });
@@ -79,6 +83,7 @@ export function DatePickerWithEventHint({ labelText, locale, defaultValue }: Pro
           name="date_requested"
           type="date"
           required
+          min={minDate}
           defaultValue={defaultValue}
           className="rclub-input rclub-input-date"
           onChange={handleChange}
@@ -93,7 +98,7 @@ export function DatePickerWithEventHint({ labelText, locale, defaultValue }: Pro
         </div>
       )}
 
-      {hasEvent && event && (
+      {hasEvent && event && selectedDate && (
         <div className="rclub-event-hint" role="status" aria-live="polite">
           <input type="hidden" name="event_id" value={event.id} />
           {event.cover_image_url && (
@@ -115,7 +120,7 @@ export function DatePickerWithEventHint({ labelText, locale, defaultValue }: Pro
               {locale === "fr" ? event.title_fr : event.title_en}
             </p>
             <p className="rclub-event-hint__meta">
-              {formatEventDate(event.starts_at, locale)}
+              {formatRequestedDate(selectedDate, locale)}
               {" · "}
               {formatEventTime(event.starts_at)}
             </p>

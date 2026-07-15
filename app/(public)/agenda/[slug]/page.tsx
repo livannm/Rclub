@@ -9,6 +9,7 @@ import { galleryService } from "@/lib/gallery/gallery-service-instance";
 import { buildEventDetailMetadata, buildEventJsonLd } from "@/lib/seo/metadata";
 import { EventDetailStickyActions } from "@/components/events/EventDetailStickyActions";
 import { formatEventDateTime } from "@/lib/utils/format-date";
+import { getClubEveningDate } from "@/lib/utils/club-date";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -84,7 +85,7 @@ export default async function EventDetailPage({ params }: Props) {
             ) : null}
             <Link
               className="button button-secondary"
-              href={`/reservations?date=${event.starts_at.slice(0, 10)}`}
+              href={`/reservations?date=${getClubEveningDate(event.starts_at)}`}
             >
               {t("reserve")}
             </Link>
@@ -100,7 +101,7 @@ export default async function EventDetailPage({ params }: Props) {
       <EventDetailStickyActions
         ticketUrl={event.ticket_url}
         ticketLabel={t("ticket")}
-        reserveHref={`/reservations?date=${event.starts_at.slice(0, 10)}`}
+        reserveHref={`/reservations?date=${getClubEveningDate(event.starts_at)}`}
         reserveLabel={t("reserve")}
         galleryHref={photos.length > 0 ? `/galerie/${slug}` : null}
         galleryLabel={photos.length > 0 ? t("gallery") : undefined}

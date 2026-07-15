@@ -1,5 +1,5 @@
-"use client";
 import Link from "next/link";
+import { getClubEveningDate } from "@/lib/utils/club-date";
 import type { EventHighlightCardEvent } from "@/components/home/event-highlight-card";
 
 type EventCarouselCardProps = {
@@ -13,7 +13,7 @@ type EventCarouselCardProps = {
 
 export function EventCarouselCard({ event, startsAtLabel, viewDetailsLabel, reserveLabel, isActive = false, onNavigate }: EventCarouselCardProps) {
   const href = `/agenda/${event.slug}`;
-  const reserveHref = `/reservations?date=${event.startsAtIso.slice(0, 10)}`;
+  const reserveHref = `/reservations?date=${getClubEveningDate(event.startsAtIso)}`;
   return (
     <article
       aria-roledescription="slide"

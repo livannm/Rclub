@@ -4425,7 +4425,7 @@ main.page-shell {
 
 @media (min-width: 1024px) {
   .home-practical-reveal-list {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -4774,15 +4774,14 @@ main.page-shell {
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: min(100vw, 1600px);
-  height: auto;
-  max-height: 92vh;
+  max-width: min(100vw, 1800px);
+  height: min(94vh, 100%);
   padding: 0 0.25rem;
 }
 
 @media (min-width: 480px) {
   .inside-lightbox-content {
-    padding: 0 3rem;
+    padding: 0 2rem;
   }
 }
 
@@ -4792,7 +4791,9 @@ main.page-shell {
   display: flex;
   align-items: center;
   justify-content: center;
-  max-height: 92vh;
+  width: 100%;
+  height: 100%;
+  max-height: 94vh;
 }
 
 .inside-lightbox-img {
@@ -4800,7 +4801,7 @@ main.page-shell {
   width: auto;
   max-width: min(98vw, 100%);
   height: auto;
-  max-height: 92vh;
+  max-height: 94vh;
   object-fit: contain;
   border-radius: var(--radius-sm);
   animation: lightbox-img-in 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
@@ -5696,8 +5697,8 @@ main.page-shell {
   }
 
   .gallery-grid--event {
-    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
+    gap: 1.25rem;
   }
 
   .form-grid.two-column {
@@ -6985,7 +6986,8 @@ main.page-shell {
   .gallery-grid--event .gallery-photo {
     width: 100%;
     height: auto;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 3 / 4;
+    min-height: 18rem;
     object-fit: cover;
   }
 
@@ -7232,14 +7234,16 @@ main.page-shell {
 .inside-lightbox-img-wrap--zoom {
   touch-action: none;
   overflow: hidden;
-  max-height: 92vh;
+  width: 100%;
+  height: min(94vh, 100%);
+  max-height: 94vh;
 }
 
 .inside-lightbox-zoom-wrapper {
-  width: auto !important;
+  width: 100% !important;
+  height: 100% !important;
   max-width: 100% !important;
-  height: auto !important;
-  max-height: 92vh !important;
+  max-height: 100% !important;
   display: flex !important;
   align-items: center;
   justify-content: center;

@@ -1,6 +1,5 @@
-"use client";
-
 import Link from "next/link";
+import { getClubEveningDate } from "@/lib/utils/club-date";
 import SpotlightCard from "@/components/react-bits/SpotlightCard";
 
 export type EventHighlightCardEvent = {
@@ -29,7 +28,7 @@ export function EventHighlightCard({
   isActive = false,
   testId,
 }: EventHighlightCardProps) {
-  const dateParam = event.startsAtIso.slice(0, 10);
+  const dateParam = getClubEveningDate(event.startsAtIso);
   return (
     <SpotlightCard
       className={`home-event-card${isActive ? " is-active" : ""}`}

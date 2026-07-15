@@ -8,6 +8,7 @@ export async function HomePracticalInfo() {
 
   const items = [
     { label: t("practicalAddressLabel"), value: contact.address },
+    { label: t("practicalParkingLabel"), value: t("practicalParkingValue") },
     { label: t("practicalHoursLabel"), value: t("practicalHoursValue") },
     { label: t("practicalDressCodeLabel"), value: t("practicalDressCodeValue") },
     { label: t("practicalReservationLabel"), value: t("practicalReservationValue") },

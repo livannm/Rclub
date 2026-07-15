@@ -12,6 +12,8 @@ import { reservationNotifyService } from "@/lib/reservation-notify/reservation-n
 import { sendNewReservationAdminEmail, sendRequestReceivedEmail } from "@/lib/email/reservation-emails";
 import { ArrivalTimeSelect } from "@/components/reservations/ArrivalTimeSelect";
 import { DatePickerWithEventHint } from "@/components/reservations/DatePickerWithEventHint";
+import { TableTypeSection } from "@/components/reservations/TableTypeSection";
+import { getTodayParisIso } from "@/lib/utils/club-date";
 
 type ReservationsPageProps = {
   searchParams: Promise<{ status?: "success" | "error"; message?: string; date?: string }>;
@@ -25,6 +27,7 @@ export default async function ReservationsPage({ searchParams }: ReservationsPag
   const params = await searchParams;
   const locale = resolveLocale(await getLocale());
   const t = await getTranslations("Reservations");
+  const minBookingDate = getTodayParisIso();
 
   async function createReservationAction(formData: FormData) {
     "use server";
@@ -162,6 +165,7 @@ export default async function ReservationsPage({ searchParams }: ReservationsPag
               labelText={t("dateRequested")}
               locale={locale}
               defaultValue={params.date}
+              minDate={minBookingDate}
             />
             <label className="rclub-field" htmlFor="arrival_time">
               <span className="rclub-label">{t("arrivalTime")}</span>
@@ -190,7 +194,7 @@ export default async function ReservationsPage({ searchParams }: ReservationsPag
         </div>
 
         {/* ── Section : Type de table ── */}
-        <div className="rclub-fieldset">
+        <TableTypeSection errorMessage={t("tableTypeRequired")}>
           <div className="rclub-section-legend"><span>{t("sectionTable")}</span></div>
           <div className="rclub-table-tiles" role="radiogroup" aria-label={t("tableType")}>
 
@@ -241,7 +245,7 @@ export default async function ReservationsPage({ searchParams }: ReservationsPag
             </div>
 
           </div>
-        </div>
+        </TableTypeSection>
 
         {/* ── Section : Occasion spéciale ── */}
         <div className="rclub-fieldset">

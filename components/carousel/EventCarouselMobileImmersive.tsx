@@ -2,6 +2,7 @@
 import { useState, useRef, useCallback } from "react";
 import Link from "next/link";
 import type { EventHighlightCardEvent } from "@/components/home/event-highlight-card";
+import { getClubEveningDate } from "@/lib/utils/club-date";
 import { CarouselControls } from "./CarouselControls";
 
 type EventCarouselMobileImmersiveProps = {
@@ -62,7 +63,7 @@ export function EventCarouselMobileImmersive({ events, navLabel, startsAtLabel, 
         {events.map((event, index) => {
           const isActive = index === activeIndex;
           const href = `/agenda/${event.slug}`;
-          const reserveHref = `/reservations?date=${event.startsAtIso.slice(0, 10)}`;
+          const reserveHref = `/reservations?date=${getClubEveningDate(event.startsAtIso)}`;
           return (
             <article
               key={event.id}

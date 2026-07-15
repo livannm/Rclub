@@ -2,6 +2,7 @@ import type { Prisma, Event as PrismaEvent } from "@prisma/client";
 import type { PrismaClient } from "@prisma/client";
 import type { ClubEvent, EventPayload } from "@/lib/events/event-schema";
 import type { EventRepository } from "@/lib/events/event-repository";
+import { eventMatchesClubEveningDate } from "@/lib/utils/club-date";
 
 function sortByDateAsc(items: ClubEvent[]) {
   return [...items].sort(
@@ -88,17 +89,20 @@ export class PrismaEventRepository implements EventRepository {
   }
 
   async findPublishedByDate(dateIso: string) {
-    const dayStart = new Date(dateIso);
-    dayStart.setUTCHours(0, 0, 0, 0);
-    const dayEnd = new Date(dateIso);
-    dayEnd.setUTCHours(23, 59, 59, 999);
+    const [year, month, day] = dateIso.split("-").map(Number);
+    const searchStart = new Date(Date.UTC(year, month - 1, day - 1));
+    const searchEnd = new Date(Date.UTC(year, month - 1, day + 2));
     const events = await this.db.event.findMany({
       where: {
         isPublished: true,
-        startsAt: { gte: dayStart, lte: dayEnd }
+        startsAt: { gte: searchStart, lt: searchEnd }
       }
     });
-    return sortByDateAsc(events.map(toClubEvent));
+    return sortByDateAsc(
+      events
+        .map(toClubEvent)
+        .filter((event) => eventMatchesClubEveningDate(event.starts_at, dateIso))
+    );
   }
 
   async findById(id: string) {

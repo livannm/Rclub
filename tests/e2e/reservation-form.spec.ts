@@ -8,6 +8,7 @@ async function fillReservationBasics(page: import("@playwright/test").Page) {
   await page.getByLabel("Nombre de personnes").fill("5");
   await page.getByLabel("Date souhaitée").fill("2099-08-02");
   await page.getByLabel("Heure d'arrivée").selectOption("23:00");
+  await page.getByLabel("Classique", { exact: true }).check();
 }
 
 test("submits reservation request successfully", async ({ page }) => {
@@ -46,6 +47,7 @@ test("rejects reservation spam when honeypot is filled", async ({ page }) => {
   await page.getByLabel("Nombre de personnes").fill("5");
   await page.getByLabel("Date souhaitée").fill("2099-08-02");
   await page.getByLabel("Heure d'arrivée").selectOption("23:00");
+  await page.getByLabel("VIP", { exact: true }).check();
   await page.getByLabel("J'accepte le traitement de mes données (RGPD)").check();
 
   await page.getByRole("button", { name: "Envoyer ma demande" }).click();

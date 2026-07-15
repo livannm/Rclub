@@ -1,5 +1,6 @@
 import type { ClubEvent, EventPayload } from "@/lib/events/event-schema";
 import type { EventRepository } from "@/lib/events/event-repository";
+import { eventMatchesClubEveningDate } from "@/lib/utils/club-date";
 
 function sortByDateAsc(items: ClubEvent[]) {
   return [...items].sort(
@@ -32,10 +33,9 @@ export class InMemoryEventRepository implements EventRepository {
   }
 
   async findPublishedByDate(dateIso: string) {
-    const day = dateIso.slice(0, 10);
     return sortByDateAsc(
       this.events.filter(
-        (event) => event.is_published && event.starts_at.slice(0, 10) === day
+        (event) => event.is_published && eventMatchesClubEveningDate(event.starts_at, dateIso)
       )
     );
   }
