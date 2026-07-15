@@ -7208,6 +7208,16 @@ main.page-shell {
     display: none;
   }
 
+  /* Ticket + reserve are in the sticky bar — avoid duplicate CTAs in the body */
+  .event-detail-actions > .button:not(.button-ghost),
+  .event-detail-actions > a.button:not(.button-ghost) {
+    display: none;
+  }
+
+  .event-detail-actions:not(:has(.button-ghost)) {
+    display: none;
+  }
+
   main.page-shell:has(.event-detail) {
     padding-bottom: calc(8rem + env(safe-area-inset-bottom));
   }
@@ -7239,8 +7249,9 @@ main.page-shell {
   }
 
   .agenda-filters {
+    --agenda-filters-sticky-top: calc(3.5rem + env(safe-area-inset-top, 0px));
     position: sticky;
-    top: calc(3.5rem + env(safe-area-inset-top, 0px));
+    top: var(--agenda-filters-sticky-top);
     z-index: 10;
     padding-bottom: 0.75rem;
     background: linear-gradient(
@@ -7248,6 +7259,17 @@ main.page-shell {
       var(--bg-primary) 75%,
       transparent
     );
+    transition: top var(--transition-base);
+  }
+
+  html:has(.site-header.is-nav-hidden) .agenda-filters {
+    --agenda-filters-sticky-top: env(safe-area-inset-top, 0px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .agenda-filters {
+      transition: none;
+    }
   }
 
   .event-detail-cover img {
