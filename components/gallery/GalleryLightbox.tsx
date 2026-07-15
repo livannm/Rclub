@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 
 export type GalleryImage = {
@@ -52,6 +53,7 @@ export function GalleryLightbox({
   nextLabel,
   zoomHint,
 }: Props) {
+  const [mounted, setMounted] = useState(false);
   const [index, setIndex] = useState(initialIndex);
   const [scale, setScale] = useState(1);
   const touchStartX = useRef<number | null>(null);
@@ -66,6 +68,10 @@ export function GalleryLightbox({
     () => setIndex((i) => (i + 1) % images.length),
     [images.length]
   );
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     setIndex(initialIndex);
@@ -104,9 +110,9 @@ export function GalleryLightbox({
     touchStartX.current = null;
   };
 
-  if (!activeImage) return null;
+  if (!activeImage || !mounted) return null;
 
-  return (
+  return createPortal(
     <div
       className="inside-lightbox"
       role="dialog"
@@ -143,18 +149,22 @@ export function GalleryLightbox({
             initialScale={1}
             minScale={1}
             maxScale={4}
+            centerOnInit
             onTransform={(_ref, state) => setScale(state.scale)}
             panning={{ disabled: scale <= 1 }}
-            doubleClick={{ mode: "toggle", step: 1.5 }}
+            doubleClick={{ mode: "toggle", step: 0.7 }}
           >
-            <TransformComponent wrapperClass="inside-lightbox-zoom-wrapper" contentClass="inside-lightbox-zoom-content">
+            <TransformComponent
+              wrapperClass="inside-lightbox-zoom-wrapper"
+              contentClass="inside-lightbox-zoom-content"
+            >
               <Image
                 src={activeImage.src}
                 alt={activeImage.alt}
                 width={1600}
                 height={1000}
                 className="inside-lightbox-img"
-                sizes="(max-width: 767px) 90vw, 85vw"
+                sizes="(max-width: 767px) 96vw, 92vw"
                 priority
               />
             </TransformComponent>
@@ -176,6 +186,7 @@ export function GalleryLightbox({
         {index + 1} / {images.length}
         {zoomHint ? <span className="inside-lightbox-zoom-hint">{zoomHint}</span> : null}
       </p>
-    </div>
+    </div>,
+    document.body
   );
 }
