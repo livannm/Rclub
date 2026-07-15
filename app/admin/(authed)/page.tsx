@@ -8,6 +8,8 @@ import type {
   UpcomingEventSummary,
   WeeklyTrendPoint
 } from "@/lib/admin-stats/admin-dashboard-stats";
+import { formatRequestedDate, getClubEveningDate } from "@/lib/utils/club-date";
+import { formatEventTime } from "@/lib/utils/format-date";
 
 export default async function AdminDashboardPage() {
   const session = await auth();
@@ -311,16 +313,8 @@ function KpiCard({
 }
 
 function NextEveningCard({ event }: { event: UpcomingEventSummary }) {
-  const dateStr = new Date(event.startsAtIso).toLocaleDateString("fr-FR", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-  });
-  const timeStr = new Date(event.startsAtIso).toLocaleTimeString("fr-FR", {
-    hour: "2-digit",
-    minute: "2-digit"
-  });
+  const dateStr = formatRequestedDate(getClubEveningDate(event.startsAtIso), "fr");
+  const timeStr = formatEventTime(event.startsAtIso);
 
   return (
     <article className="next-evening-card">
@@ -369,7 +363,8 @@ function NextEveningCard({ event }: { event: UpcomingEventSummary }) {
 }
 
 function PlanningCard({ event }: { event: UpcomingEventSummary }) {
-  const dateStr = new Date(event.startsAtIso).toLocaleDateString("fr-FR", {
+  const eveningDate = getClubEveningDate(event.startsAtIso);
+  const dateStr = new Date(`${eveningDate}T12:00:00`).toLocaleDateString("fr-FR", {
     weekday: "short",
     day: "numeric",
     month: "short"

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { getClubEveningDate } from "@/lib/utils/club-date";
 
 export type AdminCalendarEvent = {
   id: string;
@@ -42,7 +43,7 @@ export function EventCalendar({ events }: EventCalendarProps) {
   const eventsByDay = useMemo(() => {
     const map = new Map<string, AdminCalendarEvent[]>();
     for (const event of events) {
-      const key = toDateKey(new Date(event.startsAt));
+      const key = getClubEveningDate(event.startsAt);
       const list = map.get(key) ?? [];
       list.push(event);
       map.set(key, list);

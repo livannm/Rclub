@@ -1,12 +1,13 @@
 import type { EventPayload } from "@/lib/events/event-schema";
 import { asCheckbox, asOptionalString, asString } from "@/lib/utils/form-data";
+import { datetimeLocalParisToIso } from "@/lib/utils/club-date";
 
 function toIsoDatetime(value: string | undefined): string | undefined {
   if (!value) {
     return undefined;
   }
 
-  return new Date(value).toISOString();
+  return datetimeLocalParisToIso(value);
 }
 
 export function eventPayloadFromFormData(formData: FormData): EventPayload {

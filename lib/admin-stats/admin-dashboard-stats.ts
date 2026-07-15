@@ -4,6 +4,7 @@ import type { PrivatizationService } from "@/lib/privatizations/privatization-se
 import type { ReservationService } from "@/lib/reservations/reservation-service";
 import type { ReservationRequest, ReservationStatus } from "@/lib/reservations/reservation-schema";
 import type { ClubEvent } from "@/lib/events/event-schema";
+import { daysUntilClubEvening } from "@/lib/utils/club-date";
 
 export type UpcomingEventSummary = {
   id: string;
@@ -114,10 +115,9 @@ export class AdminDashboardStatsService {
       .filter((event) => new Date(event.starts_at).getTime() >= nowMs)
       .sort((a, b) => new Date(a.starts_at).getTime() - new Date(b.starts_at).getTime());
 
-    const todayUtcMs = startOfDayUtc(now).getTime();
     const upcomingPlanning = upcomingPublishedSorted
       .slice(0, 3)
-      .map((event) => this.toUpcomingSummary(event, reservations, todayUtcMs));
+      .map((event) => this.toUpcomingSummary(event, reservations));
 
     // ── Reservation aggregates ──
     const newRes = reservations.filter((r) => r.status === "new");
@@ -242,15 +242,13 @@ export class AdminDashboardStatsService {
 
   private toUpcomingSummary(
     event: ClubEvent,
-    reservations: ReservationRequest[],
-    todayUtcMs: number
+    reservations: ReservationRequest[]
   ): UpcomingEventSummary {
     const eventRes = reservations.filter((r) => r.event_id === event.id);
     const confirmed = eventRes.filter((r) => r.status === "confirmed");
     const pending = eventRes.filter((r) => r.status === "new").length;
     const totalGuestsConfirmed = confirmed.reduce((sum, r) => sum + r.guest_count, 0);
-    const eventDayUtcMs = startOfDayUtc(new Date(event.starts_at)).getTime();
-    const daysUntil = Math.max(0, Math.round((eventDayUtcMs - todayUtcMs) / MS_PER_DAY));
+    const daysUntil = daysUntilClubEvening(event.starts_at);
 
     return {
       id: event.id,

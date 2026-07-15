@@ -4,6 +4,7 @@ import { AgendaFilters } from "@/components/agenda/AgendaFilters";
 import { buildLocalizedPageMetadata } from "@/lib/seo/metadata";
 import { eventService } from "@/lib/events/events-service-instance";
 import { resolveLocale } from "@/i18n/locales";
+import { getClubEveningParts } from "@/lib/utils/club-date";
 import { getLocale, getTranslations } from "next-intl/server";
 
 export async function generateMetadata() {
@@ -27,10 +28,10 @@ export default async function AgendaPage({ searchParams }: PageProps) {
   const selectedMonth = params.month ? parseInt(params.month, 10) : null;
   const showPast = params.past === "1";
 
-  // Available years from all events
-  const years = [...new Set(allEvents.map((e) => new Date(e.starts_at).getFullYear()))].sort(
-    (a, b) => a - b
-  );
+  // Available years from all events (club evening date = start of the night)
+  const years = [
+    ...new Set(allEvents.map((e) => getClubEveningParts(e.starts_at).year)),
+  ].sort((a, b) => a - b);
 
   // Available months per year
   const intlLocale = locale === "fr" ? "fr-FR" : "en-GB";
@@ -39,8 +40,8 @@ export default async function AgendaPage({ searchParams }: PageProps) {
     const monthNums = [
       ...new Set(
         allEvents
-          .filter((e) => new Date(e.starts_at).getFullYear() === year)
-          .map((e) => new Date(e.starts_at).getMonth() + 1)
+          .filter((e) => getClubEveningParts(e.starts_at).year === year)
+          .map((e) => getClubEveningParts(e.starts_at).month)
       ),
     ].sort((a, b) => a - b);
 
@@ -56,10 +57,10 @@ export default async function AgendaPage({ searchParams }: PageProps) {
     filtered = filtered.filter((e) => new Date(e.starts_at) >= now);
   }
   if (selectedYear != null) {
-    filtered = filtered.filter((e) => new Date(e.starts_at).getFullYear() === selectedYear);
+    filtered = filtered.filter((e) => getClubEveningParts(e.starts_at).year === selectedYear);
   }
   if (selectedMonth != null) {
-    filtered = filtered.filter((e) => new Date(e.starts_at).getMonth() + 1 === selectedMonth);
+    filtered = filtered.filter((e) => getClubEveningParts(e.starts_at).month === selectedMonth);
   }
 
   const isFiltered = selectedYear != null || selectedMonth != null;

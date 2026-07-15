@@ -9,7 +9,10 @@ export default async function AdminReservationsPage() {
   ]);
 
   const eventLookup = Object.fromEntries(
-    allEvents.map((e) => [e.id, { titleFr: e.title_fr, startsAt: new Date(e.starts_at) }])
+    allEvents.map((e) => [
+      e.id,
+      { titleFr: e.title_fr, startsAt: new Date(e.starts_at), startsAtIso: e.starts_at }
+    ])
   );
 
   const groups = groupReservationsByEvening(allReservations, eventLookup);

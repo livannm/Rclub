@@ -1,24 +1,27 @@
 import Link from "next/link";
 import { EventFormFields } from "@/components/admin/event-form-fields";
 import { createEventAction } from "@/lib/admin/event-actions";
+import {
+  DEFAULT_EVENT_DURATION_HOURS,
+  DEFAULT_EVENT_START_TIME,
+} from "@/lib/events/event-defaults";
+import { datetimeLocalParisToIso, isoToDatetimeLocalParis } from "@/lib/utils/club-date";
 
 type NewEventPageProps = {
   searchParams: Promise<{ date?: string; message?: string }>;
 };
 
 function defaultEndFromStart(startsAt: string) {
-  const start = new Date(startsAt);
-  if (Number.isNaN(start.getTime())) {
-    return "";
-  }
-  const end = new Date(start);
-  end.setHours(end.getHours() + 5);
-  return end.toISOString().slice(0, 16);
+  const startIso = datetimeLocalParisToIso(startsAt);
+  const endIso = new Date(
+    new Date(startIso).getTime() + DEFAULT_EVENT_DURATION_HOURS * 60 * 60 * 1000
+  ).toISOString();
+  return isoToDatetimeLocalParis(endIso);
 }
 
 export default async function NewEventPage({ searchParams }: NewEventPageProps) {
   const params = await searchParams;
-  const defaultStartsAt = params.date ? `${params.date}T22:00` : "";
+  const defaultStartsAt = params.date ? `${params.date}T${DEFAULT_EVENT_START_TIME}` : "";
   const defaultEndsAt = defaultStartsAt ? defaultEndFromStart(defaultStartsAt) : "";
 
   return (

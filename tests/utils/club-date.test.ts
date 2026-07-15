@@ -1,10 +1,14 @@
 import { describe, expect, it } from "vitest";
 import {
+  datetimeLocalParisToIso,
+  daysUntilClubEvening,
   eventMatchesClubEveningDate,
   formatRequestedDate,
   getClubEveningDate,
+  getClubEveningParts,
   getParisDateIso,
   getTodayParisIso,
+  isoToDatetimeLocalParis,
   isDateBeforeTodayParis,
 } from "@/lib/utils/club-date";
 
@@ -36,5 +40,26 @@ describe("club-date", () => {
     expect(isDateBeforeTodayParis("2026-05-23", now)).toBe(false);
     expect(isDateBeforeTodayParis("2026-05-24", now)).toBe(false);
     expect(getTodayParisIso(now)).toBe("2026-05-23");
+  });
+
+  it("extracts year and month from club evening date", () => {
+    expect(getClubEveningParts("2026-05-23T23:00:00.000Z")).toEqual({
+      year: 2026,
+      month: 5,
+      day: 23,
+    });
+  });
+
+  it("round-trips datetime-local values as Europe/Paris", () => {
+    const iso = "2026-05-23T19:00:00.000Z"; // 21:00 Paris (CEST)
+    const local = isoToDatetimeLocalParis(iso);
+    expect(local).toBe("2026-05-23T21:00");
+    expect(datetimeLocalParisToIso(local)).toBe(iso);
+  });
+
+  it("counts days until club evening from Paris today", () => {
+    const now = new Date("2026-05-22T10:00:00.000Z");
+    expect(daysUntilClubEvening("2026-05-23T19:00:00.000Z", now)).toBe(1);
+    expect(daysUntilClubEvening("2026-05-22T19:00:00.000Z", now)).toBe(0);
   });
 });

@@ -8,8 +8,8 @@ import { eventService } from "@/lib/events/events-service-instance";
 import { galleryService } from "@/lib/gallery/gallery-service-instance";
 import { buildEventDetailMetadata, buildEventJsonLd } from "@/lib/seo/metadata";
 import { EventDetailStickyActions } from "@/components/events/EventDetailStickyActions";
-import { formatEventDateTime } from "@/lib/utils/format-date";
-import { getClubEveningDate } from "@/lib/utils/club-date";
+import { formatEventTime } from "@/lib/utils/format-date";
+import { formatRequestedDate, getClubEveningDate } from "@/lib/utils/club-date";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -63,11 +63,12 @@ export default async function EventDetailPage({ params }: Props) {
           <h1 className="page-title" data-testid="event-detail-title">
             {localized.title}
           </h1>
+          <p className="event-detail-evening">
+            {formatRequestedDate(getClubEveningDate(event.starts_at), locale)}
+          </p>
           <p className="event-detail-datetime">
-            {formatEventDateTime(event.starts_at, locale)}
-            {event.ends_at
-              ? ` — ${formatEventDateTime(event.ends_at, locale)}`
-              : null}
+            {formatEventTime(event.starts_at)}
+            {event.ends_at ? ` — ${formatEventTime(event.ends_at)}` : null}
           </p>
           <p>
             {t("location")}: {event.location}

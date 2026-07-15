@@ -1,5 +1,6 @@
 import type { ClubEvent } from "@/lib/events/event-schema";
 import { MediaUploadField } from "@/components/admin/media-upload-field";
+import { isoToDatetimeLocalParis } from "@/lib/utils/club-date";
 
 type EventFormFieldsProps = {
   event?: ClubEvent;
@@ -8,7 +9,7 @@ type EventFormFieldsProps = {
 };
 
 function toDatetimeLocalValue(value: string) {
-  return new Date(value).toISOString().slice(0, 16);
+  return isoToDatetimeLocalParis(value);
 }
 
 export function EventFormFields({ event, defaultStartsAt, defaultEndsAt }: EventFormFieldsProps) {

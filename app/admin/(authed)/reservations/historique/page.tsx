@@ -1,6 +1,7 @@
 import { reservationService } from "@/lib/reservations/reservation-service-instance";
 import { eventService } from "@/lib/events/events-service-instance";
 import { groupReservationsByEvening } from "@/lib/reservations/reservation-groups";
+import { formatRequestedDate } from "@/lib/utils/club-date";
 
 export default async function AdminReservationsHistoriquePage() {
   const [allReservations, allEvents] = await Promise.all([
@@ -9,7 +10,10 @@ export default async function AdminReservationsHistoriquePage() {
   ]);
 
   const eventLookup = Object.fromEntries(
-    allEvents.map((e) => [e.id, { titleFr: e.title_fr, startsAt: new Date(e.starts_at) }])
+    allEvents.map((e) => [
+      e.id,
+      { titleFr: e.title_fr, startsAt: new Date(e.starts_at), startsAtIso: e.starts_at }
+    ])
   );
 
   const groups = groupReservationsByEvening(allReservations, eventLookup);
@@ -50,9 +54,9 @@ export default async function AdminReservationsHistoriquePage() {
             >
               <div className="res-group-heading">
                 <h2 className="res-group-label">{group.label}</h2>
-                {group.date && (
+                {group.eveningDateIso && (
                   <span className="res-badge-past">
-                    {group.date.toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" })}
+                    {formatRequestedDate(group.eveningDateIso, "fr")}
                   </span>
                 )}
               </div>

@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ClubEvent } from "@/lib/events/event-schema";
 import type { AppLocale } from "@/i18n/locales";
 import { getLocalizedEventContent } from "@/lib/events/event-localized";
-import { formatEventDateTime } from "@/lib/utils/format-date";
+import { formatClubEveningBadge, formatEventDateTime } from "@/lib/utils/format-date";
 
 type EventCardProps = {
   event: ClubEvent;
@@ -28,11 +28,7 @@ export function EventCard({
   showTicket = true
 }: EventCardProps) {
   const localized = getLocalizedEventContent(event, locale);
-  const d = new Date(event.starts_at);
-  const eventDay = String(d.getDate()).padStart(2, "0");
-  const eventMonth = d
-    .toLocaleDateString(locale === "fr" ? "fr-FR" : "en-GB", { month: "short" })
-    .toUpperCase();
+  const { day: eventDay, month: eventMonth } = formatClubEveningBadge(event.starts_at, locale);
 
   return (
     <article id={event.slug} className={`event-card event-card-interactive${isPast ? " event-card--past" : ""}`}>

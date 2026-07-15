@@ -13,6 +13,7 @@ type ParisParts = {
   month: number;
   day: number;
   hour: number;
+  minute: number;
 };
 
 function getParisParts(isoDate: string): ParisParts {
@@ -22,6 +23,7 @@ function getParisParts(isoDate: string): ParisParts {
     month: "2-digit",
     day: "2-digit",
     hour: "2-digit",
+    minute: "2-digit",
     hourCycle: "h23",
   }).formatToParts(new Date(isoDate));
 
@@ -33,7 +35,55 @@ function getParisParts(isoDate: string): ParisParts {
     month: get("month"),
     day: get("day"),
     hour: get("hour"),
+    minute: get("minute"),
   };
+}
+
+export function parseIsoDate(dateIso: string): { year: number; month: number; day: number } {
+  const [year, month, day] = dateIso.split("-").map(Number);
+  return { year, month, day };
+}
+
+export function getClubEveningParts(startsAtIso: string) {
+  return parseIsoDate(getClubEveningDate(startsAtIso));
+}
+
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+/** Days from today (Paris) until the event's club evening date. */
+export function daysUntilClubEvening(startsAtIso: string, now = new Date()): number {
+  const evening = getClubEveningDate(startsAtIso);
+  const today = getTodayParisIso(now);
+  const { year: ey, month: em, day: ed } = parseIsoDate(evening);
+  const { year: ty, month: tm, day: td } = parseIsoDate(today);
+  const eveningMs = Date.UTC(ey, em - 1, ed);
+  const todayMs = Date.UTC(ty, tm - 1, td);
+  return Math.max(0, Math.round((eveningMs - todayMs) / MS_PER_DAY));
+}
+
+/** ISO instant → `datetime-local` value interpreted as Europe/Paris. */
+export function isoToDatetimeLocalParis(isoDate: string): string {
+  const { year, month, day, hour, minute } = getParisParts(isoDate);
+  const h = String(hour).padStart(2, "0");
+  const m = String(minute).padStart(2, "0");
+  return `${toIsoDate(year, month, day)}T${h}:${m}`;
+}
+
+/** `datetime-local` value (Europe/Paris) → ISO instant. */
+export function datetimeLocalParisToIso(localValue: string): string {
+  const [datePart, timePart] = localValue.split("T");
+  const { year, month, day } = parseIsoDate(datePart);
+  const [hour, minute] = timePart.split(":").map(Number);
+
+  let guess = Date.UTC(year, month - 1, day, hour, minute);
+  for (let i = 0; i < 4; i++) {
+    const parts = getParisParts(new Date(guess).toISOString());
+    const target = Date.UTC(year, month - 1, day, hour, minute);
+    const actual = Date.UTC(parts.year, parts.month - 1, parts.day, parts.hour, parts.minute);
+    guess += target - actual;
+  }
+
+  return new Date(guess).toISOString();
 }
 
 function toIsoDate(year: number, month: number, day: number): string {

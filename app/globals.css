@@ -5244,6 +5244,11 @@ main.page-shell {
   border-bottom: 1px solid var(--hairline);
 }
 
+.event-detail-evening {
+  font-size: 1.05rem;
+  text-transform: capitalize;
+}
+
 .event-detail-datetime {
   color: var(--accent-gold);
   font-weight: 600;

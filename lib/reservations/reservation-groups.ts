@@ -1,5 +1,6 @@
 import type { ReservationRequest } from "@/lib/reservations/reservation-schema";
 import { isArrivalInPast } from "@/lib/reservations/arrival-datetime";
+import { getClubEveningDate } from "@/lib/utils/club-date";
 
 export type EveningGroup = {
   key: string;
@@ -7,6 +8,7 @@ export type EveningGroup = {
   eventId: string | null;
   label: string;
   date: Date | null;
+  eveningDateIso: string | null;
   upcoming: boolean;
   confirmed: number;
   pending: number;
@@ -33,7 +35,7 @@ export function isExpiredReservation(
   return new Date(eventDate) < new Date();
 }
 
-type EventLookup = Record<string, { titleFr: string; startsAt: Date }>;
+type EventLookup = Record<string, { titleFr: string; startsAt: Date; startsAtIso: string }>;
 
 export function groupReservationsByEvening(
   reservations: ReservationRequest[],
@@ -46,6 +48,7 @@ export function groupReservationsByEvening(
     let key: string;
     let label: string;
     let date: Date | null = null;
+    let eveningDateIso: string | null = null;
 
     let eventId: string | null = null;
     if (r.event_id && events[r.event_id]) {
@@ -53,6 +56,7 @@ export function groupReservationsByEvening(
       key = `event:${r.event_id}`;
       label = ev.titleFr;
       date = ev.startsAt;
+      eveningDateIso = getClubEveningDate(ev.startsAtIso);
       eventId = r.event_id;
     } else if (r.date_requested) {
       key = `date:${r.date_requested}`;
@@ -63,10 +67,12 @@ export function groupReservationsByEvening(
         year: "numeric"
       });
       date = new Date(r.date_requested);
+      eveningDateIso = r.date_requested;
     } else {
       key = "no-date";
       label = "Sans date précisée";
       date = null;
+      eveningDateIso = null;
     }
 
     if (!map.has(key)) {
@@ -76,6 +82,7 @@ export function groupReservationsByEvening(
         eventId,
         label,
         date,
+        eveningDateIso,
         upcoming: date ? date >= now : false,
         confirmed: 0,
         pending: 0,

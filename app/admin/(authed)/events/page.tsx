@@ -1,18 +1,14 @@
 import Link from "next/link";
 import { EventCalendar } from "@/components/admin/event-calendar";
 import { eventService } from "@/lib/events/events-service-instance";
+import { formatEventDateTime } from "@/lib/utils/format-date";
 
 type AdminEventsPageProps = {
   searchParams: Promise<{ message?: string; deleted?: string }>;
 };
 
 function formatEventDate(startsAt: string) {
-  return new Date(startsAt).toLocaleString("fr-FR", {
-    day: "2-digit",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit"
-  });
+  return formatEventDateTime(startsAt, "fr");
 }
 
 export default async function AdminEventsPage({ searchParams }: AdminEventsPageProps) {
