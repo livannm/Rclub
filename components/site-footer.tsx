@@ -74,9 +74,15 @@ export async function SiteFooter() {
               <div className="site-footer-contact-row">
                 <dt>{t("phoneLabel")}</dt>
                 <dd>
-                  <a href={contact.phoneHref} data-testid="footer-phone">
-                    {contact.phoneDisplay}
-                  </a>
+                  {contact.phones.map((phone, index) => (
+                    <a
+                      key={phone.href}
+                      href={phone.href}
+                      data-testid={index === 0 ? "footer-phone" : undefined}
+                    >
+                      {phone.display}
+                    </a>
+                  ))}
                 </dd>
               </div>
               <div className="site-footer-contact-row">

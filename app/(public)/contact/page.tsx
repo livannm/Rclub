@@ -169,20 +169,23 @@ export default async function ContactPage() {
           <span className="contact-item-arrow" aria-hidden="true">↗</span>
         </a>
 
-        <a
-          href={contact.phoneHref}
-          className="contact-item"
-          aria-label={`${t("phone")} — ${contact.phoneDisplay}`}
-        >
-          <span className="contact-item-icon">
-            <Phone size={26} strokeWidth={1.75} />
-          </span>
-          <span className="contact-item-body">
-            <span className="contact-item-label">{t("callUs")}</span>
-            <span className="contact-item-value">{contact.phoneDisplay}</span>
-          </span>
-          <span className="contact-item-arrow" aria-hidden="true">↗</span>
-        </a>
+        {contact.phones.map((phone) => (
+          <a
+            key={phone.href}
+            href={phone.href}
+            className="contact-item"
+            aria-label={`${t("phone")} — ${phone.display}`}
+          >
+            <span className="contact-item-icon">
+              <Phone size={26} strokeWidth={1.75} />
+            </span>
+            <span className="contact-item-body">
+              <span className="contact-item-label">{t("callUs")}</span>
+              <span className="contact-item-value">{phone.display}</span>
+            </span>
+            <span className="contact-item-arrow" aria-hidden="true">↗</span>
+          </a>
+        ))}
 
         <a
           href={contact.mapsUrl}
