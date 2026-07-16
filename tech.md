@@ -105,8 +105,12 @@ repository interface
 | `AUTH_SECRET` | oui | NextAuth JWT secret |
 | `RESEND_API_KEY` | oui | Emails transactionnels |
 | `NEXT_PUBLIC_CLUB_ADDRESS` | non | Adresse affichée (défaut 24 Place des Halles) |
+| `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` | non | Clé API Maps JavaScript — carte interactive contact (sinon iframe) |
+| `NEXT_PUBLIC_CLUB_MAPS_PLACE_ID` | non | Place ID Google du Rclub (pin précis) |
+| `NEXT_PUBLIC_CLUB_MAPS_COORDS` | non | Coordonnées `lat,lng` de repli |
+| `NEXT_PUBLIC_CLUB_MAPS_SEARCH_QUERY` | non | Requête Places ciblée (défaut `Rclub Strasbourg`) |
 | `NEXT_PUBLIC_CLUB_MAPS_URL` | non | URL Maps externe — doit commencer par `https://` |
-| `NEXT_PUBLIC_CLUB_MAPS_EMBED_URL` | non | URL iframe Google Maps (défaut : géocodage sur l’adresse) |
+| `NEXT_PUBLIC_CLUB_MAPS_EMBED_URL` | non | URL iframe Google Maps (override complet) |
 | `NEXT_PUBLIC_CLUB_PHONE` | non | Téléphone principal affiché |
 | `NEXT_PUBLIC_CLUB_PHONE_2` | non | Second numéro affiché |
 | `NEXT_PUBLIC_CLUB_INSTAGRAM_URL` | non | URL Instagram |

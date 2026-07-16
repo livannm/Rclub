@@ -5854,6 +5854,7 @@ main.page-shell {
   display: block;
   width: 100%;
   border: none;
+  min-height: 380px;
   filter: grayscale(1) invert(0.9) contrast(0.85) brightness(0.7);
   opacity: 0.85;
   transition: opacity var(--transition-base);

@@ -1,3 +1,8 @@
+import {
+  DEFAULT_CLUB_PLACE_SEARCH_QUERY,
+  getClubPlaceConfig,
+} from "@/lib/site/club-place";
+
 export type ClubPhone = {
   display: string;
   href: string;
@@ -61,13 +66,13 @@ export function getClubContact(): ClubContact {
   const phoneHref = phones[0]!.href;
   const address =
     process.env.NEXT_PUBLIC_CLUB_ADDRESS ?? "24 Place des Halles, 67000 Strasbourg";
+  const { placeId: mapsPlaceId } = getClubPlaceConfig();
   const rawMapsUrl = process.env.NEXT_PUBLIC_CLUB_MAPS_URL;
-  const defaultMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+  const defaultMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(DEFAULT_CLUB_PLACE_SEARCH_QUERY)}&query_place_id=${mapsPlaceId}`;
   const mapsUrl =
     rawMapsUrl && /^https:\/\//i.test(rawMapsUrl) ? rawMapsUrl : defaultMapsUrl;
-  const mapsEmbedUrl =
-    process.env.NEXT_PUBLIC_CLUB_MAPS_EMBED_URL ??
-    `https://maps.google.com/maps?q=${encodeURIComponent(address)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+  const defaultMapsEmbedUrl = `https://maps.google.com/maps?q=place_id:${mapsPlaceId}&hl=fr&z=18&ie=UTF8&iwloc=&output=embed`;
+  const mapsEmbedUrl = process.env.NEXT_PUBLIC_CLUB_MAPS_EMBED_URL ?? defaultMapsEmbedUrl;
 
   const handleMatch = instagramUrl.match(/instagram\.com\/([^/?#]+)/i);
   const instagramHandle = handleMatch?.[1] ? `@${handleMatch[1]}` : "@rclub.strasbourg";
@@ -93,6 +98,6 @@ export function getClubContact(): ClubContact {
     emailHref: `mailto:${email}`,
     address,
     mapsUrl,
-    mapsEmbedUrl
+    mapsEmbedUrl,
   };
 }

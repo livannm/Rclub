@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Mail, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
+import { ClubMap } from "@/components/contact/ClubMap";
 import { getClubContact } from "@/lib/site/contact";
+import { getClubPlaceConfig } from "@/lib/site/club-place";
 
 export const metadata: Metadata = {
   title: "Contact — Rclub Strasbourg",
@@ -79,6 +81,7 @@ function IconWhatsApp({ size = 28 }: { size?: number }) {
 export default async function ContactPage() {
   const t = await getTranslations("Contact");
   const contact = getClubContact();
+  const placeConfig = getClubPlaceConfig();
 
   return (
     <main>
@@ -221,14 +224,14 @@ export default async function ContactPage() {
       </div>
 
       <div className="contact-map-wrap">
-        <iframe
+        <ClubMap
+          apiKey={placeConfig.apiKey}
+          placeId={placeConfig.placeId}
+          searchQuery={placeConfig.searchQuery}
+          fallbackLat={placeConfig.coords.lat}
+          fallbackLng={placeConfig.coords.lng}
+          fallbackEmbedUrl={contact.mapsEmbedUrl}
           title="Rclub Strasbourg — carte"
-          src={contact.mapsEmbedUrl}
-          width="100%"
-          height="380"
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          className="contact-map"
         />
       </div>
       </div>
