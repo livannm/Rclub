@@ -6921,9 +6921,35 @@ main.page-shell {
 }
 
 @media (max-width: 767px) {
+  .ev-carousel-mobile__body {
+    padding: 4rem 1.25rem 6rem;
+  }
+
+  .ev-carousel-mobile__content {
+    gap: 0.85rem;
+  }
+
+  .ev-carousel-mobile__label {
+    margin-bottom: 0;
+  }
+
   .ev-carousel-mobile__title {
     max-width: none;
     line-height: 1.15;
+    margin-bottom: 0;
+  }
+
+  .ev-carousel-mobile__date {
+    margin-bottom: 0.35rem;
+  }
+
+  .ev-carousel-mobile__actions {
+    gap: 0.85rem;
+    margin-top: 0.25rem;
+  }
+
+  .ev-carousel-mobile__counter {
+    margin-top: 0.35rem;
   }
 }
 
