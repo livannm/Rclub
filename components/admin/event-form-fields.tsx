@@ -1,5 +1,6 @@
 import type { ClubEvent } from "@/lib/events/event-schema";
 import { MediaUploadField } from "@/components/admin/media-upload-field";
+import { RichTextEditorField } from "@/components/admin/rich-text-editor-field";
 import { isoToDatetimeLocalParis } from "@/lib/utils/club-date";
 
 type EventFormFieldsProps = {
@@ -45,24 +46,20 @@ export function EventFormFields({ event, defaultStartsAt, defaultEndsAt }: Event
         Titre (EN)
         <input id="title_en" name="title_en" defaultValue={event?.title_en} required />
       </label>
-      <label htmlFor="description_fr" className="full-span">
-        Description (FR)
-        <textarea
-          id="description_fr"
-          name="description_fr"
-          defaultValue={event?.description_fr}
-          required
-        />
-      </label>
-      <label htmlFor="description_en" className="full-span">
-        Description (EN)
-        <textarea
-          id="description_en"
-          name="description_en"
-          defaultValue={event?.description_en}
-          required
-        />
-      </label>
+      <RichTextEditorField
+        id="description_fr"
+        name="description_fr"
+        label="Description (FR)"
+        defaultValue={event?.description_fr}
+        required
+      />
+      <RichTextEditorField
+        id="description_en"
+        name="description_en"
+        label="Description (EN)"
+        defaultValue={event?.description_en}
+        required
+      />
       <label htmlFor="starts_at">
         Début
         <input

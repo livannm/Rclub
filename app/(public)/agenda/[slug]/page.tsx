@@ -8,6 +8,7 @@ import { eventService } from "@/lib/events/events-service-instance";
 import { galleryService } from "@/lib/gallery/gallery-service-instance";
 import { buildEventDetailMetadata, buildEventJsonLd } from "@/lib/seo/metadata";
 import { EventDetailStickyActions } from "@/components/events/EventDetailStickyActions";
+import { RichTextContent } from "@/components/rich-text-content";
 import { formatEventTime } from "@/lib/utils/format-date";
 import { formatRequestedDate, getClubEveningDate } from "@/lib/utils/club-date";
 
@@ -76,7 +77,7 @@ export default async function EventDetailPage({ params }: Props) {
         </header>
 
         <div className="event-detail-body">
-          <p className="event-detail-description">{localized.description}</p>
+          <RichTextContent html={localized.description} className="event-detail-description" />
 
           <div className="event-detail-actions">
             {event.ticket_url ? (

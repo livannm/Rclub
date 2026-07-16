@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { ClubEvent } from "@/lib/events/event-schema";
 import type { AppLocale } from "@/i18n/locales";
 import { getLocalizedEventContent } from "@/lib/events/event-localized";
+import { truncateRichText } from "@/lib/utils/rich-text";
 import { formatClubEveningBadge, formatEventDateTime } from "@/lib/utils/format-date";
 
 type EventCardProps = {
@@ -54,7 +55,7 @@ export function EventCard({
         <h2 data-testid={index !== undefined ? `agenda-event-title-${index}` : undefined}>
           {localized.title}
         </h2>
-        <p className="event-card-excerpt">{localized.description}</p>
+        <p className="event-card-excerpt">{truncateRichText(localized.description, 180)}</p>
         <p>
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ display: "inline", verticalAlign: "middle", marginRight: "0.35em" }}>
             <circle cx="12" cy="12" r="10" />

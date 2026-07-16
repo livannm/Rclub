@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
 import type { ClubEvent } from "@/lib/events/event-schema";
 import { getLocalizedEventContent } from "@/lib/events/event-localized";
+import { stripRichText } from "@/lib/utils/rich-text";
 import type { AppLocale } from "@/i18n/locales";
 import { resolveLocale } from "@/i18n/locales";
 
@@ -138,7 +139,7 @@ export function buildEventDetailMetadata(
   const localized = getLocalizedEventContent(event, locale);
   const url = absoluteUrl(`/agenda/${event.slug}`, baseUrl);
   const title = `${localized.title} - Rclub Strasbourg`;
-  const description = localized.description;
+  const description = stripRichText(localized.description);
   const coverUrl = event.cover_image_url.startsWith("/")
     ? absoluteUrl(event.cover_image_url, baseUrl)
     : event.cover_image_url;
@@ -173,7 +174,7 @@ export function buildEventGalleryMetadata(
   const localized = getLocalizedEventContent(event, locale);
   const url = absoluteUrl(`/galerie/${event.slug}`, baseUrl);
   const title = `${localized.title} - Galerie photos Rclub Strasbourg`;
-  const description = localized.description;
+  const description = stripRichText(localized.description);
 
   return {
     title,
@@ -233,7 +234,7 @@ export function buildEventJsonLd(
     "@context": "https://schema.org",
     "@type": "Event",
     name: localized.title,
-    description: localized.description,
+    description: stripRichText(localized.description),
     startDate: event.starts_at,
     endDate: event.ends_at ?? undefined,
     eventStatus: "https://schema.org/EventScheduled",

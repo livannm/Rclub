@@ -40,7 +40,9 @@ export async function createEvent(
   await page.getByLabel("Slug").fill(slug);
   await page.getByLabel("Titre (FR)").fill(title);
   await page.getByLabel("Titre (EN)").fill(title);
+  await page.getByLabel("Description (FR)").click();
   await page.getByLabel("Description (FR)").fill(descriptionFr);
+  await page.getByLabel("Description (EN)").click();
   await page.getByLabel("Description (EN)").fill(descriptionEn);
   await page.getByLabel("Début").fill(startsAt);
   await page.getByLabel("Fin").fill(endsAt);
