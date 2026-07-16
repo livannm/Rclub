@@ -3,12 +3,7 @@
 import { useEffect, useState } from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import {
-  formatRichTextForDisplay,
-  looksLikeHtml,
-  plainTextToRichHtml,
-  stripRichText,
-} from "@/lib/utils/rich-text";
+import { isRichTextEmpty, toEditorHtml } from "@/lib/utils/rich-text-format";
 
 type RichTextEditorFieldProps = {
   id: string;
@@ -17,19 +12,6 @@ type RichTextEditorFieldProps = {
   defaultValue?: string;
   required?: boolean;
 };
-
-function toEditorHtml(value: string | undefined) {
-  const trimmed = value?.trim() ?? "";
-  if (!trimmed) {
-    return "";
-  }
-
-  if (looksLikeHtml(trimmed)) {
-    return formatRichTextForDisplay(trimmed);
-  }
-
-  return plainTextToRichHtml(trimmed);
-}
 
 type ToolbarButtonProps = {
   label: string;
@@ -103,7 +85,7 @@ export function RichTextEditorField({
     }
   }, [defaultValue, editor]);
 
-  const isEmpty = stripRichText(value).length === 0;
+  const isEmpty = isRichTextEmpty(value);
   const submittedValue = isEmpty ? "" : value;
 
   return (

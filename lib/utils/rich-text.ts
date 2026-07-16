@@ -1,37 +1,31 @@
-import DOMPurify from "isomorphic-dompurify";
+import sanitizeHtml from "sanitize-html";
+import { looksLikeHtml, plainTextToRichHtml } from "@/lib/utils/rich-text-format";
 
-const ALLOWED_TAGS = [
-  "p",
-  "br",
-  "strong",
-  "b",
-  "em",
-  "i",
-  "u",
-  "s",
-  "ul",
-  "ol",
-  "li",
-  "blockquote",
-  "a",
-  "h3",
-  "h4",
-] as const;
+const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
+  allowedTags: [
+    "p",
+    "br",
+    "strong",
+    "b",
+    "em",
+    "i",
+    "u",
+    "s",
+    "ul",
+    "ol",
+    "li",
+    "blockquote",
+    "a",
+    "h3",
+    "h4",
+  ],
+  allowedAttributes: {
+    a: ["href", "target", "rel"],
+  },
+  allowedSchemes: ["http", "https", "mailto"],
+};
 
-const ALLOWED_ATTR = ["href", "target", "rel"] as const;
-
-function escapeHtml(text: string) {
-  return text
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
-}
-
-export function looksLikeHtml(value: string) {
-  return /<\/?[a-z][\s\S]*>/i.test(value.trim());
-}
+export { looksLikeHtml, plainTextToRichHtml } from "@/lib/utils/rich-text-format";
 
 export function sanitizeRichTextHtml(value: string) {
   const trimmed = value.trim();
@@ -39,30 +33,7 @@ export function sanitizeRichTextHtml(value: string) {
     return "";
   }
 
-  return DOMPurify.sanitize(trimmed, {
-    ALLOWED_TAGS: [...ALLOWED_TAGS],
-    ALLOWED_ATTR: [...ALLOWED_ATTR],
-  }).trim();
-}
-
-export function plainTextToRichHtml(value: string) {
-  const trimmed = value.trim();
-  if (!trimmed) {
-    return "";
-  }
-
-  const paragraphs = trimmed
-    .split(/\n{2,}/)
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean);
-
-  if (paragraphs.length === 0) {
-    return "";
-  }
-
-  return paragraphs
-    .map((paragraph) => `<p>${escapeHtml(paragraph).replaceAll("\n", "<br>")}</p>`)
-    .join("");
+  return sanitizeHtml(trimmed, SANITIZE_OPTIONS).trim();
 }
 
 export function formatRichTextForDisplay(value: string) {
@@ -85,9 +56,9 @@ export function stripRichText(value: string) {
   }
 
   if (looksLikeHtml(trimmed)) {
-    return DOMPurify.sanitize(trimmed, {
-      ALLOWED_TAGS: [],
-      ALLOWED_ATTR: [],
+    return sanitizeHtml(trimmed, {
+      allowedTags: [],
+      allowedAttributes: {},
     })
       .replace(/\s+/g, " ")
       .trim();
