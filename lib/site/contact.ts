@@ -13,6 +13,8 @@ export type ClubContact = {
   phoneDisplay: string;
   phoneHref: string;
   whatsappUrl: string;
+  email: string;
+  emailHref: string;
   address: string;
   mapsUrl: string;
   mapsEmbedUrl: string;
@@ -75,6 +77,7 @@ export function getClubContact(): ClubContact {
 
   const waNumber = phoneHref.replace(/^tel:\+?/, "");
   const whatsappUrl = `https://wa.me/${waNumber}`;
+  const email = process.env.NEXT_PUBLIC_CLUB_EMAIL ?? "contact@r-club.fr";
 
   return {
     instagramUrl,
@@ -86,6 +89,8 @@ export function getClubContact(): ClubContact {
     phoneDisplay,
     phoneHref,
     whatsappUrl,
+    email,
+    emailHref: `mailto:${email}`,
     address,
     mapsUrl,
     mapsEmbedUrl

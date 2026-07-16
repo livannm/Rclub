@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
 import { getClubContact } from "@/lib/site/contact";
 
 export const metadata: Metadata = {
   title: "Contact — Rclub Strasbourg",
-  description: "Retrouvez Rclub Strasbourg sur Instagram, Facebook, TikTok, WhatsApp ou venez nous rendre visite au 24 Place des Halles, Strasbourg.",
+  description: "Retrouvez Rclub Strasbourg sur Instagram, Facebook, TikTok, WhatsApp, par email à contact@r-club.fr ou venez nous rendre visite au 24 Place des Halles, Strasbourg.",
 };
 
 function IconInstagram({ size = 28 }: { size?: number }) {
@@ -165,6 +165,21 @@ export default async function ContactPage() {
           <span className="contact-item-body">
             <span className="contact-item-label">{t("writeUs")}</span>
             <span className="contact-item-value">{contact.phoneDisplay}</span>
+          </span>
+          <span className="contact-item-arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <a
+          href={contact.emailHref}
+          className="contact-item"
+          aria-label={`${t("email")} — ${contact.email}`}
+        >
+          <span className="contact-item-icon">
+            <Mail size={26} strokeWidth={1.75} />
+          </span>
+          <span className="contact-item-body">
+            <span className="contact-item-label">{t("emailUs")}</span>
+            <span className="contact-item-value">{contact.email}</span>
           </span>
           <span className="contact-item-arrow" aria-hidden="true">↗</span>
         </a>
