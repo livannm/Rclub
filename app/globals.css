@@ -4361,6 +4361,13 @@ main.page-shell {
   max-width: 62ch;
 }
 
+@media (min-width: 768px) {
+  .home-exp-closer {
+    margin-inline: auto;
+    text-align: center;
+  }
+}
+
 .home-exp-closer-lead {
   font-family: var(--font-display, serif);
   font-size: clamp(1.25rem, 2.4vw, 1.7rem);
