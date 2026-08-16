@@ -4218,7 +4218,7 @@ main.page-shell {
 .home-exp-block {
   display: grid;
   gap: clamp(1.5rem, 4vw, 0rem);
-  align-items: start;
+  align-items: center;
 }
 
 @media (min-width: 768px) {
