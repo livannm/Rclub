@@ -29,23 +29,31 @@ test.describe("Home — sections sous carousel", () => {
   });
 
   test.describe("L'expérience Rclub", () => {
-    test("la section est visible avec 3 cartes", async ({ page }) => {
-      const cards = page.locator(".home-experience-card");
-      await expect(cards).toHaveCount(3);
+    test("la section est visible avec 3 blocs", async ({ page }) => {
+      const section = page.locator(".home-experience");
+      await expect(section).toBeVisible();
+
+      const blocks = page.locator(".home-exp-block");
+      await expect(blocks).toHaveCount(3);
     });
 
     test("les numéros 01 02 03 sont présents", async ({ page }) => {
       for (const num of ["01", "02", "03"]) {
-        await expect(page.locator(".home-experience-num").filter({ hasText: num })).toBeVisible();
+        await expect(page.locator(".home-exp-block-num").filter({ hasText: num })).toBeVisible();
       }
     });
 
-    test("les titres de cartes sont visibles", async ({ page }) => {
-      const titles = page.locator(".home-experience-title");
+    test("les titres de chapitres sont visibles", async ({ page }) => {
+      const titles = page.locator(".home-exp-block-title");
       await expect(titles).toHaveCount(3);
       for (const title of await titles.all()) {
         await expect(title).toBeVisible();
       }
+    });
+
+    test("la signature et la tagline sont visibles", async ({ page }) => {
+      await expect(page.locator(".home-exp-signature")).toBeVisible();
+      await expect(page.locator(".home-exp-signature-tagline")).toBeVisible();
     });
   });
 
@@ -88,11 +96,11 @@ test.describe("Home — sections sous carousel", () => {
       expect(count).toBe(4);
     });
 
-    test("les cards experience ont des titres h3 avec un h2 parent", async ({ page }) => {
-      const h2 = page.locator(".home-experience .sr-only");
+    test("les chapitres experience ont des titres h3 avec un h2 parent", async ({ page }) => {
+      const h2 = page.locator(".home-experience .home-exp-intro-title");
       await expect(h2).toHaveCount(1);
 
-      const h3s = page.locator(".home-experience-title");
+      const h3s = page.locator(".home-exp-block-title");
       await expect(h3s).toHaveCount(3);
     });
   });
