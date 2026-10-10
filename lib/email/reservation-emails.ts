@@ -44,7 +44,7 @@ function requestReceivedHtml(reservation: ReservationRequest): string {
   return `
 <!DOCTYPE html>
 <html lang="fr">
-<head><meta charset="utf-8"><title>Demande de réservation reçue — Rclub</title></head>
+<head><meta charset="utf-8"><title>Réservation prise en compte — Rclub</title></head>
 <body style="margin:0;padding:0;background:#0a0a0a;font-family:sans-serif;color:#f0e6c8;">
   <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 16px;">
     <tr><td align="center">
@@ -53,10 +53,10 @@ function requestReceivedHtml(reservation: ReservationRequest): string {
           <p style="margin:0;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:#c9a84c;">R C L U B — S T R A S B O U R G</p>
         </td></tr>
         <tr><td style="padding:32px 32px 24px;">
-          <h1 style="margin:0 0 8px;font-size:22px;font-weight:700;letter-spacing:-0.02em;color:#f0e6c8;">Demande bien reçue</h1>
+          <h1 style="margin:0 0 8px;font-size:22px;font-weight:700;letter-spacing:-0.02em;color:#f0e6c8;">Réservation prise en compte</h1>
           <p style="margin:0 0 24px;font-size:14px;color:#8a7a60;line-height:1.6;">Bonjour ${escapeHtml(reservation.full_name)},</p>
           <p style="margin:0 0 24px;font-size:14px;color:#b89c6a;line-height:1.6;">
-            Nous avons bien reçu votre demande de réservation. Notre équipe va l'examiner et vous recontactera très prochainement pour vous confirmer les détails.
+            Votre réservation a bien été prise en compte. Nous vous attendons au Rclub. Voici le récapitulatif :
           </p>
 
           <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #2a2218;border-radius:2px;margin-bottom:24px;">
@@ -303,7 +303,7 @@ export async function sendRequestReceivedEmail(reservation: ReservationRequest):
   await sendEmail({
     from: getFromEmail(),
     to: reservation.email,
-    subject: "Votre demande de réservation au Rclub — bien reçue",
+    subject: "Votre réservation au Rclub a bien été prise en compte",
     html: requestReceivedHtml(reservation)
   });
 }
