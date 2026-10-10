@@ -111,8 +111,7 @@ repository interface
 | `NEXT_PUBLIC_CLUB_MAPS_SEARCH_QUERY` | non | Requête Places ciblée (défaut `Rclub Strasbourg`) |
 | `NEXT_PUBLIC_CLUB_MAPS_URL` | non | URL Maps externe — doit commencer par `https://` |
 | `NEXT_PUBLIC_CLUB_MAPS_EMBED_URL` | non | URL iframe Google Maps (override complet) |
-| `NEXT_PUBLIC_CLUB_PHONE` | non | Téléphone principal affiché |
-| `NEXT_PUBLIC_CLUB_PHONE_2` | non | Second numéro affiché |
+| `NEXT_PUBLIC_CLUB_PHONE` | non | Téléphone affiché |
 | `NEXT_PUBLIC_CLUB_INSTAGRAM_URL` | non | URL Instagram |
 | `NEXT_PUBLIC_CLUB_FACEBOOK_URL` | non | URL Facebook |
 | `NEXT_PUBLIC_CLUB_TIKTOK_URL` | non | URL TikTok |

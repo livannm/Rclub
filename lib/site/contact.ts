@@ -27,10 +27,10 @@ export type ClubContact = {
 
 const DEFAULT_INSTAGRAM_URL =
   "https://www.instagram.com/rclub.strasbourg?igsh=MTB4amRydjI2Nmxqbg==";
-const DEFAULT_PHONES: ClubPhone[] = [
-  { display: "+33 7 68 38 16 36", href: "tel:+33768381636" },
-  { display: "+33 6 95 86 89 36", href: "tel:+33695868936" },
-];
+const DEFAULT_PHONE: ClubPhone = {
+  display: "+33 7 68 38 16 36",
+  href: "tel:+33768381636",
+};
 
 function resolvePhone(
   display: string | undefined,
@@ -54,12 +54,7 @@ export function getClubContact(): ClubContact {
     resolvePhone(
       process.env.NEXT_PUBLIC_CLUB_PHONE,
       process.env.NEXT_PUBLIC_CLUB_PHONE_HREF,
-      DEFAULT_PHONES[0]!,
-    ),
-    resolvePhone(
-      process.env.NEXT_PUBLIC_CLUB_PHONE_2,
-      process.env.NEXT_PUBLIC_CLUB_PHONE_2_HREF,
-      DEFAULT_PHONES[1]!,
+      DEFAULT_PHONE,
     ),
   ];
   const phoneDisplay = phones[0]!.display;
