@@ -37,6 +37,37 @@ export function isExpiredReservation(
 
 type EventLookup = Record<string, { titleFr: string; startsAt: Date; startsAtIso: string }>;
 
+export function resolveEveningGroup(
+  slug: string,
+  groups: EveningGroup[],
+  events: EventLookup,
+): EveningGroup | null {
+  const existing = groups.find((group) => group.slug === slug);
+  if (existing) return existing;
+
+  if (!slug.startsWith("event_")) return null;
+
+  const eventId = slug.slice("event_".length);
+  const event = events[eventId];
+  if (!event) return null;
+
+  return {
+    key: `event:${eventId}`,
+    slug,
+    eventId,
+    label: event.titleFr,
+    date: event.startsAt,
+    eveningDateIso: getClubEveningDate(event.startsAtIso),
+    upcoming: event.startsAt >= new Date(),
+    confirmed: 0,
+    pending: 0,
+    refused: 0,
+    cancelled: 0,
+    totalGuestsConfirmed: 0,
+    reservations: [],
+  };
+}
+
 export function groupReservationsByEvening(
   reservations: ReservationRequest[],
   events: EventLookup

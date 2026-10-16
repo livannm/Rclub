@@ -1,7 +1,11 @@
 import { notFound } from "next/navigation";
 import { reservationService } from "@/lib/reservations/reservation-service-instance";
 import { eventService } from "@/lib/events/events-service-instance";
-import { groupReservationsByEvening, isExpiredReservation } from "@/lib/reservations/reservation-groups";
+import {
+  groupReservationsByEvening,
+  isExpiredReservation,
+  resolveEveningGroup,
+} from "@/lib/reservations/reservation-groups";
 import type { ReservationRequest } from "@/lib/reservations/reservation-schema";
 
 type GroupePageProps = {
@@ -53,7 +57,7 @@ export default async function AdminReservationsGroupePage({ params }: GroupePage
   );
 
   const groups = groupReservationsByEvening(allReservations, eventLookup);
-  const group = groups.find((g) => g.slug === key);
+  const group = resolveEveningGroup(key, groups, eventLookup);
 
   if (!group) notFound();
 
