@@ -22,7 +22,9 @@ const GOLD_METALLIC_PALETTE = [
 
 export type HeroCinematicProps = {
   heroAriaLabel: string;
+  brandLabel: string;
   title: string;
+  intro: string;
   reservationLabel: string;
   agendaLabel: string;
   heroVideoUrl: string;
@@ -31,7 +33,9 @@ export type HeroCinematicProps = {
 
 export function HeroCinematic({
   heroAriaLabel,
+  brandLabel,
   title,
+  intro,
   reservationLabel,
   agendaLabel,
   heroVideoUrl,
@@ -64,8 +68,8 @@ export function HeroCinematic({
         </div>
       ) : null}
       <div className="hero-content hero-content--centered">
-        <h1 className="hero-wordmark">
-          <Link href="/" aria-label={title} className="hero-wordmark-link">
+        <p className="hero-wordmark">
+          <Link href="/" aria-label={brandLabel} className="hero-wordmark-link">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={HERO_BRAND_URL}
@@ -77,7 +81,9 @@ export function HeroCinematic({
               data-testid="hero-wordmark"
             />
           </Link>
-        </h1>
+        </p>
+        <h1 className="hero-title">{title}</h1>
+        <p className="hero-intro">{intro}</p>
 
         <div className="hero-actions hero-actions--centered">
           {reducedMotion ? (

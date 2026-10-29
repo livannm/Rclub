@@ -52,7 +52,9 @@ export default async function HomePage() {
 
       <HeroCinematic
         heroAriaLabel={t("heroAriaLabel")}
+        brandLabel={t("brandName")}
         title={t("title")}
+        intro={t("description")}
         reservationLabel={t("reservationLink")}
         agendaLabel={t("agendaLink")}
         heroVideoUrl={heroVideoUrl}

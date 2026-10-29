@@ -30,9 +30,10 @@
     "copyright": "© {year} Rclub Strasbourg. All rights reserved."
   },
   "Home": {
-    "title": "Rclub",
+    "brandName": "R Club",
+    "title": "R Club, your nightclub in the heart of Strasbourg",
     "kicker": "Premium nightlife",
-    "description": "Premium nightlife in Strasbourg: signature nights, photo gallery, VIP reservations and bespoke private events.",
+    "description": "Since 1998, R Club has welcomed you at 24 place des Halles in Strasbourg. Join our DJ sets and themed nights to dance with friends, celebrate a birthday or enjoy a VIP table. See the upcoming events and send your reservation request.",
     "heroAriaLabel": "Homepage hero video",
     "nextEventTitle": "Next event",
     "upcomingEventsTitle": "Upcoming events",
@@ -168,7 +169,7 @@
     "practicalParkingLabel": "Parking",
     "practicalParkingValue": "P2 car park at Place des Halles",
     "practicalHoursLabel": "Hours",
-    "practicalHoursValue": "Thursday – Saturday · 23h – 06h",
+    "practicalHoursValue": "Thursday, Friday, Saturday and eves of public holidays: from 11 p.m. to 6 a.m.",
     "practicalEntryLabel": "Entry",
     "practicalEntryWithoutDrink": "€10 without drink",
     "practicalEntryWithDrink": "€15 with drink included",
@@ -243,8 +244,8 @@
   },
   "Seo": {
     "home": {
-      "title": "Rclub Strasbourg - Premium club, nights and events",
-      "description": "Discover Rclub Strasbourg, a premium nightlife experience with event schedule, photo galleries, VIP reservations and private hire."
+      "title": "R Club Strasbourg | Nightclub, parties and VIP tables",
+      "description": "Discover R Club, a nightclub in the heart of Strasbourg: DJ sets, themed nights and VIP tables. Check the programme and book your next night."
     },
     "agenda": {
       "title": "Events schedule - Rclub Strasbourg",

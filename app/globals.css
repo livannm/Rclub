@@ -1124,7 +1124,7 @@ figure.media-card:hover {
 .hero-wordmark {
   flex-shrink: 0;
   margin: 0;
-  max-width: min(100%, clamp(11rem, 36vw, 14rem));
+  max-width: min(100%, clamp(8.5rem, 28vw, 11rem));
 }
 
 .hero-wordmark-link {
@@ -1140,12 +1140,31 @@ figure.media-card:hover {
 
 .hero-wordmark-img {
   display: block;
-  width: min(100%, clamp(11rem, 36vw, 14rem));
+  width: min(100%, clamp(8.5rem, 28vw, 11rem));
   height: auto;
   margin-inline: auto;
   object-fit: contain;
   object-position: center;
   filter: drop-shadow(0 2px 20px rgba(0, 0, 0, 0.5));
+}
+
+.hero-title {
+  max-width: 16em;
+  margin: 1.15rem 0 0;
+  font-family: var(--font-display, serif);
+  font-size: clamp(1.85rem, 4vw, 3rem);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.hero-intro {
+  max-width: 40rem;
+  margin: 0.9rem 0 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
 }
 
 @media (min-width: 768px) {
@@ -1156,11 +1175,11 @@ figure.media-card:hover {
   }
 
   .hero-wordmark {
-    max-width: min(100%, 20rem);
+    max-width: min(100%, 14rem);
   }
 
   .hero-wordmark-img {
-    width: min(100%, 20rem);
+    width: min(100%, 14rem);
     filter: drop-shadow(0 2px 24px rgba(0, 0, 0, 0.5));
   }
 }
