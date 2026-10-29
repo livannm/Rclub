@@ -22,11 +22,11 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://r-club.fr"),
   title: {
-    default: "Rclub Strasbourg - Club premium, soirées et événements",
+    default: "R Club Strasbourg | Discothèque, soirées et tables VIP",
     template: "%s"
   },
   description:
-    "Découvrez Rclub Strasbourg, une expérience nightlife premium avec agenda des soirées, galerie photos, réservations VIP et privatisations.",
+    "Découvrez le R Club, discothèque au cœur de Strasbourg : DJ sets, soirées à thème et tables VIP. Consultez le programme et réservez votre prochaine soirée.",
   applicationName: "Rclub Strasbourg",
   robots: {
     index: true,

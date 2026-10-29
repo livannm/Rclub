@@ -192,14 +192,24 @@ export default async function ContactPage() {
             key={phone.href}
             href={phone.href}
             className="contact-item"
-            aria-label={`${t("phone")} — ${phone.display}`}
+            data-testid={phone.kind === "landline" ? "contact-landline" : "contact-phone"}
+            aria-label={
+              phone.kind === "landline"
+                ? `${t("landline")} — ${phone.display}. ${t("landlineNote")}`
+                : `${t("phone")} — ${phone.display}`
+            }
           >
             <span className="contact-item-icon">
               <Phone size={26} strokeWidth={1.75} />
             </span>
             <span className="contact-item-body">
-              <span className="contact-item-label">{t("callUs")}</span>
+              <span className="contact-item-label">
+                {phone.kind === "landline" ? t("landline") : t("callUs")}
+              </span>
               <span className="contact-item-value">{phone.display}</span>
+              {phone.kind === "landline" ? (
+                <span className="contact-item-note">{t("landlineNote")}</span>
+              ) : null}
             </span>
             <span className="contact-item-arrow" aria-hidden="true">↗</span>
           </a>

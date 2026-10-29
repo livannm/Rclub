@@ -48,7 +48,7 @@ export async function createEvent(
   await page.getByLabel("Fin").fill(endsAt);
   await page.getByLabel("Lieu").fill(location);
   await page.getByLabel("Image de couverture").fill(coverImageUrl);
-  await page.getByLabel("Vidéo hero (optionnel)").fill(heroVideoUrl);
+  await page.getByLabel("Teaser vidéo (optionnel)").fill(heroVideoUrl);
   await page.getByLabel("Billetterie (optionnel)").fill(ticketUrl);
   await page.getByLabel("Publier sur l'agenda").check();
   await page.getByRole("button", { name: "Ajouter l'événement" }).click();

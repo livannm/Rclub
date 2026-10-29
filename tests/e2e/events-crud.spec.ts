@@ -29,6 +29,22 @@ test("admin can create update and delete an event", async ({ page }) => {
 
   await expect(page.getByRole("heading", { name: updatedTitle })).toBeVisible();
 
+  const editUrl = page.url();
+  await page.goto(`/agenda/${slug}`);
+  await expect(page.getByTestId("event-teaser")).toHaveCount(0);
+
+  await page.goto(editUrl);
+  await page.getByLabel("Teaser vidéo (optionnel)").fill("https://example.com/teaser.mp4");
+  await page.getByRole("button", { name: "Enregistrer" }).click();
+  await expect(page.getByRole("heading", { name: updatedTitle })).toBeVisible();
+
+  await page.goto(`/agenda/${slug}`);
+  await expect(page.getByTestId("event-teaser").locator("video")).toHaveAttribute(
+    "src",
+    "https://example.com/teaser.mp4",
+  );
+
+  await page.goto(editUrl);
   await page.getByRole("button", { name: "Supprimer l'événement" }).click();
   await expect(page).toHaveURL(/\/admin\/events/);
   await expect(page.getByTestId(`admin-event-row-${slug}`)).toHaveCount(0);
