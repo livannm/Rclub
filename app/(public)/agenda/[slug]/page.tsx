@@ -8,6 +8,7 @@ import { eventService } from "@/lib/events/events-service-instance";
 import { galleryService } from "@/lib/gallery/gallery-service-instance";
 import { buildEventDetailMetadata, buildEventJsonLd } from "@/lib/seo/metadata";
 import { EventDetailStickyActions } from "@/components/events/EventDetailStickyActions";
+import { EventTeaserPlayer } from "@/components/events/EventTeaserPlayer";
 import { RichTextContent } from "@/components/rich-text-content";
 import { formatEventTime } from "@/lib/utils/format-date";
 import { formatRequestedDate, getClubEveningDate } from "@/lib/utils/club-date";
@@ -77,6 +78,13 @@ export default async function EventDetailPage({ params }: Props) {
         </header>
 
         <div className="event-detail-body">
+          {event.hero_video_url ? (
+            <EventTeaserPlayer
+              url={event.hero_video_url}
+              title={t("teaserTitle", { event: localized.title })}
+              caption={t("teaser")}
+            />
+          ) : null}
           <RichTextContent html={localized.description} className="event-detail-description" />
 
           <div className="event-detail-actions">

@@ -19,6 +19,7 @@
     "tagline": "Nightlife premium à Strasbourg",
     "contactTitle": "Contact",
     "phoneLabel": "Téléphone",
+    "landlineNote": "Joignable uniquement aux horaires d'ouverture du club",
     "addressLabel": "Adresse",
     "navTitle": "Explorer",
     "agenda": "Agenda",
@@ -65,7 +66,9 @@
     "ticket": "Billetterie",
     "reserve": "Réserver",
     "gallery": "Voir la galerie",
-    "viewDetails": "Voir les détails"
+    "viewDetails": "Voir les détails",
+    "teaser": "Teaser",
+    "teaserTitle": "Teaser : {event}"
   },
   "GalleryIndex": {
     "title": "Galerie",
@@ -234,6 +237,8 @@
     "writeUs": "Écrivez-nous",
     "emailUs": "Par email",
     "callUs": "Appelez-nous",
+    "landline": "Téléphone fixe",
+    "landlineNote": "Joignable uniquement aux horaires d'ouverture du club",
     "findUs": "Nous trouver"
   },
   "Seo": {

@@ -19,6 +19,7 @@
     "tagline": "Premium nightlife in Strasbourg",
     "contactTitle": "Contact",
     "phoneLabel": "Phone",
+    "landlineNote": "Reachable only during the club's opening hours",
     "addressLabel": "Address",
     "navTitle": "Explore",
     "agenda": "Events",
@@ -65,7 +66,9 @@
     "ticket": "Tickets",
     "reserve": "Book",
     "gallery": "See gallery",
-    "viewDetails": "View details"
+    "viewDetails": "View details",
+    "teaser": "Teaser",
+    "teaserTitle": "Teaser: {event}"
   },
   "GalleryIndex": {
     "title": "Gallery",
@@ -234,6 +237,8 @@
     "writeUs": "Message us",
     "emailUs": "By email",
     "callUs": "Call us",
+    "landline": "Landline",
+    "landlineNote": "Reachable only during the club's opening hours",
     "findUs": "Find us"
   },
   "Seo": {

@@ -25,4 +25,17 @@ describe("getClubContact maps urls", () => {
     expect(contact.mapsUrl).toContain(encodeURIComponent(DEFAULT_CLUB_PLACE_SEARCH_QUERY));
     expect(contact.mapsEmbedUrl).toContain(`place_id:${DEFAULT_CLUB_PLACE_ID}`);
   });
+
+  it("lists the mobile number and the landline with opening-hours restriction", () => {
+    const contact = getClubContact();
+    const landline = contact.phones.find((phone) => phone.kind === "landline");
+
+    expect(landline).toEqual({
+      display: "03 88 22 32 22",
+      href: "tel:+33388223222",
+      kind: "landline",
+    });
+    expect(contact.phones.some((phone) => phone.kind === "mobile")).toBe(true);
+    expect(contact.phoneHref).not.toBe(landline?.href);
+  });
 });

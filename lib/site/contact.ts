@@ -3,9 +3,12 @@ import {
   getClubPlaceConfig,
 } from "@/lib/site/club-place";
 
+export type ClubPhoneKind = "mobile" | "landline";
+
 export type ClubPhone = {
   display: string;
   href: string;
+  kind: ClubPhoneKind;
 };
 
 export type ClubContact = {
@@ -30,7 +33,25 @@ const DEFAULT_INSTAGRAM_URL =
 const DEFAULT_PHONE: ClubPhone = {
   display: "+33 7 68 38 16 36",
   href: "tel:+33768381636",
+  kind: "mobile",
 };
+
+const DEFAULT_LANDLINE: ClubPhone = {
+  display: "03 88 22 32 22",
+  href: "tel:+33388223222",
+  kind: "landline",
+};
+
+function toTelHref(display: string) {
+  const compact = display.replace(/[^\d+]/g, "");
+  if (compact.startsWith("+")) {
+    return `tel:${compact}`;
+  }
+  if (compact.startsWith("0")) {
+    return `tel:+33${compact.slice(1)}`;
+  }
+  return `tel:${compact}`;
+}
 
 function resolvePhone(
   display: string | undefined,
@@ -40,7 +61,8 @@ function resolvePhone(
   const resolvedDisplay = display ?? fallback.display;
   return {
     display: resolvedDisplay,
-    href: href ?? `tel:${resolvedDisplay.replace(/\s/g, "")}`,
+    href: href ?? toTelHref(resolvedDisplay),
+    kind: fallback.kind,
   };
 }
 
@@ -55,6 +77,11 @@ export function getClubContact(): ClubContact {
       process.env.NEXT_PUBLIC_CLUB_PHONE,
       process.env.NEXT_PUBLIC_CLUB_PHONE_HREF,
       DEFAULT_PHONE,
+    ),
+    resolvePhone(
+      process.env.NEXT_PUBLIC_CLUB_LANDLINE,
+      process.env.NEXT_PUBLIC_CLUB_LANDLINE_HREF,
+      DEFAULT_LANDLINE,
     ),
   ];
   const phoneDisplay = phones[0]!.display;
