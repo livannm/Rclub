@@ -88,11 +88,14 @@ export function EventFormFields({ event, defaultStartsAt, defaultEndsAt }: Event
       <MediaUploadField
         id="hero_video_url"
         name="hero_video_url"
-        label="Vidéo hero (optionnel)"
+        label="Teaser vidéo (optionnel)"
         kind="video"
-        placeholder="/media/hero.mp4"
+        className="full-span"
+        placeholder="Lien cloud (comme les photos), YouTube ou fichier"
         defaultValue={event?.hero_video_url ?? ""}
-        destination={{ kind: "videos" }}
+        destination={
+          event?.slug ? { kind: "events", eventSlug: event.slug } : { kind: "videos" }
+        }
       />
       <label htmlFor="ticket_url">
         Billetterie (optionnel)

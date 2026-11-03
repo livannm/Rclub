@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { EventTeaserPlayer } from "@/components/events/EventTeaserPlayer";
 import type { MediaDestination } from "@/lib/media/media-destination";
 import { uploadMediaFromClient } from "@/lib/media/upload-from-client";
 
@@ -117,14 +118,17 @@ export function MediaUploadField({
             <span className="media-upload__hint">ou collez une URL</span>
           )}
         </div>
-        {showPreview ? (
+        {showPreview && kind === "video" ? (
+          <EventTeaserPlayer
+            url={value}
+            title="Aperçu du teaser"
+            className="media-upload__teaser"
+          />
+        ) : null}
+        {showPreview && kind === "image" ? (
           <div className="media-upload__preview" data-provider={provider ?? "url"}>
-            {kind === "video" ? (
-              <video src={value} className="media-upload__media" muted playsInline />
-            ) : (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={value} alt="Aperçu" className="media-upload__media" />
-            )}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={value} alt="Aperçu" className="media-upload__media" />
           </div>
         ) : null}
       </label>

@@ -19,6 +19,7 @@
     "tagline": "Nightlife premium à Strasbourg",
     "contactTitle": "Contact",
     "phoneLabel": "Téléphone",
+    "landlineNote": "Joignable uniquement aux horaires d'ouverture du club",
     "addressLabel": "Adresse",
     "navTitle": "Explorer",
     "agenda": "Agenda",
@@ -29,9 +30,10 @@
     "copyright": "© {year} Rclub Strasbourg. Tous droits réservés."
   },
   "Home": {
-    "title": "Rclub",
+    "brandName": "R Club",
+    "title": "R Club, votre discothèque au cœur de Strasbourg",
     "kicker": "Nightlife premium",
-    "description": "Expérience nightlife premium à Strasbourg : soirées signature, galerie, réservations VIP et privatisations sur mesure.",
+    "description": "Depuis 1998, le R Club vous accueille au 24 place des Halles à Strasbourg. Retrouvez nos DJ sets et soirées à thème pour danser entre amis, célébrer un anniversaire ou profiter d'une table VIP. Découvrez les prochains événements et faites votre demande de réservation.",
     "heroAriaLabel": "Vidéo d'accueil",
     "nextEventTitle": "Prochain événement",
     "upcomingEventsTitle": "Prochains événements",
@@ -65,7 +67,9 @@
     "ticket": "Billetterie",
     "reserve": "Réserver",
     "gallery": "Voir la galerie",
-    "viewDetails": "Voir les détails"
+    "viewDetails": "Voir les détails",
+    "teaser": "Teaser",
+    "teaserTitle": "Teaser : {event}"
   },
   "GalleryIndex": {
     "title": "Galerie",
@@ -165,7 +169,7 @@
     "practicalParkingLabel": "Parking",
     "practicalParkingValue": "Parking P2 Place des Halles",
     "practicalHoursLabel": "Horaires",
-    "practicalHoursValue": "Jeudi – Samedi · 23h – 06h",
+    "practicalHoursValue": "Jeudi, vendredi, samedi et veilles de jours fériés : de 23 h à 6 h du matin.",
     "practicalEntryLabel": "Entrée",
     "practicalEntryWithoutDrink": "10 € sans consommation",
     "practicalEntryWithDrink": "15 € avec boisson incluse",
@@ -234,12 +238,14 @@
     "writeUs": "Écrivez-nous",
     "emailUs": "Par email",
     "callUs": "Appelez-nous",
+    "landline": "Téléphone fixe",
+    "landlineNote": "Joignable uniquement aux horaires d'ouverture du club",
     "findUs": "Nous trouver"
   },
   "Seo": {
     "home": {
-      "title": "Rclub Strasbourg - Club premium, soirées et événements",
-      "description": "Découvrez Rclub Strasbourg, une expérience nightlife premium avec agenda des soirées, galerie photos, réservations VIP et privatisations."
+      "title": "R Club Strasbourg | Discothèque, soirées et tables VIP",
+      "description": "Découvrez le R Club, discothèque au cœur de Strasbourg : DJ sets, soirées à thème et tables VIP. Consultez le programme et réservez votre prochaine soirée."
     },
     "agenda": {
       "title": "Agenda des événements - Rclub Strasbourg",

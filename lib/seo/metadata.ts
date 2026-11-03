@@ -21,9 +21,9 @@ export const seoPages: Record<
 > = {
   home: {
     path: "/",
-    title: "Rclub Strasbourg - Club premium, soirées et événements",
+    title: "R Club Strasbourg | Discothèque, soirées et tables VIP",
     description:
-      "Découvrez Rclub Strasbourg, une expérience nightlife premium avec agenda des soirées, galerie photos, réservations VIP et privatisations.",
+      "Découvrez le R Club, discothèque au cœur de Strasbourg : DJ sets, soirées à thème et tables VIP. Consultez le programme et réservez votre prochaine soirée.",
   },
   agenda: {
     path: "/agenda",
