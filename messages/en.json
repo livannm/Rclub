@@ -85,7 +85,10 @@
     "lightboxClose": "Close",
     "lightboxPrev": "Previous photo",
     "lightboxNext": "Next photo",
-    "lightboxZoomHint": "Pinch to zoom"
+    "lightboxZoomHint": "Pinch to zoom",
+    "loading": "Loading photo…",
+    "loadError": "This photo could not be loaded.",
+    "retry": "Retry"
   },
   "Reservations": {
     "title": "Reservations",
@@ -263,5 +266,16 @@
       "title": "Private hire - Rclub Strasbourg",
       "description": "Hire Rclub Strasbourg for a private, corporate or bespoke event."
     }
+  },
+  "Pagination": {
+    "label": "Pagination",
+    "previous": "Previous",
+    "next": "Next",
+    "summary": "Page {page} of {total}",
+    "goToPage": "Go to page {page}"
+  },
+  "Media": {
+    "loading": "Loading…",
+    "unavailable": "Media unavailable"
   }
 }

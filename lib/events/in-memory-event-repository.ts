@@ -1,5 +1,6 @@
 import type { ClubEvent, EventPayload } from "@/lib/events/event-schema";
-import type { EventRepository } from "@/lib/events/event-repository";
+import type { EventRepository, EventListQuery } from "@/lib/events/event-repository";
+import { paginate } from "@/lib/utils/pagination";
 import { eventMatchesClubEveningDate } from "@/lib/utils/club-date";
 
 function sortByDateAsc(items: ClubEvent[]) {
@@ -13,6 +14,21 @@ export class InMemoryEventRepository implements EventRepository {
 
   constructor(initialEvents: ClubEvent[] = []) {
     this.events = [...initialEvents];
+  }
+
+  async listPublishedDates() {
+    return this.events.filter(event => event.is_published).map(event => event.starts_at);
+  }
+
+  async listPublishedPage(query: EventListQuery) {
+    const items = this.events.filter(event => event.is_published &&
+      (!query.startsAtFrom || new Date(event.starts_at).getTime() >= new Date(query.startsAtFrom).getTime()) &&
+      (!query.startsAtTo || new Date(event.starts_at).getTime() < new Date(query.startsAtTo).getTime())
+    ).sort((a, b) => {
+      const delta = new Date(a.starts_at).getTime() - new Date(b.starts_at).getTime();
+      return (query.descending ? -delta : delta) || a.id.localeCompare(b.id);
+    });
+    return paginate(items, query.pageSize ?? Math.max(1, items.length), query.page);
   }
 
   async listAll() {

@@ -1,3 +1,4 @@
+import { MediaImage } from "@/components/media/MediaImage";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { SiteFooter } from "@/components/site-footer";
@@ -22,9 +23,10 @@ export default async function PublicLayout({
     <>
       <header className="site-header">
         <Link href="/" className="site-logo-link" aria-label={t("logoAlt")}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <MediaImage
             src={logoUrl}
+            loading="eager"
+            fetchPriority="high"
             alt=""
             data-testid="site-logo"
             className="site-logo"

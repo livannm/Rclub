@@ -1,5 +1,7 @@
 "use client";
 
+import { MediaImage } from "@/components/media/MediaImage";
+
 import { useRef, useState } from "react";
 import { EventTeaserPlayer } from "@/components/events/EventTeaserPlayer";
 import type { MediaDestination } from "@/lib/media/media-destination";
@@ -127,8 +129,7 @@ export function MediaUploadField({
         ) : null}
         {showPreview && kind === "image" ? (
           <div className="media-upload__preview" data-provider={provider ?? "url"}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={value} alt="Aperçu" className="media-upload__media" />
+            <MediaImage src={value} alt="Aperçu" className="media-upload__media" />
           </div>
         ) : null}
       </label>

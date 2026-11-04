@@ -85,7 +85,10 @@
     "lightboxClose": "Fermer",
     "lightboxPrev": "Photo précédente",
     "lightboxNext": "Photo suivante",
-    "lightboxZoomHint": "Pincez pour zoomer"
+    "lightboxZoomHint": "Pincez pour zoomer",
+    "loading": "Chargement de la photo…",
+    "loadError": "Impossible de charger cette photo.",
+    "retry": "Réessayer"
   },
   "Reservations": {
     "title": "Réservations",
@@ -263,5 +266,16 @@
       "title": "Privatisation - Rclub Strasbourg",
       "description": "Privatisez Rclub Strasbourg pour un événement privé, professionnel ou une soirée sur mesure."
     }
+  },
+  "Pagination": {
+    "label": "Pagination",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "summary": "Page {page} sur {total}",
+    "goToPage": "Aller à la page {page}"
+  },
+  "Media": {
+    "loading": "Chargement…",
+    "unavailable": "Média indisponible"
   }
 }

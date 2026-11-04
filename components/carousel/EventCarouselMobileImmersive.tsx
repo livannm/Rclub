@@ -1,4 +1,7 @@
 "use client";
+
+import { MediaImage } from "@/components/media/MediaImage";
+
 import { useState, useRef, useCallback } from "react";
 import Link from "next/link";
 import type { EventHighlightCardEvent } from "@/components/home/event-highlight-card";
@@ -73,8 +76,7 @@ export function EventCarouselMobileImmersive({ events, navLabel, startsAtLabel, 
               className="ev-carousel-mobile__slide"
             >
               {event.coverImageUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={event.coverImageUrl} alt="" className="ev-carousel-mobile__img" loading={index === 0 ? "eager" : "lazy"} />
+                <MediaImage src={event.coverImageUrl} alt="" className="ev-carousel-mobile__img" loading={index === 0 ? "eager" : "lazy"} />
               ) : (
                 <div className="ev-carousel-mobile__fallback" aria-hidden><span>R</span></div>
               )}

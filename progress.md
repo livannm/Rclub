@@ -1,5 +1,13 @@
 # Suivi d'avancement - Rclub
 
+## 2026-11-04 — Pagination et médias (F-03 / F-05)
+
+- Owner : Codex — statut : `review`.
+- Branche : `feat/gallery-pagination-media-loading`.
+- Agenda : 5 événements par page lorsque les passés sont inclus ; galerie : 5 albums ; album : 24 photos, avec visionneuse continue.
+- Chargement des médias harmonisé et pictogrammes de contact retirés.
+- Décisions et validation : [tasks/TASK-pagination-media.md](tasks/TASK-pagination-media.md).
+
 ## Objectif
 
 Ce fichier sert de source unique de suivi pour coordonner un orchestrateur et plusieurs agents ouvriers.

@@ -33,6 +33,7 @@ export function AgendaFilters({
   const setParams = useCallback(
     (year: number | null, month: number | null, past?: boolean) => {
       const params = new URLSearchParams(searchParams.toString());
+      params.delete("page");
       if (year != null) {
         params.set("year", String(year));
       } else {

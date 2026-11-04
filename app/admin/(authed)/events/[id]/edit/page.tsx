@@ -1,3 +1,4 @@
+import { MediaImage } from "@/components/media/MediaImage";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { EventFormFields } from "@/components/admin/event-form-fields";
@@ -147,8 +148,7 @@ export default async function EditEventPage({ searchParams, params }: EditEventP
                 data-testid={`admin-photo-item-${event.slug}-${index}`}
                 className="admin-photo-item"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={photo.image_url} alt={photo.alt_fr} width={60} height={40} />
+                    <MediaImage src={photo.image_url} alt={photo.alt_fr} width={60} height={40} />
                 <span className="admin-photo-url">{photo.image_url}</span>
                 <form action={reorderPhotoAction} className="inline-form">
                   <input type="hidden" name="photo_id" value={photo.id} />

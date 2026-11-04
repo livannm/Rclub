@@ -1,3 +1,4 @@
+import { MediaImage } from "@/components/media/MediaImage";
 import Link from "next/link";
 import type { ClubEvent } from "@/lib/events/event-schema";
 import type { AppLocale } from "@/i18n/locales";
@@ -40,8 +41,7 @@ export function EventCard({
         </div>
         {event.cover_image_url ? (
           <div className="event-card-image-wrap">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <MediaImage
               src={event.cover_image_url}
               alt={localized.title}
               loading="lazy"

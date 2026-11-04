@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { OptimizedImage as Image } from "@/components/media/MediaImage";
 import { useState, useEffect, useRef } from "react";
 import { GalleryLightbox } from "@/components/gallery/GalleryLightbox";
 

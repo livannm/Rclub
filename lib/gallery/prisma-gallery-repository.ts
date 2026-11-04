@@ -1,4 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, type Prisma } from "@prisma/client";
+import { toClubEvent } from "@/lib/events/prisma-event-repository";
+import { getPagination } from "@/lib/utils/pagination";
 import type { GalleryRepository } from "@/lib/gallery/gallery-repository";
 import type { GalleryPhoto, CreatePhotoPayload } from "@/lib/gallery/gallery-types";
 
@@ -26,6 +28,29 @@ function toGalleryPhoto(
 
 export class PrismaGalleryRepository implements GalleryRepository {
   constructor(private readonly prisma: PrismaClient) {}
+
+  async listAlbums(page: number, pageSize: number) {
+    const where: Prisma.EventWhereInput = { isPublished: true, medias: { some: { type: "photo" } } };
+    const total = await this.prisma.event.count({ where });
+    const pagination = getPagination(total, pageSize, page);
+    const events = await this.prisma.event.findMany({
+      where, orderBy: [{ startsAt: "desc" }, { id: "asc" }],
+      skip: pagination.offset, take: pageSize,
+    });
+    return { ...pagination, items: events.map(toClubEvent) };
+  }
+
+  async listByEventSlugPage(eventSlug: string, page: number, pageSize: number) {
+    const where: Prisma.EventMediaWhereInput = { event: { slug: eventSlug }, type: "photo" };
+    const total = await this.prisma.eventMedia.count({ where });
+    const pagination = getPagination(total, pageSize, page);
+    const medias = await this.prisma.eventMedia.findMany({
+      where, include: { event: { select: { slug: true } } },
+      orderBy: [{ sortOrder: "asc" }, { id: "asc" }],
+      skip: pagination.offset, take: pageSize,
+    });
+    return { ...pagination, items: medias.map(toGalleryPhoto) };
+  }
 
   async listByEventSlug(eventSlug: string): Promise<GalleryPhoto[]> {
     const medias = await this.prisma.eventMedia.findMany({

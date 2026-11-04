@@ -1,3 +1,4 @@
+import { MediaImage } from "@/components/media/MediaImage";
 import Link from "next/link";
 import { getClubEveningDate } from "@/lib/utils/club-date";
 import SpotlightCard from "@/components/react-bits/SpotlightCard";
@@ -42,8 +43,7 @@ export function EventHighlightCard({
         >
           <div className="home-event-card__media">
             {event.coverImageUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <MediaImage
                 src={event.coverImageUrl}
                 alt=""
                 className="home-event-card__image"
