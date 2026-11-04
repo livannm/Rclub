@@ -1,5 +1,9 @@
 "use client";
 
+import { MediaVideo } from "@/components/media/MediaPlayer";
+
+import { MediaImage } from "@/components/media/MediaImage";
+
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import BorderGlow from "@/components/react-bits/BorderGlow";
@@ -45,7 +49,7 @@ export function HeroCinematic({
 
   return (
     <section aria-label={heroAriaLabel} className="hero hero--centered">
-      <video
+      <MediaVideo eager
         data-testid="hero-video"
         src={heroVideoUrl}
         poster={heroPosterUrl}
@@ -70,9 +74,9 @@ export function HeroCinematic({
       <div className="hero-content hero-content--centered">
         <p className="hero-wordmark">
           <Link href="/" aria-label={brandLabel} className="hero-wordmark-link">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <MediaImage
               src={HERO_BRAND_URL}
+              loading="eager"
               alt=""
               className="hero-wordmark-img"
               width={319}

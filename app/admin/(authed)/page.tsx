@@ -1,3 +1,4 @@
+import { MediaImage } from "@/components/media/MediaImage";
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { MediaUploadField } from "@/components/admin/media-upload-field";
@@ -202,8 +203,7 @@ export default async function AdminDashboardPage() {
               <code data-testid="current-logo-url">{currentLogo}</code>
             </p>
             {currentLogo && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <MediaImage
                 src={currentLogo}
                 alt="Logo actuel"
                 data-testid="current-logo-preview"
@@ -318,11 +318,9 @@ function NextEveningCard({ event }: { event: UpcomingEventSummary }) {
 
   return (
     <article className="next-evening-card">
-      <div
-        className="next-evening-cover"
-        style={{ backgroundImage: `url(${event.coverImageUrl})` }}
-        aria-hidden
-      />
+      <div className="next-evening-cover" aria-hidden="true">
+        <MediaImage src={event.coverImageUrl} alt="" className="next-evening-image" />
+      </div>
       <div className="next-evening-body">
         <p className="next-evening-when">
           {event.daysUntil === 0 ? "Aujourd'hui" : `Dans ${event.daysUntil} jour${event.daysUntil > 1 ? "s" : ""}`}

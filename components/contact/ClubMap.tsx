@@ -1,7 +1,10 @@
 'use client'
 
+import { MediaEmbed } from '@/components/media/MediaPlayer'
+import { useMediaVisibility } from '@/components/media/useMediaVisibility'
+
 import { importLibrary, setOptions } from '@googlemaps/js-api-loader'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CLUB_MAP_STYLES } from '@/lib/maps/club-map-styles'
 import { resolveClubPlace } from '@/lib/maps/resolve-club-place'
 
@@ -26,14 +29,12 @@ export function ClubMap({
   title,
   className = 'contact-map',
 }: ClubMapProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
+  const { ref: containerRef, visible } = useMediaVisibility()
   const [useEmbedFallback, setUseEmbedFallback] = useState(!apiKey)
+  const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    if (!apiKey || !containerRef.current) {
-      setUseEmbedFallback(true)
-      return
-    }
+    if (!visible || !apiKey || !containerRef.current) return
 
     let cancelled = false
 
@@ -65,6 +66,9 @@ export function ClubMap({
           position: resolved.coords,
           title: resolved.displayName ?? 'Rclub Strasbourg',
         })
+        google.maps.event.addListenerOnce(map, 'idle', () => {
+          if (!cancelled) setReady(true)
+        })
       } catch {
         if (!cancelled) setUseEmbedFallback(true)
       }
@@ -75,11 +79,11 @@ export function ClubMap({
     return () => {
       cancelled = true
     }
-  }, [apiKey, placeId, searchQuery, fallbackLat, fallbackLng])
+  }, [apiKey, placeId, searchQuery, fallbackLat, fallbackLng, containerRef, visible])
 
   if (useEmbedFallback) {
     return (
-      <iframe
+      <MediaEmbed
         title={title}
         src={fallbackEmbedUrl}
         width="100%"
@@ -97,6 +101,8 @@ export function ClubMap({
       role="img"
       aria-label={title}
       className={className}
+      data-media-state={ready ? 'loaded' : 'loading'}
+      aria-busy={!ready}
       style={{ minHeight: 380 }}
     />
   )

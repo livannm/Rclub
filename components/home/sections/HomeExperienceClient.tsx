@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useReducedMotion } from 'motion/react'
-import Image from 'next/image'
+import { OptimizedImage as Image } from '@/components/media/MediaImage'
 
 interface ExperienceBlock {
   num: string

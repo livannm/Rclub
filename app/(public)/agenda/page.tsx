@@ -6,13 +6,16 @@ import { eventService } from "@/lib/events/events-service-instance";
 import { resolveLocale } from "@/i18n/locales";
 import { getClubEveningParts } from "@/lib/utils/club-date";
 import { getLocale, getTranslations } from "next-intl/server";
+import { Pagination } from "@/components/Pagination";
+import { parsePage } from "@/lib/utils/pagination";
+import { parseAgendaYear, parseAgendaMonth } from "@/lib/events/agenda-query";
 
 export async function generateMetadata() {
   return buildLocalizedPageMetadata("agenda");
 }
 
 type PageProps = {
-  searchParams: Promise<{ year?: string; month?: string; past?: string }>;
+  searchParams: Promise<{ year?: string; month?: string; past?: string; page?: string }>;
 };
 
 export default async function AgendaPage({ searchParams }: PageProps) {
@@ -21,16 +24,19 @@ export default async function AgendaPage({ searchParams }: PageProps) {
   const t = await getTranslations("Agenda");
   const tDetail = await getTranslations("EventDetail");
 
-  const allEvents = await eventService.listPublished();
   const now = new Date();
 
-  const selectedYear = params.year ? parseInt(params.year, 10) : null;
-  const selectedMonth = params.month ? parseInt(params.month, 10) : null;
+  const selectedYear = parseAgendaYear(params.year);
+  const selectedMonth = selectedYear ? parseAgendaMonth(params.month) : null;
   const showPast = params.past === "1";
+  const [dates, result] = await Promise.all([
+    eventService.listPublishedDates(),
+    eventService.listAgenda({ showPast, year: selectedYear, month: selectedMonth, page: parsePage(params.page), now }),
+  ]);
 
   // Available years from all events (club evening date = start of the night)
   const years = [
-    ...new Set(allEvents.map((e) => getClubEveningParts(e.starts_at).year)),
+    ...new Set(dates.map(date => getClubEveningParts(date).year)),
   ].sort((a, b) => a - b);
 
   // Available months per year
@@ -39,9 +45,9 @@ export default async function AgendaPage({ searchParams }: PageProps) {
   for (const year of years) {
     const monthNums = [
       ...new Set(
-        allEvents
-          .filter((e) => getClubEveningParts(e.starts_at).year === year)
-          .map((e) => getClubEveningParts(e.starts_at).month)
+        dates
+          .filter(date => getClubEveningParts(date).year === year)
+          .map(date => getClubEveningParts(date).month)
       ),
     ].sort((a, b) => a - b);
 
@@ -51,18 +57,11 @@ export default async function AgendaPage({ searchParams }: PageProps) {
     }));
   }
 
-  // Filter events
-  let filtered = allEvents;
-  if (!showPast) {
-    filtered = filtered.filter((e) => new Date(e.starts_at) >= now);
-  }
-  if (selectedYear != null) {
-    filtered = filtered.filter((e) => getClubEveningParts(e.starts_at).year === selectedYear);
-  }
-  if (selectedMonth != null) {
-    filtered = filtered.filter((e) => getClubEveningParts(e.starts_at).month === selectedMonth);
-  }
-
+  const filtered = result.items;
+  const query: Record<string, string> = {};
+  if (showPast) query.past = "1";
+  if (selectedYear) query.year = String(selectedYear);
+  if (selectedMonth) query.month = String(selectedMonth);
   const isFiltered = selectedYear != null || selectedMonth != null;
 
   return (
@@ -107,6 +106,7 @@ export default async function AgendaPage({ searchParams }: PageProps) {
           })}
         </section>
       )}
+      {showPast ? <Pagination path="/agenda" query={query} page={result.page} totalPages={result.totalPages} /> : null}
     </main>
   );
 }

@@ -1,6 +1,7 @@
 import { ZodError } from "zod";
 import { eventSchema, type ClubEvent, type EventPayload } from "@/lib/events/event-schema";
 import type { EventRepository } from "@/lib/events/event-repository";
+import { buildAgendaQuery, type AgendaOptions } from "@/lib/events/agenda-query";
 
 export type EventServiceErrorCode = "VALIDATION_ERROR" | "DUPLICATE_SLUG" | "NOT_FOUND";
 
@@ -15,6 +16,14 @@ export class EventServiceError extends Error {
 
 export class EventService {
   constructor(private readonly repository: EventRepository) {}
+
+  async listAgenda(options: AgendaOptions) {
+    return this.repository.listPublishedPage(buildAgendaQuery(options));
+  }
+
+  async listPublishedDates() {
+    return this.repository.listPublishedDates();
+  }
 
   async listAll() {
     return this.repository.listAll();

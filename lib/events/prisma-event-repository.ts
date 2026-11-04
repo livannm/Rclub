@@ -1,7 +1,8 @@
 import type { Prisma, Event as PrismaEvent } from "@prisma/client";
 import type { PrismaClient } from "@prisma/client";
 import type { ClubEvent, EventPayload } from "@/lib/events/event-schema";
-import type { EventRepository } from "@/lib/events/event-repository";
+import type { EventRepository, EventListQuery } from "@/lib/events/event-repository";
+import { getPagination } from "@/lib/utils/pagination";
 import { eventMatchesClubEveningDate } from "@/lib/utils/club-date";
 
 function sortByDateAsc(items: ClubEvent[]) {
@@ -10,7 +11,7 @@ function sortByDateAsc(items: ClubEvent[]) {
   );
 }
 
-function toClubEvent(event: PrismaEvent): ClubEvent {
+export function toClubEvent(event: PrismaEvent): ClubEvent {
   return {
     id: event.id,
     slug: event.slug,
@@ -66,6 +67,28 @@ function toUpdateData(payload: EventPayload): Prisma.EventUpdateInput {
 
 export class PrismaEventRepository implements EventRepository {
   constructor(private readonly db: PrismaClient) {}
+
+  async listPublishedDates() {
+    const dates = await this.db.event.findMany({ where: { isPublished: true }, select: { startsAt: true } });
+    return dates.map(event => event.startsAt.toISOString());
+  }
+
+  async listPublishedPage(query: EventListQuery) {
+    const where: Prisma.EventWhereInput = {
+      isPublished: true,
+      startsAt: {
+        ...(query.startsAtFrom ? { gte: new Date(query.startsAtFrom) } : {}),
+        ...(query.startsAtTo ? { lt: new Date(query.startsAtTo) } : {}),
+      },
+    };
+    const total = await this.db.event.count({ where });
+    const pagination = getPagination(total, query.pageSize ?? Math.max(1, total), query.page);
+    const events = await this.db.event.findMany({
+      where, orderBy: [{ startsAt: query.descending ? "desc" : "asc" }, { id: "asc" }],
+      skip: pagination.offset, take: pagination.pageSize,
+    });
+    return { ...pagination, items: events.map(toClubEvent) };
+  }
 
   async listAll() {
     const events = await this.db.event.findMany();

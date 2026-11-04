@@ -1,5 +1,7 @@
 "use client";
 
+import { MediaImage } from "@/components/media/MediaImage";
+
 import { useState, useCallback, useRef, useEffect } from "react";
 import type { ClubEvent } from "@/lib/events/event-schema";
 import { formatEventTime } from "@/lib/utils/format-date";
@@ -103,7 +105,7 @@ export function DatePickerWithEventHint({ labelText, locale, defaultValue, minDa
           <input type="hidden" name="event_id" value={event.id} />
           {event.cover_image_url && (
             <div className="rclub-event-hint__img-wrap" aria-hidden="true">
-              <img
+              <MediaImage
                 src={event.cover_image_url}
                 alt=""
                 className="rclub-event-hint__img"

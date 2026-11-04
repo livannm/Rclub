@@ -1,3 +1,4 @@
+import { MediaImage } from "@/components/media/MediaImage";
 import Link from "next/link";
 import { getClubEveningDate } from "@/lib/utils/club-date";
 import type { EventHighlightCardEvent } from "@/components/home/event-highlight-card";
@@ -30,8 +31,7 @@ export function EventCarouselCard({ event, startsAtLabel, viewDetailsLabel, rese
         />
       )}
       {event.coverImageUrl ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={event.coverImageUrl} alt="" className="ev-carousel__card-img" loading={isActive ? "eager" : "lazy"} />
+        <MediaImage src={event.coverImageUrl} alt="" className="ev-carousel__card-img" loading={isActive ? "eager" : "lazy"} />
       ) : (
         <div className="ev-carousel__card-fallback" aria-hidden><span>R</span></div>
       )}

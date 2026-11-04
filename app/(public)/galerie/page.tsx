@@ -2,26 +2,28 @@ import { buildLocalizedPageMetadata } from "@/lib/seo/metadata";
 import { getLocale, getTranslations } from "next-intl/server";
 import { resolveLocale } from "@/i18n/locales";
 import { galleryService } from "@/lib/gallery/gallery-service-instance";
-import { eventService } from "@/lib/events/events-service-instance";
 import { getLocalizedEventContent } from "@/lib/events/event-localized";
+import { Pagination } from "@/components/Pagination";
+import { MediaImage } from "@/components/media/MediaImage";
+import { parsePage } from "@/lib/utils/pagination";
+import Link from "next/link";
 
 export async function generateMetadata() {
   return buildLocalizedPageMetadata("gallery");
 }
 
-export default async function GaleriePage() {
+export default async function GaleriePage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
   const locale = resolveLocale(await getLocale());
   const t = await getTranslations("GalleryIndex");
 
-  const slugs = await galleryService.listEventSlugs();
-  const events = await Promise.all(slugs.map((slug) => eventService.findBySlug(slug)));
+  const result = await galleryService.listAlbums(parsePage((await searchParams).page));
 
   return (
     <main className="page-shell site-grid">
       <p className="page-kicker">{t("kicker")}</p>
       <h1 className="page-title">{t("title")}</h1>
 
-      {slugs.length === 0 ? (
+      {result.total === 0 ? (
         <p className="agenda-empty" data-testid="gallery-index-empty">{t("empty")}</p>
       ) : null}
 
@@ -29,22 +31,21 @@ export default async function GaleriePage() {
         aria-label={t("sectionLabel")}
         className="card-grid"
       >
-        {slugs.map((slug, index) => {
-          const event = events[index];
-          const localized = event ? getLocalizedEventContent(event, locale) : null;
-          const title = localized?.title ?? slug;
-          const coverUrl = event?.cover_image_url ?? null;
+        {result.items.map((event, index) => {
+          const localized = getLocalizedEventContent(event, locale);
+          const title = localized.title;
+          const coverUrl = event.cover_image_url;
 
           return (
-            <a
-              key={slug}
-              href={`/galerie/${slug}`}
+            <Link
+              key={event.id}
+              href={`/galerie/${event.slug}${result.page > 1 ? `?albumsPage=${result.page}` : ""}`}
+              prefetch={false}
               data-testid={`gallery-index-item-${index}`}
               className="media-card media-link"
             >
               {coverUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <MediaImage
                   src={coverUrl}
                   alt={title}
                   loading="lazy"
@@ -52,10 +53,11 @@ export default async function GaleriePage() {
                 />
               ) : null}
               <h2 className="media-card-body">{title}</h2>
-            </a>
+            </Link>
           );
         })}
       </section>
+      <Pagination path="/galerie" page={result.page} totalPages={result.totalPages} />
     </main>
   );
 }

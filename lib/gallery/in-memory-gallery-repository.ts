@@ -1,12 +1,31 @@
 import type { GalleryRepository } from "@/lib/gallery/gallery-repository";
 import type { GalleryPhoto, CreatePhotoPayload } from "@/lib/gallery/gallery-types";
-import { DEMO_GALLERY_PHOTOS } from "@/lib/seed/demo-content";
+import { DEMO_GALLERY_PHOTOS, DEMO_EVENTS } from "@/lib/seed/demo-content";
+import type { EventRepository } from "@/lib/events/event-repository";
+import { InMemoryEventRepository } from "@/lib/events/in-memory-event-repository";
+import { paginate } from "@/lib/utils/pagination";
 
 export class InMemoryGalleryRepository implements GalleryRepository {
   private photos: GalleryPhoto[];
 
-  constructor(initialPhotos: GalleryPhoto[] = DEMO_GALLERY_PHOTOS) {
+  constructor(
+    initialPhotos: GalleryPhoto[] = DEMO_GALLERY_PHOTOS,
+    private readonly events: Pick<EventRepository, "listAll"> = new InMemoryEventRepository(DEMO_EVENTS),
+  ) {
     this.photos = [...initialPhotos];
+  }
+
+  async listAlbums(page: number, pageSize: number) {
+    const withPhotos = new Set(this.photos.map(photo => photo.event_id));
+    const events = (await this.events.listAll()).filter(event => event.is_published && withPhotos.has(event.id));
+    events.sort((a, b) => new Date(b.starts_at).getTime() - new Date(a.starts_at).getTime() || a.id.localeCompare(b.id));
+    return paginate(events, pageSize, page);
+  }
+
+  async listByEventSlugPage(eventSlug: string, page: number, pageSize: number) {
+    const photos = this.photos.filter(photo => photo.event_slug === eventSlug)
+      .sort((a, b) => a.order - b.order || a.id.localeCompare(b.id));
+    return paginate(photos, pageSize, page);
   }
 
   async listByEventSlug(eventSlug: string): Promise<GalleryPhoto[]> {

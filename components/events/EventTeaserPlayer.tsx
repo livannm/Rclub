@@ -1,3 +1,4 @@
+import { MediaEmbed, MediaVideo } from "@/components/media/MediaPlayer";
 import { resolveTeaserPlayer } from "@/lib/events/teaser-player";
 
 type EventTeaserPlayerProps = {
@@ -20,7 +21,7 @@ export function EventTeaserPlayer({ url, title, caption, className }: EventTease
       {caption ? <figcaption className="event-teaser-caption">{caption}</figcaption> : null}
       <div className="event-teaser-frame">
         {player.kind === "embed" ? (
-          <iframe
+          <MediaEmbed
             src={player.src}
             title={title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -29,7 +30,7 @@ export function EventTeaserPlayer({ url, title, caption, className }: EventTease
             referrerPolicy="strict-origin-when-cross-origin"
           />
         ) : (
-          <video src={player.src} controls playsInline preload="metadata" aria-label={title} />
+          <MediaVideo src={player.src} controls playsInline preload="metadata" aria-label={title} />
         )}
       </div>
     </figure>

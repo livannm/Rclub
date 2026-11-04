@@ -10,6 +10,8 @@
 ## Objectif
 Afficher la liste des événements à venir triés par date croissante sur la page Agenda.
 
+Évolution : l'option « afficher les passés » inclut les passés et les événements à venir, triés par date décroissante, 5 par page. Voir [TASK-pagination-media.md](TASK-pagination-media.md).
+
 ## Plan de tests (à écrire en premier)
 - [x] Unitaire: tri chronologique
 - [x] Intégration: récupération événements publiés à venir

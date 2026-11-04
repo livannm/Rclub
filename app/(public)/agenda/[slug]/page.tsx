@@ -1,3 +1,4 @@
+import { MediaImage } from "@/components/media/MediaImage";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -55,8 +56,7 @@ export default async function EventDetailPage({ params }: Props) {
       <article className="event-detail">
         {event.cover_image_url ? (
           <figure className="event-detail-cover">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={event.cover_image_url} alt={localized.title} />
+            <MediaImage src={event.cover_image_url} alt={localized.title} loading="eager" fetchPriority="high" />
           </figure>
         ) : null}
 

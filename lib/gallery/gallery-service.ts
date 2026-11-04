@@ -1,8 +1,17 @@
 import type { GalleryRepository } from "@/lib/gallery/gallery-repository";
 import type { CreatePhotoPayload } from "@/lib/gallery/gallery-types";
+import { ALBUM_PAGE_SIZE, PHOTO_PAGE_SIZE, parsePage } from "@/lib/utils/pagination";
 
 export class GalleryService {
   constructor(private readonly repository: GalleryRepository) {}
+
+  async listAlbums(page = 1) {
+    return this.repository.listAlbums(parsePage(page), ALBUM_PAGE_SIZE);
+  }
+
+  async listEventPhotosPage(eventSlug: string, page = 1) {
+    return this.repository.listByEventSlugPage(eventSlug, parsePage(page), PHOTO_PAGE_SIZE);
+  }
 
   async listEventPhotos(eventSlug: string) {
     return this.repository.listByEventSlug(eventSlug);

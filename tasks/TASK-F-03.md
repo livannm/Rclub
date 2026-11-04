@@ -11,7 +11,9 @@
 Afficher la galerie photo du site, structurée par événement.
 
 - `/galerie` : liste les événements publiés ayant au moins une photo (image de couverture + titre)
-- `/galerie/[slug]` : affiche toutes les photos associées à cet événement
+- `/galerie/[slug]` : donne accès à toutes les photos associées à cet événement (24 par page).
+
+Évolution pagination et médias : voir [TASK-pagination-media.md](TASK-pagination-media.md).
 
 > "Cash Out" est un événement parmi d'autres — il n'y a pas de galerie dédiée à cash-out, mais une galerie générique par événement.
 

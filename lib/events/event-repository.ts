@@ -1,6 +1,17 @@
 import type { ClubEvent, EventPayload } from "@/lib/events/event-schema";
+import type { Paginated } from "@/lib/utils/pagination";
+
+export type EventListQuery = {
+  startsAtFrom?: string;
+  startsAtTo?: string;
+  descending: boolean;
+  page: number;
+  pageSize?: number;
+};
 
 export interface EventRepository {
+  listPublishedPage(query: EventListQuery): Promise<Paginated<ClubEvent>>;
+  listPublishedDates(): Promise<string[]>;
   listAll(): Promise<ClubEvent[]>;
   listPublished(): Promise<ClubEvent[]>;
   listPublishedUpcoming(nowIso: string): Promise<ClubEvent[]>;
